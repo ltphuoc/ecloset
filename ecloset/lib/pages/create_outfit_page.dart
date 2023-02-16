@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/constants/app_colors.dart';
+import 'package:ecloset/constants/app_styles.dart';
 import 'package:ecloset/pages/closet_page.dart';
 import 'package:ecloset/pages/save_outfit_page.dart';
 import 'package:ecloset/utils/routes_name.dart';

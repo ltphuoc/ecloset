@@ -4,8 +4,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../constant/app_colors.dart';
-import '../constant/app_styles.dart';
+import '../constants/app_colors.dart';
+import '../constants/app_styles.dart';
 
 class SaveOutfitPage extends StatefulWidget {
   SaveOutfitPage({super.key, required this.imageByte});

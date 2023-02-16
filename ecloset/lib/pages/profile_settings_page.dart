@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/constants/app_colors.dart';
+import 'package:ecloset/constants/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

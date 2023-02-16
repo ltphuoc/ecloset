@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/constants/app_colors.dart';
+import 'package:ecloset/constants/app_styles.dart';
 import 'package:ecloset/pages/closet_page.dart';
+import 'package:ecloset/pages/home_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
@@ -109,34 +111,34 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
 
     Future.value(uploadTask).then((value) async {
       var newUrl = await ref.getDownloadURL();
-      // var formData = jsonEncode({
-      //   "productName": _productName,
-      //   "categoryId": _productCat,
-      //   "subcategoryId": _subProductCat,
-      //   "supplierId": 1,
-      //   "color": "string",
-      //   "image": newUrl,
-      //   "productUrl": "string"
-      // });
+      var formData = jsonEncode({
+        "productName": _productName,
+        "categoryId": _productCat,
+        "subcategoryId": _subProductCat,
+        "supplierId": 1,
+        "color": "string",
+        "image": newUrl,
+        "productUrl": "string"
+      });
 
-      // const url = 'https://localhost:7269/api/product/add';
-      // final response = await http.post(
-      //   Uri.parse(url),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      //   body: formData,
-      // );
-      // if (response.statusCode == 201) {
-      //   Navigator.pushAndRemoveUntil(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => const HomePage()),
-      //       (route) => false);
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => ClosetPage()),
-      //   );
-      // }
+      const url = 'https://10.0.2.2:7269/api/product/add';
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: formData,
+      );
+      if (response.statusCode == 201) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (route) => false);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ClosetPage()),
+        );
+      }
     });
   }
 
@@ -151,7 +153,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
               TextButton(
                   onPressed: () async {
                     var url =
-                        "https://localhost:7269/api/product/${widget.closet?.productId}";
+                        "https://10.0.2.2:7269/api/product/${widget.closet?.productId}";
                     final response = await http.delete(Uri.parse(url));
                     if (response.statusCode == 200) {
                       Navigator.pushNamedAndRemoveUntil(

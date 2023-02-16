@@ -1,12 +1,45 @@
 import 'dart:convert';
 
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/constants/app_colors.dart';
+import 'package:ecloset/constants/app_styles.dart';
 import 'package:ecloset/pages/closet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../utils/routes_name.dart';
+
+class Outfit {
+  final int outfitId;
+  final String outfitName;
+  final int categoryId;
+  final int subcategoryId;
+  final int supplierId;
+  final String? image;
+  final String? description;
+
+  Outfit({
+    required this.outfitId,
+    required this.outfitName,
+    required this.categoryId,
+    required this.subcategoryId,
+    required this.supplierId,
+    this.image,
+    this.description,
+  });
+
+  static fromJson(i) {
+    Outfit c = Outfit(
+      outfitName: i['outfitName'],
+      outfitId: i['outfitId'],
+      categoryId: i['categoryId'],
+      subcategoryId: i['subcategoryId'],
+      supplierId: i['supplierId'],
+      image: i["image"],
+      description: i["description"],
+    );
+    return c;
+  }
+}
 
 class OutfitPage extends StatefulWidget {
   const OutfitPage({super.key});
@@ -16,12 +49,12 @@ class OutfitPage extends StatefulWidget {
 }
 
 class _OutfitPageState extends State<OutfitPage> {
-  List<Closet> closetList = [];
+  List<Outfit> outfitList = [];
   int id = 1;
   @override
   void initState() {
     super.initState();
-    fetchClosets();
+    fetchOutfit();
   }
 
   @override
@@ -59,20 +92,20 @@ class _OutfitPageState extends State<OutfitPage> {
                     crossAxisSpacing: 16.0,
                     mainAxisSpacing: 16.0,
                   ),
-                  itemCount: closetList.length,
+                  itemCount: outfitList.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
-                    Closet closet = closetList[index];
+                    Outfit outfit = outfitList[index];
                     return Card(
                       child: InkWell(
-                        child: closet.image == null
+                        child: outfit.image == null
                             ? Image.network("https://picsum.photos/200/300",
                                 fit: BoxFit.cover)
-                            : Image.memory(base64Decode(closet.image!)),
+                            : Image.memory(base64Decode(outfit.image!)),
                         onTap: () {
                           Navigator.pushNamed(
                               context, RouteName.addEditItemPage,
-                              arguments: closet);
+                              arguments: outfit);
                         },
                       ),
                     );
@@ -86,16 +119,17 @@ class _OutfitPageState extends State<OutfitPage> {
     );
   }
 
-  void fetchClosets() async {
-    // try {
-    //   const url = 'https://localhost:7269/api/product/list';
-    //   final response = await http.get(Uri.parse(url));
-    //   final json = jsonDecode(response.body);
-    //   setState(() {
-    //     closetList = List<Closet>.from(json.map((i) => Closet.fromJson(i)));
-    //   });
-    // } on Exception catch (e) {
-    //   print(e.toString());
-    // }
+  void fetchOutfit() async {
+    try {
+      const url = 'https://10.0.2.2:7269/api/outfit/list';
+      // const url = '192.168.0.101/api/outfit/list';
+      final response = await http.get(Uri.parse(url));
+      final json = jsonDecode(response.body);
+      setState(() {
+        outfitList = List<Outfit>.from(json.map((i) => Outfit.fromJson(i)));
+      });
+    } on Exception catch (e) {
+      print(e.toString());
+    }
   }
 }

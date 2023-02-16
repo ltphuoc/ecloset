@@ -1,5 +1,5 @@
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/constants/app_colors.dart';
+import 'package:ecloset/constants/app_styles.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:flutter/material.dart';
 

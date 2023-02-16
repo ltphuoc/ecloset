@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/constants/app_colors.dart';
+import 'package:ecloset/constants/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -128,7 +128,9 @@ class _ClosetPageState extends State<ClosetPage> {
 
   void fetchClosets() async {
     try {
-      const url = 'https://localhost:7269/api/product/list';
+      // const url = 'https://192.168.0.101:7269/api/product/list';
+      const url = 'https://10.0.2.2:7269/api/product/list';
+      // const url = 'https://127.0.0.1:7269/api/product/list';
       final response = await http.get(Uri.parse(url));
       final json = jsonDecode(response.body);
       setState(() {

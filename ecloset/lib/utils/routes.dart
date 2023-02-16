@@ -12,12 +12,16 @@ import 'package:ecloset/utils/routes_name.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/save_outfit_page.dart';
+import '../pages/splash_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case RouteName.splashPage:
+        return MaterialPageRoute(builder: (context) => const SplashScreen());
+
       case RouteName.app:
-        return MaterialPageRoute(builder: (context) => App());
+        return MaterialPageRoute(builder: (context) => const App());
 
       case RouteName.homePage:
         return MaterialPageRoute(builder: (context) => HomePage());

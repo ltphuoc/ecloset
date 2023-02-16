@@ -1,4 +1,4 @@
-import 'package:ecloset/constant/app_colors.dart';
+import 'package:ecloset/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'app_fonts.dart';

@@ -1,4 +1,6 @@
 class RouteName {
+  static const String splashPage = 'splash_page';
+
   static const String app = 'app';
 
   static const String homePage = 'home_page';
