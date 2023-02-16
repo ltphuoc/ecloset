@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "643914377626",
+    "firebase_url": "https://ecloset-f1f4f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ecloset-f1f4f",
+    "storage_bucket": "ecloset-f1f4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643914377626:android:bc94ec7da09f4ed763b223",
+        "android_client_info": {
+          "package_name": "com.example.ecloset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643914377626-u85l4ef1mr4ic4b4qqge3mm9lg3bb423.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecloset",
+            "certificate_hash": "ecd7f355f32f66f36828e37b7d765ee73d20eac3"
+          }
+        },
+        {
+          "client_id": "643914377626-vi1gkesiu2cmm7hv8nm1kpnna9d96ibe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZAhEtxJ0zygawLtZmR7MYA_1M7yZ1Yhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643914377626-vi1gkesiu2cmm7hv8nm1kpnna9d96ibe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "643914377626-0gt3k9cbspbgctqi3bu8agc2m08tch2n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecloset"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
