@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'dart:developer';
 
 import 'package:ecloset/Model/DAO/AccountDAO.dart';
@@ -32,11 +30,9 @@ class LoginViewModel extends BaseModel {
     try {
       setState(ViewStatus.Loading);
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        return null;
-      }
+
       final GoogleSignInAuthentication? googleAuth =
-          await googleUser.authentication;
+          await googleUser?.authentication;
       if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth?.accessToken,
