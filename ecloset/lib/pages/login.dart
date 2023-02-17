@@ -17,11 +17,13 @@ class Login extends StatelessWidget {
     return ScopedModel(
         model: LoginViewModel(),
         child: Scaffold(
+          backgroundColor: AppColors.primaryColor,
           body: SingleChildScrollView(
             child: SafeArea(
               child: Container(
-                // color: AppColors.primaryColor,
+                color: Colors.grey.shade100,
                 width: double.infinity,
+                height: MediaQuery.of(context).size.height,
                 // padding: const EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
