@@ -1,32 +1,105 @@
+import 'dart:io';
+
+import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/firebase_options.dart';
+import 'package:ecloset/Pages/add_edit_item_page.dart';
+import 'package:ecloset/Pages/app.dart';
+import 'package:ecloset/Pages/closet_page.dart';
+import 'package:ecloset/Pages/create_outfit_page.dart';
+import 'package:ecloset/Pages/home_page.dart';
+import 'package:ecloset/Pages/login.dart';
+import 'package:ecloset/Pages/outfit_page.dart';
+import 'package:ecloset/Pages/profile_settings_page.dart';
+import 'package:ecloset/Pages/save_outfit_page.dart';
+import 'package:ecloset/Pages/start_up.dart';
+import 'package:ecloset/Pages/user_profile_page.dart';
+import 'package:ecloset/setup.dart';
+import 'package:ecloset/utils/pageNavigation.dart';
+import 'package:ecloset/utils/request.dart';
 import 'package:ecloset/utils/routes.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
+  HttpOverrides.global = new MyHttpOverrides();
+  await setup();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    // return MaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: 'eCloset',
+    //   theme: ThemeData(
+    //     primaryColor: AppColors.primaryColor,
+    //   ),
+    //   initialRoute: RouteName.app,
+    //   onGenerateRoute: Routes.generateRoute,
+    // );
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'eCloset',
+      title: 'Ecloset',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case RouteName.login:
+            return ScaleRoute(page: Login());
+          case RouteName.app:
+            return CupertinoPageRoute(
+                builder: (context) => App(), settings: settings);
+
+          case RouteName.homePage:
+            return CupertinoPageRoute(
+                builder: (context) => HomePage(), settings: settings);
+
+          case RouteName.closetPage:
+            return CupertinoPageRoute(
+                builder: (context) => ClosetPage(), settings: settings);
+          case RouteName.addEditItemPage:
+            return MaterialPageRoute(
+                builder: (context) => AddEditItemPage(
+                      closet: settings.arguments as ClosetDTO?,
+                    ));
+
+          case RouteName.outfitPage:
+            return CupertinoPageRoute(
+                builder: (context) => OutfitPage(), settings: settings);
+          case RouteName.createOutfitPage:
+            return CupertinoPageRoute(
+                builder: (context) => CreateOutfitPage(), settings: settings);
+          case RouteName.saveOutfitPage:
+            return CupertinoPageRoute(
+                builder: (context) => SaveOutfitPage(
+                      imageByte: settings.arguments,
+                    ));
+
+          case RouteName.profileSettingPage:
+            return CupertinoPageRoute(
+                builder: (context) => ProfileSettingsPage(),
+                settings: settings);
+          case RouteName.userProfilePage:
+            return CupertinoPageRoute(
+                builder: (context) => UserProfilePage(), settings: settings);
+          default:
+            return MaterialPageRoute(builder: (context) {
+              return const Scaffold(
+                body: Center(child: Text("No route defined")),
+              );
+            });
+        }
+      },
       theme: ThemeData(
-        primaryColor: AppColors.primaryColor,
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: RouteName.app,
-      onGenerateRoute: Routes.generateRoute,
+      home: StartUpView(),
     );
   }
 }

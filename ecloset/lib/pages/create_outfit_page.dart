@@ -2,13 +2,17 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:ecloset/Model/DTO/ClosetDTO.dart';
+import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
-import 'package:ecloset/pages/closet_page.dart';
-import 'package:ecloset/pages/save_outfit_page.dart';
+import 'package:ecloset/Pages/closet_page.dart';
+import 'package:ecloset/Pages/save_outfit_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:scoped_model/scoped_model.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 // import 'package:path_provider/path_provider.dart';
 
@@ -41,7 +45,7 @@ class CreateOutfitPage extends StatefulWidget {
 
 class _CreateOutfitPageState extends State<CreateOutfitPage> {
   List list = [];
-  List<Closet> closetList = [];
+  // List<Closet> closetList = [];
   late Offset _initPos;
   Offset _currentPos = const Offset(0, 0);
   late double _currentScale;
@@ -51,24 +55,25 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
 
   WidgetsToImageController controller = WidgetsToImageController();
 
-  void fetchClosets() async {
-    try {
-      const url = 'https://localhost:7269/api/product/list';
-      final response = await http.get(Uri.parse(url));
-      final json = jsonDecode(response.body);
-      setState(() {
-        closetList = List<Closet>.from(json.map((i) => Closet.fromJson(i)));
-      });
-    } on Exception catch (e) {
-      print(e.toString());
-    }
-  }
+  // void fetchClosets() async {
+  //   try {
+  //     const url = 'https://localhost:7269/api/product/list';
+  //     final response = await http.get(Uri.parse(url));
+  //     final json = jsonDecode(response.body);
+  //     setState(() {
+  //       closetList = List<Closet>.from(json.map((i) => Closet.fromJson(i)));
+  //     });
+  //   } on Exception catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
     screen = const Size(800, 600);
-    fetchClosets();
+    // fetchClosets();
+    Get.find<ClosetViewModel>().getCloset();
   }
 
 //  ContainerList(
@@ -82,169 +87,190 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primaryColor,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Outfit idea",
-          style: AppStyles.h3,
-        ),
-        backgroundColor: AppColors.primaryColor,
-        actions: [
-          TextButton(
-              onPressed: () async {
-                Uint8List? imageByte = await controller.capture();
-                if (imageByte == null) return;
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SaveOutfitPage(imageByte: imageByte)));
-              },
-              child: Text(
-                "Next",
-                style: AppStyles.h5,
-              ))
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          _showBottomSheet(context);
-        },
-      ),
-      body: GestureDetector(
-        onTap: () {
-          setState(() {
-            _isSelectItem = false;
-          });
-        },
-        child: WidgetsToImage(
-          controller: controller,
-          child: Container(
-            decoration: const BoxDecoration(
-              color: AppColors.greyBg,
-            ),
-            child: Stack(
-              children: list.map((value) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isSelectItem = true;
-                      int index = list.indexOf(value);
-                      if (index == -1) return;
-                      list.add(list.removeAt(index));
-                    });
-                  },
-                  onScaleStart: (details) {
-                    _initPos = details.focalPoint;
-                    _currentPos = Offset(value.xPosition, value.yPosition);
-                    _currentScale = value.scale;
-                    _currentRotation = value.rotation;
-                  },
-                  onScaleUpdate: (details) {
-                    final delta = details.focalPoint - _initPos;
-                    final left = (delta.dx / screen.width) + _currentPos.dx;
-                    final top = (delta.dy / screen.height) + _currentPos.dy;
+    return ScopedModel(
+        model: ClosetViewModel(),
+        child: ScopedModelDescendant<ClosetViewModel>(
+          builder: (context, child, model) {
+            return Scaffold(
+              backgroundColor: AppColors.primaryColor,
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text(
+                  "Outfit idea",
+                  style: AppStyles.h3,
+                ),
+                backgroundColor: AppColors.primaryColor,
+                actions: [
+                  TextButton(
+                      onPressed: () async {
+                        Uint8List? imageByte = await controller.capture();
+                        if (imageByte == null) return;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SaveOutfitPage(imageByte: imageByte)));
+                      },
+                      child: Text(
+                        "Next",
+                        style: AppStyles.h5,
+                      ))
+                ],
+              ),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: AppColors.primaryColor,
+                child: const Icon(Icons.add),
+                onPressed: () {
+                  _showBottomSheet(context, model.closetList);
+                },
+              ),
+              body: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isSelectItem = false;
+                  });
+                },
+                child: WidgetsToImage(
+                  controller: controller,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: AppColors.greyBg,
+                    ),
+                    child: Stack(
+                      children: list.map((value) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _isSelectItem = true;
+                              int index = list.indexOf(value);
+                              if (index == -1) return;
+                              list.add(list.removeAt(index));
+                            });
+                          },
+                          onScaleStart: (details) {
+                            _initPos = details.focalPoint;
+                            _currentPos =
+                                Offset(value.xPosition, value.yPosition);
+                            _currentScale = value.scale;
+                            _currentRotation = value.rotation;
+                          },
+                          onScaleUpdate: (details) {
+                            final delta = details.focalPoint - _initPos;
+                            final left =
+                                (delta.dx / screen.width) + _currentPos.dx;
+                            final top =
+                                (delta.dy / screen.height) + _currentPos.dy;
 
-                    setState(() {
-                      value.xPosition = Offset(left, top).dx;
-                      value.yPosition = Offset(left, top).dy;
-                      value.rotation = details.rotation + _currentRotation;
-                      value.scale = details.scale * _currentScale;
-                    });
-                  },
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: value.xPosition * screen.width,
-                        top: value.yPosition * screen.height,
-                        child: Transform.scale(
-                          scale: value.scale,
-                          child: Transform.rotate(
-                            angle: value.rotation,
-                            child: SizedBox(
-                              height: value.height,
-                              width: value.width,
-                              child: FittedBox(
-                                fit: BoxFit.fill,
-                                child: Listener(
-                                    onPointerDown: (details) {
-                                      _initPos = details.position;
-                                      _currentPos = Offset(
-                                          value.xPosition, value.yPosition);
-                                      _currentScale = value.scale;
-                                      _currentRotation = value.rotation;
-                                    },
-                                    child: DottedBorder(
-                                      color: value == list.last && _isSelectItem
-                                          ? Colors.black
-                                          : Colors.transparent,
-                                      dashPattern: const [8, 8],
-                                      strokeWidth: 2,
-                                      borderType: BorderType.RRect,
-                                      radius: const Radius.circular(12),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(12)),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Align(
-                                                alignment: Alignment.topRight,
-                                                child: value == list.last &&
-                                                        _isSelectItem
-                                                    ? IconButton(
-                                                        icon: const Icon(
-                                                          Icons.close,
-                                                          size: 32,
-                                                        ),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            list.remove(value);
-                                                          });
-                                                        },
-                                                        color: Colors.red,
-                                                      )
-                                                    : IconButton(
-                                                        icon: const Icon(
-                                                          size: 32,
-                                                          Icons.close,
-                                                        ),
-                                                        onPressed: () {},
-                                                        color:
-                                                            Colors.transparent,
-                                                      )),
-                                            Image.memory(
-                                              base64Decode(value.url),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ],
-                                        ),
+                            setState(() {
+                              value.xPosition = Offset(left, top).dx;
+                              value.yPosition = Offset(left, top).dy;
+                              value.rotation =
+                                  details.rotation + _currentRotation;
+                              value.scale = details.scale * _currentScale;
+                            });
+                          },
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: value.xPosition * screen.width,
+                                top: value.yPosition * screen.height,
+                                child: Transform.scale(
+                                  scale: value.scale,
+                                  child: Transform.rotate(
+                                    angle: value.rotation,
+                                    child: SizedBox(
+                                      height: value.height,
+                                      width: value.width,
+                                      child: FittedBox(
+                                        fit: BoxFit.fill,
+                                        child: Listener(
+                                            onPointerDown: (details) {
+                                              _initPos = details.position;
+                                              _currentPos = Offset(
+                                                  value.xPosition,
+                                                  value.yPosition);
+                                              _currentScale = value.scale;
+                                              _currentRotation = value.rotation;
+                                            },
+                                            child: DottedBorder(
+                                              color: value == list.last &&
+                                                      _isSelectItem
+                                                  ? Colors.black
+                                                  : Colors.transparent,
+                                              dashPattern: const [8, 8],
+                                              strokeWidth: 2,
+                                              borderType: BorderType.RRect,
+                                              radius: const Radius.circular(12),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(12)),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Align(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: value ==
+                                                                    list.last &&
+                                                                _isSelectItem
+                                                            ? IconButton(
+                                                                icon:
+                                                                    const Icon(
+                                                                  Icons.close,
+                                                                  size: 32,
+                                                                ),
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    list.remove(
+                                                                        value);
+                                                                  });
+                                                                },
+                                                                color:
+                                                                    Colors.red,
+                                                              )
+                                                            : IconButton(
+                                                                icon:
+                                                                    const Icon(
+                                                                  size: 32,
+                                                                  Icons.close,
+                                                                ),
+                                                                onPressed:
+                                                                    () {},
+                                                                color: Colors
+                                                                    .transparent,
+                                                              )),
+                                                    Image.memory(
+                                                      base64Decode(value.url),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )),
                                       ),
-                                    )),
-                              ),
-                            ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                      )
-                    ],
+                        );
+                      }).toList(),
+                    ),
                   ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ),
-    );
+                ),
+              ),
+            );
+          },
+        ));
   }
 
-  void _showBottomSheet(BuildContext context) async {
+  void _showBottomSheet(
+      BuildContext context, List<ClosetDTO>? closetList) async {
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -275,7 +301,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                               child: TabBarView(children: [
                                 GridView.count(
                                     crossAxisCount: 3,
-                                    children: closetList
+                                    children: closetList!
                                         .map((e) => InkWell(
                                               onTap: () {
                                                 doMultiSelect(

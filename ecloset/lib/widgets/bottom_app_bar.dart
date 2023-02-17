@@ -1,6 +1,6 @@
 import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/pages/home_page.dart';
-import 'package:ecloset/pages/user_profile_page.dart';
+import 'package:ecloset/Pages/home_page.dart';
+import 'package:ecloset/Pages/user_profile_page.dart';
 import 'package:flutter/material.dart';
 
 enum AddMenuAction { addItem, add2, add3 }
