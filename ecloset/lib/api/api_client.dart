@@ -2,13 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
+const baseUrl = "https://10.0.2.2:7269/api";
+
 class Api_Client {
   late BuildContext context;
   final Dio _dio = Dio();
   //IMPLEMENT USER REIGSTER
   Future signup(
       String email, String password, String phone, String name) async {
-    String urlPath = 'https://10.0.2.2:7269/api/account/register';
+    String urlPath = '$baseUrl/account/register';
 
     dynamic userDataSignin = {
       'contactLname': name,
@@ -30,7 +32,7 @@ class Api_Client {
 
   //IMPLEMENT USER LOGIN
   Future login(String name, String password, String newPassword) async {
-    const urlPath = 'https://10.0.2.2:7269/api/account/login';
+    const urlPath = '$baseUrl/api/account/login';
 
     dynamic userData = {
       'email': name,

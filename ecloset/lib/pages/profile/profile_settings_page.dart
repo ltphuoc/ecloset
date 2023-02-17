@@ -78,7 +78,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditProfileField(
+                        builder: (context) => const EditProfileField(
                             title: "Nickname", value: "nickname"),
                       ));
                 },

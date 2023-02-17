@@ -1,6 +1,6 @@
 import 'package:ecloset/constants/app_colors.dart';
 import 'package:ecloset/constants/app_styles.dart';
-import 'package:ecloset/pages/closet_page.dart';
+import 'package:ecloset/pages/closet/closet_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';

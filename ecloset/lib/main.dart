@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.primaryColor,
       ),
-      initialRoute: RouteName.splashPage,
+      // initialRoute: RouteName.splashPage,
+      initialRoute: RouteName.app,
       onGenerateRoute: Routes.generateRoute,
     );
   }

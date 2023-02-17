@@ -1,17 +1,17 @@
 import 'dart:typed_data';
 
-import 'package:ecloset/pages/add_edit_item_page.dart';
+import 'package:ecloset/pages/closet/add_edit_item_page.dart';
 import 'package:ecloset/pages/app.dart';
-import 'package:ecloset/pages/closet_page.dart';
-import 'package:ecloset/pages/create_outfit_page.dart';
-import 'package:ecloset/pages/home_page.dart';
-import 'package:ecloset/pages/outfit_page.dart';
-import 'package:ecloset/pages/profile_settings_page.dart';
-import 'package:ecloset/pages/user_profile_page.dart';
+import 'package:ecloset/pages/closet/closet_page.dart';
+import 'package:ecloset/pages/outfit/create_outfit_page.dart';
+import 'package:ecloset/pages/home/home_page.dart';
+import 'package:ecloset/pages/outfit/outfit_page.dart';
+import 'package:ecloset/pages/profile/profile_settings_page.dart';
+import 'package:ecloset/pages/profile/user_profile_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/save_outfit_page.dart';
+import '../pages/outfit/save_outfit_page.dart';
 import '../pages/splash_page.dart';
 
 class Routes {

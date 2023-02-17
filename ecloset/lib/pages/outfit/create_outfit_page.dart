@@ -1,16 +1,19 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecloset/constants/app_colors.dart';
 import 'package:ecloset/constants/app_styles.dart';
-import 'package:ecloset/pages/closet_page.dart';
-import 'package:ecloset/pages/save_outfit_page.dart';
-import 'package:ecloset/utils/routes_name.dart';
+import 'package:ecloset/pages/closet/closet_page.dart';
+import 'package:ecloset/pages/outfit/save_outfit_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:widgets_to_image/widgets_to_image.dart';
-// import 'package:path_provider/path_provider.dart';
+
+import '../../widgets/loading_screen.dart';
 
 class ContainerList {
   double height;
@@ -53,7 +56,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
 
   void fetchClosets() async {
     try {
-      const url = 'https://localhost:7269/api/product/list';
+      const url = 'https://10.0.2.2:7269/api/product/list';
       final response = await http.get(Uri.parse(url));
       final json = jsonDecode(response.body);
       setState(() {
@@ -69,6 +72,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
     super.initState();
     screen = const Size(800, 600);
     fetchClosets();
+    print(closetList);
   }
 
 //  ContainerList(
@@ -94,8 +98,10 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
         actions: [
           TextButton(
               onPressed: () async {
+                loadingScreen(context);
                 Uint8List? imageByte = await controller.capture();
                 if (imageByte == null) return;
+                Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -220,8 +226,8 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                         color:
                                                             Colors.transparent,
                                                       )),
-                                            Image.memory(
-                                              base64Decode(value.url),
+                                            Image.network(
+                                              value.url,
                                               fit: BoxFit.cover,
                                             ),
                                           ],
@@ -252,7 +258,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
               builder: (BuildContext context, StateSetter setState) =>
                   SingleChildScrollView(
                 child: DefaultTabController(
-                    length: 3, // length of tabs
+                    length: 5, // length of tabs
                     initialIndex: 0,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -264,6 +270,8 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                               Tab(text: 'All'),
                               Tab(text: 'Tops'),
                               Tab(text: 'Pants'),
+                              Tab(text: 'Footwear'),
+                              Tab(text: 'Accessories'),
                             ],
                           ),
                           Container(
@@ -309,18 +317,154 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                               ),
                                             ))
                                         .toList()),
-                                const Center(
-                                  child: Text('Tops',
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                const Center(
-                                  child: Text('Pants',
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold)),
-                                ),
+                                GridView.count(
+                                    crossAxisCount: 3,
+                                    children: closetList
+                                        .where((e) => e.categoryId == 1)
+                                        .map((e) => InkWell(
+                                              onTap: () {
+                                                doMultiSelect(
+                                                    e.image, setState);
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.topLeft,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 0.1),
+                                                    ),
+                                                    child: Image.network(
+                                                        e.image ??
+                                                            'https://picsum.photos/300',
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                  Icon(
+                                                    list.any((element) =>
+                                                            element.url ==
+                                                            e.image)
+                                                        ? Icons.check_circle
+                                                        : Icons
+                                                            .radio_button_unchecked,
+                                                    size: 24,
+                                                    color:
+                                                        AppColors.primaryColor,
+                                                  )
+                                                ],
+                                              ),
+                                            ))
+                                        .toList()),
+                                GridView.count(
+                                    crossAxisCount: 3,
+                                    children: closetList
+                                        .where((e) => e.categoryId == 2)
+                                        .map((e) => InkWell(
+                                              onTap: () {
+                                                doMultiSelect(
+                                                    e.image, setState);
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.topLeft,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 0.1),
+                                                    ),
+                                                    child: Image.network(
+                                                        e.image ??
+                                                            'https://picsum.photos/300',
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                  Icon(
+                                                    list.any((element) =>
+                                                            element.url ==
+                                                            e.image)
+                                                        ? Icons.check_circle
+                                                        : Icons
+                                                            .radio_button_unchecked,
+                                                    size: 24,
+                                                    color:
+                                                        AppColors.primaryColor,
+                                                  )
+                                                ],
+                                              ),
+                                            ))
+                                        .toList()),
+                                GridView.count(
+                                    crossAxisCount: 3,
+                                    children: closetList
+                                        .where((e) => e.categoryId == 3)
+                                        .map((e) => InkWell(
+                                              onTap: () {
+                                                doMultiSelect(
+                                                    e.image, setState);
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.topLeft,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 0.1),
+                                                    ),
+                                                    child: Image.network(
+                                                        e.image ??
+                                                            'https://picsum.photos/300',
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                  Icon(
+                                                    list.any((element) =>
+                                                            element.url ==
+                                                            e.image)
+                                                        ? Icons.check_circle
+                                                        : Icons
+                                                            .radio_button_unchecked,
+                                                    size: 24,
+                                                    color:
+                                                        AppColors.primaryColor,
+                                                  )
+                                                ],
+                                              ),
+                                            ))
+                                        .toList()),
+                                GridView.count(
+                                    crossAxisCount: 3,
+                                    children: closetList
+                                        .where((e) => e.categoryId == 4)
+                                        .map((e) => InkWell(
+                                              onTap: () {
+                                                doMultiSelect(
+                                                    e.image, setState);
+                                              },
+                                              child: Stack(
+                                                alignment: Alignment.topLeft,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 0.1),
+                                                    ),
+                                                    child: Image.network(
+                                                        e.image ??
+                                                            'https://picsum.photos/300',
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                  Icon(
+                                                    list.any((element) =>
+                                                            element.url ==
+                                                            e.image)
+                                                        ? Icons.check_circle
+                                                        : Icons
+                                                            .radio_button_unchecked,
+                                                    size: 24,
+                                                    color:
+                                                        AppColors.primaryColor,
+                                                  )
+                                                ],
+                                              ),
+                                            ))
+                                        .toList()),
                               ]))
                         ])),
               ),

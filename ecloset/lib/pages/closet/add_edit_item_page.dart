@@ -3,13 +3,16 @@ import 'dart:io';
 
 import 'package:ecloset/constants/app_colors.dart';
 import 'package:ecloset/constants/app_styles.dart';
-import 'package:ecloset/pages/closet_page.dart';
-import 'package:ecloset/pages/home_page.dart';
+import 'package:ecloset/pages/closet/closet_page.dart';
+import 'package:ecloset/pages/home/home_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
+import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+
+import '../../api/api_client.dart';
 
 enum ProductCategories { top, bottom, footwear, otherAccessories }
 
@@ -77,7 +80,6 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
 
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
-  // DatabaseReference databaseRef = FirebaseDatabase.instance.ref("Image");
 
   Future pickImage(context) async {
     try {
@@ -105,6 +107,8 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
   }
 
   void saveItem(context) async {
+    loadingScreen(context);
+
     firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
         .ref("/foldername${DateTime.now().millisecondsSinceEpoch}");
     firebase_storage.UploadTask uploadTask = ref.putFile(image!.absolute);
@@ -121,7 +125,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
         "productUrl": "string"
       });
 
-      const url = 'https://10.0.2.2:7269/api/product/add';
+      const url = '$baseUrl/api/product/add';
       final response = await http.post(
         Uri.parse(url),
         headers: <String, String>{
@@ -130,6 +134,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
         body: formData,
       );
       if (response.statusCode == 201) {
+        Navigator.pop(context);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),
@@ -153,7 +158,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
               TextButton(
                   onPressed: () async {
                     var url =
-                        "https://10.0.2.2:7269/api/product/${widget.closet?.productId}";
+                        "$baseUrl/api/product/${widget.closet?.productId}";
                     final response = await http.delete(Uri.parse(url));
                     if (response.statusCode == 200) {
                       Navigator.pushNamedAndRemoveUntil(

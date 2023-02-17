@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:ecloset/constants/app_colors.dart';
 import 'package:ecloset/constants/app_styles.dart';
-import 'package:ecloset/pages/closet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../utils/routes_name.dart';
+import '../../api/api_client.dart';
+import '../../utils/routes_name.dart';
 
 class Outfit {
   final int outfitId;
@@ -101,7 +101,7 @@ class _OutfitPageState extends State<OutfitPage> {
                         child: outfit.image == null
                             ? Image.network("https://picsum.photos/200/300",
                                 fit: BoxFit.cover)
-                            : Image.memory(base64Decode(outfit.image!)),
+                            : Image.network(outfit.image!),
                         onTap: () {
                           Navigator.pushNamed(
                               context, RouteName.addEditItemPage,
@@ -121,8 +121,7 @@ class _OutfitPageState extends State<OutfitPage> {
 
   void fetchOutfit() async {
     try {
-      const url = 'https://10.0.2.2:7269/api/outfit/list';
-      // const url = '192.168.0.101/api/outfit/list';
+      const url = '$baseUrl/api/outfit/list';
       final response = await http.get(Uri.parse(url));
       final json = jsonDecode(response.body);
       setState(() {

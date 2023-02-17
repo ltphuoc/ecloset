@@ -5,7 +5,8 @@ import 'package:ecloset/constants/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../utils/routes_name.dart';
+import '../../api/api_client.dart';
+import '../../utils/routes_name.dart';
 
 class Closet {
   final int productId;
@@ -49,7 +50,7 @@ class Closet {
 }
 
 class ClosetPage extends StatefulWidget {
-  ClosetPage({super.key});
+  const ClosetPage({super.key});
 
   @override
   State<ClosetPage> createState() => _ClosetPageState();
@@ -108,7 +109,7 @@ class _ClosetPageState extends State<ClosetPage> {
                         child: closet.image == null
                             ? Image.network("https://picsum.photos/200/300",
                                 fit: BoxFit.cover)
-                            : Image.memory(base64Decode(closet.image!)),
+                            : Image.network(closet.image!),
                         onTap: () {
                           Navigator.pushNamed(
                               context, RouteName.addEditItemPage,
@@ -128,9 +129,7 @@ class _ClosetPageState extends State<ClosetPage> {
 
   void fetchClosets() async {
     try {
-      // const url = 'https://192.168.0.101:7269/api/product/list';
-      const url = 'https://10.0.2.2:7269/api/product/list';
-      // const url = 'https://127.0.0.1:7269/api/product/list';
+      const url = '$baseUrl/api/product/list';
       final response = await http.get(Uri.parse(url));
       final json = jsonDecode(response.body);
       setState(() {

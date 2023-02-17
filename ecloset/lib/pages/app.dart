@@ -1,6 +1,6 @@
 import 'package:ecloset/constants/app_colors.dart';
-import 'package:ecloset/pages/home_page.dart';
-import 'package:ecloset/pages/user_profile_page.dart';
+import 'package:ecloset/pages/home/home_page.dart';
+import 'package:ecloset/pages/profile/user_profile_page.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatefulWidget {

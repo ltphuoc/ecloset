@@ -1,6 +1,6 @@
 import 'package:ecloset/constants/app_colors.dart';
 import 'package:ecloset/constants/app_styles.dart';
-import 'package:ecloset/pages/profile_settings_page.dart';
+import 'package:ecloset/pages/profile/profile_settings_page.dart';
 import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
+                    const Expanded(
                       flex: 1,
                       child: CircleAvatar(
                         radius: 40,
@@ -128,7 +128,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ProfileSettingsPage()));
+                                            const ProfileSettingsPage()));
                               },
                               child: Text("Manage your profile",
                                   style: AppStyles.h5.copyWith(
