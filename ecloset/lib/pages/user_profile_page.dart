@@ -1,7 +1,7 @@
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
-import 'package:ecloset/pages/profile_settings_page.dart';
-import 'package:ecloset/widgets/app_bar.dart';
+import 'package:ecloset/Pages/profile_settings_page.dart';
+import 'package:ecloset/Widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class UserProfilePage extends StatefulWidget {
