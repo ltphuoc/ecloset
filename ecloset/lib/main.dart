@@ -28,6 +28,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = new MyHttpOverrides();
   await setup();
+  createRouteBindings();
   runApp(MyApp());
 }
 
