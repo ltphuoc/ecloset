@@ -1,5 +1,6 @@
 import 'package:ecloset/ViewModel/login_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
+import 'package:ecloset/pages/app.dart';
 import 'package:ecloset/pages/user_profile_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/button_global.dart';
@@ -36,7 +37,7 @@ class SettingPage extends StatelessWidget {
                     text2: 'Personal Information',
                     onPressed: () {
                       // Navigator.pushNamed(context, RouteName.userProfilePage);
-                      Get.toNamed(RouteName.app);
+                      Get.offAll(() => App());
                     },
                   ),
                   SizedBox(

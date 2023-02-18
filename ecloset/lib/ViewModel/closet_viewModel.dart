@@ -5,6 +5,8 @@ import 'package:ecloset/Model/DAO/ClosetDAO.dart';
 import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/ViewModel/base_model.dart';
 import 'package:ecloset/ViewModel/login_viewModel.dart';
+import 'package:ecloset/ViewModel/root_viewModel.dart';
+import 'package:ecloset/pages/app.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -45,8 +47,9 @@ class ClosetViewModel extends BaseModel {
         url = '';
       }
       closet = await closetDAO?.addCloset(productName, proId, proCat, url);
+      await Get.find<RootViewModel>().startUp();
       // await Future.delayed(Duration(microseconds: 500));
-      Get.toNamed(RouteName.app);
+      Get.offAll(() => App());
       setState(ViewStatus.Completed);
     } catch (e) {
       print(e);

@@ -96,30 +96,15 @@ class _ClosetPageState extends State<ClosetPage> {
                 style: AppStyles.h3,
               ),
               backgroundColor: AppColors.primaryColor,
-              actions: [
-                IconButton(
-                  tooltip: "Add new item",
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.pushNamed(context, RouteName.addEditItemPage);
-                  },
-                )
-              ],
-              leading: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: Material(
-                  color: AppColors.primaryColor,
-                  child: InkWell(
-                    onTap: () async {
-                      Get.back();
-                    },
-                    child: Icon(Icons.arrow_back_ios,
-                        size: 20, color: Colors.white),
-                  ),
-                ),
-              ),
+              // actions: [
+              //   IconButton(
+              //     tooltip: "Add new item",
+              //     icon: const Icon(Icons.add),
+              //     onPressed: () {
+              //       Navigator.pushNamed(context, RouteName.addEditItemPage);
+              //     },
+              //   )
+              // ],
             ),
             body: SafeArea(
                 child: DefaultTabController(

@@ -23,46 +23,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 0,
       actions: [
-        PopupMenuButton<AddMenuAction>(
-          color: AppColors.black,
-          tooltip: "",
-          icon: const Icon(Icons.add),
-          onSelected: (value) {
-            if (value == AddMenuAction.addEditItem) {
-              Get.find<ClosetViewModel>().getCloset();
-              Navigator.pushNamed(context, RouteName.addEditItemPage);
-            } else if (value == AddMenuAction.addOutfit) {
-              Navigator.pushNamed(context, RouteName.createOutfitPage);
-            }
-          },
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          itemBuilder: (context) {
-            return <PopupMenuEntry<AddMenuAction>>[
-              PopupMenuItem<AddMenuAction>(
-                value: AddMenuAction.addEditItem,
-                child: Text(
-                  'Add new item',
-                  style: AppStyles.h4,
-                ),
-              ),
-              PopupMenuItem<AddMenuAction>(
-                value: AddMenuAction.addOutfit,
-                child: Text(
-                  'Add new outfit',
-                  style: AppStyles.h4,
-                ),
-              ),
-              PopupMenuItem<AddMenuAction>(
-                value: AddMenuAction.add3,
-                child: Text(
-                  'Add new collection',
-                  style: AppStyles.h4,
-                ),
-              ),
-            ];
-          },
-        ),
         // Builder(
         //       builder: (context) => IconButton(
         //           onPressed: () {
