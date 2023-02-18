@@ -2,6 +2,7 @@ import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/Pages/home_page.dart';
 import 'package:ecloset/Pages/user_profile_page.dart';
 import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/pages/closet_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _AppState extends State<App> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
     const HomePage(),
-    Container(),
+    const ClosetPage(),
     Container(),
     const UserProfilePage(),
   ];
@@ -33,56 +34,56 @@ class _AppState extends State<App> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   tooltip: 'Increment',
-      //   elevation: 2.0,
-      //   backgroundColor: AppColors.primaryColor,
-      //   child: PopupMenuButton<AddMenuAction>(
-      //     offset: const Offset(100, 0),
-      //     color: AppColors.whiteBg,
-      //     tooltip: "",
-      //     icon: const Icon(Icons.add),
-      //     onSelected: (value) {
-      //       if (value == AddMenuAction.addEditItem) {
-      //         Navigator.pushNamed(context, RouteName.addEditItemPage);
-      //       } else if (value == AddMenuAction.addOutfit) {
-      //         Navigator.pushNamed(context, RouteName.createOutfitPage);
-      //       }
-      //     },
-      //     shape: const RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      //     itemBuilder: (context) {
-      //       return <PopupMenuEntry<AddMenuAction>>[
-      //         PopupMenuItem<AddMenuAction>(
-      //           value: AddMenuAction.addEditItem,
-      //           child: Text('Add new item',
-      //               style: AppStyles.h4.copyWith(
-      //                 color: AppColors.black,
-      //               )),
-      //         ),
-      //         PopupMenuItem<AddMenuAction>(
-      //           value: AddMenuAction.addOutfit,
-      //           child: Text(
-      //             'Add new outfit',
-      //             style: AppStyles.h4.copyWith(
-      //               color: AppColors.black,
-      //             ),
-      //           ),
-      //         ),
-      //         PopupMenuItem<AddMenuAction>(
-      //           value: AddMenuAction.add3,
-      //           child: Text(
-      //             'Add new collection',
-      //             style: AppStyles.h4.copyWith(
-      //               color: AppColors.black,
-      //             ),
-      //           ),
-      //         ),
-      //       ];
-      //     },
-      //   ),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'Increment',
+        elevation: 2.0,
+        backgroundColor: AppColors.primaryColor,
+        child: PopupMenuButton<AddMenuAction>(
+          offset: const Offset(100, 0),
+          color: AppColors.whiteBg,
+          tooltip: "",
+          icon: const Icon(Icons.add),
+          onSelected: (value) {
+            if (value == AddMenuAction.addEditItem) {
+              Navigator.pushNamed(context, RouteName.addEditItemPage);
+            } else if (value == AddMenuAction.addOutfit) {
+              Navigator.pushNamed(context, RouteName.createOutfitPage);
+            }
+          },
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          itemBuilder: (context) {
+            return <PopupMenuEntry<AddMenuAction>>[
+              PopupMenuItem<AddMenuAction>(
+                value: AddMenuAction.addEditItem,
+                child: Text('Add new item',
+                    style: AppStyles.h4.copyWith(
+                      color: AppColors.black,
+                    )),
+              ),
+              PopupMenuItem<AddMenuAction>(
+                value: AddMenuAction.addOutfit,
+                child: Text(
+                  'Add new outfit',
+                  style: AppStyles.h4.copyWith(
+                    color: AppColors.black,
+                  ),
+                ),
+              ),
+              PopupMenuItem<AddMenuAction>(
+                value: AddMenuAction.add3,
+                child: Text(
+                  'Add new collection',
+                  style: AppStyles.h4.copyWith(
+                    color: AppColors.black,
+                  ),
+                ),
+              ),
+            ];
+          },
+        ),
+      ),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(), //shape of notch

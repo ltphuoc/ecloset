@@ -8,17 +8,17 @@ class BlogsViewModel extends BaseModel {
     {
       "id": 1,
       "images":
-          'https://free4kwallpapers.com/uploads/originals/2022/04/20/rubiks-cube-digital-art-wallpaper.jpg',
+          'https://nikechinhhang.net/wp-content/uploads/2021/01/mua-giay-nike-giam-gia-4.png',
     },
     {
       "id": 2,
       'images':
-          'https://free4kwallpapers.com/uploads/originals/2022/01/27/gas-station-digital-art-wallpaper.jpg',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM_esCUjDS0tPowfNBE4iW7DFqz7VsMM2wCQ&usqp=CAU',
     },
     {
       "id": 3,
       'images':
-          'https://free4kwallpapers.com/uploads/originals/2020/10/24/chris-bo--digital-landscape-artwork-wallpaper.jpg',
+          'https://i.pinimg.com/originals/90/28/f5/9028f50cb6da21e72b363391287d0adf.png',
     },
   ];
   // BlogDTO? dialogBlog;
