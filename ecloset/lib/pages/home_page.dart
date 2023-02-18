@@ -14,6 +14,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shimmer/shimmer.dart';
 
+List brandList = [
+  "https://scontent.xx.fbcdn.net/v/t1.15752-9/312605451_368550622093275_6979727709408294604_n.png?stp=dst-png_p1080x2048&_nc_cat=108&ccb=1-7&_nc_sid=aee45a&_nc_ohc=KCTy2uEKoBAAX8zDY4Z&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdS376vjvFdjaoqYYkboLOeHjFdQ8O0TvXjDCv-G7t3VRw&oe=64184CD1",
+  "https://scontent.xx.fbcdn.net/v/t1.15752-9/249849632_907607629858311_4690803459134502629_n.png?_nc_cat=107&ccb=1-7&_nc_sid=aee45a&_nc_ohc=q0DHoU6P0k0AX8LhBFo&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQeSvJRr-sMU7_SJ8efQHsmkZ2_8d91ZyiCtPAlpQTVxA&oe=64184C18",
+  "https://scontent.xx.fbcdn.net/v/t1.15752-9/277967988_303371048543646_549985502856049414_n.png?_nc_cat=105&ccb=1-7&_nc_sid=aee45a&_nc_ohc=V3tfnRkURGsAX8xI_gH&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdSFjVgR95uY0c9YWIW-2Tw0mf6i970qtjwC92vSJ5XsPA&oe=64183723",
+  "https://scontent.xx.fbcdn.net/v/t1.15752-9/331201020_504977688464540_8597117485664390504_n.png?_nc_cat=106&ccb=1-7&_nc_sid=aee45a&_nc_ohc=im-dPDlmKH8AX-_Fs8h&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdTLS5XrjxpKeoy_qw4RtAwr7N8pYjl-ug4hL3j83F6iFw&oe=641838A6",
+];
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -27,7 +34,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.whiteBg,
       appBar: const MainAppBar(),
-      endDrawer: const Drawer(),
       body: SafeArea(
         child: ListView(children: const [
           Padding(
@@ -35,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             child: banner(),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+            padding: EdgeInsets.only(top: 8, left: 24, right: 24),
             child: _Brand(),
           ),
           Padding(
@@ -65,7 +71,7 @@ class banner extends StatelessWidget {
         model: BlogsViewModel(),
         child: Container(
           // color: Colors.white,
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+          padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
           // padding: EdgeInsets.only(bottom: 8),
           child: ScopedModelDescendant<BlogsViewModel>(
             builder: (context, child, model) {
@@ -300,74 +306,88 @@ class _Brand extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          "Brand",
-          style: AppStyles.h2
-              .copyWith(fontWeight: FontWeight.w700, color: (AppColors.black)),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Image.network(
-                    "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
-                //   [Container(
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(100),
-                //       color: Colors.grey,
-                //     ),
-                //   ),
-                // ],
-              ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey,
+        Container(
+            height: 100,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: brandList.length,
+              itemBuilder: (context, index) {
+                String imageUrl = brandList[index];
+                return Container(
+                  margin: index != 0 ? const EdgeInsets.only(left: 16) : null,
+                  child: CircleAvatar(
+                    radius: 40.0,
+                    backgroundColor: Colors.white,
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                    // backgroundImage: NetworkImage(imageUrl),
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
+                );
+              },
+            ))
+
+        // Row(
+        //   children: <Widget>[
+        //     Expanded(
+        //       child: AspectRatio(
+        //         aspectRatio: 2 / 2,
+        //         child: Image.network(
+        //             "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
+        //         //   [Container(
+        //         //     decoration: BoxDecoration(
+        //         //       borderRadius: BorderRadius.circular(100),
+        //         //       color: Colors.grey,
+        //         //     ),
+        //         //   ),
+        //         // ],
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       width: 12,
+        //     ),
+        //     Expanded(
+        //       child: AspectRatio(
+        //         aspectRatio: 2 / 2,
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             borderRadius: BorderRadius.circular(100),
+        //             color: Colors.grey,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       width: 12,
+        //     ),
+        //     Expanded(
+        //       child: AspectRatio(
+        //         aspectRatio: 2 / 2,
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             borderRadius: BorderRadius.circular(100),
+        //             color: Colors.grey,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       width: 12,
+        //     ),
+        //     Expanded(
+        //       child: AspectRatio(
+        //         aspectRatio: 2 / 2,
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             borderRadius: BorderRadius.circular(100),
+        //             color: Colors.grey,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // )
       ],
     );
   }
@@ -429,8 +449,6 @@ class _MyCloset extends StatelessWidget {
     );
   }
 }
-
-
 
 // class _Trending extends StatelessWidget {
 //   const _Trending({

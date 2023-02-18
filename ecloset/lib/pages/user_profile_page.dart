@@ -111,8 +111,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           const SizedBox(
                             height: 8,
                           ),
-                          Text("User Name",
-                              style: AppStyles.h5.copyWith(
+                          Text("eCloset",
+                              style: AppStyles.h4.copyWith(
                                   fontWeight: FontWeight.normal,
                                   color: AppColors.black)),
                         ],
@@ -143,19 +143,29 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                   ],
                 ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 12, bottom: 2),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: Text("Tủ quần áo của tôi <3"),
+                  ),
+                ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    "facebook.com/eCloset",
+                    style: AppStyles.h4.copyWith(
+                        color: AppColors.primaryColor,
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: Divider(
                     height: 10,
                     thickness: 1.3,
                     indent: 10,
                     color: AppColors.brown,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Center(
-                    child: Text("Tủ quần áo của tôi <3"),
                   ),
                 ),
                 const SizedBox(
