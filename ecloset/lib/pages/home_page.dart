@@ -307,7 +307,7 @@ class _Brand extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-            height: 100,
+            height: 60,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: brandList.length,
@@ -316,7 +316,7 @@ class _Brand extends StatelessWidget {
                 return Container(
                   margin: index != 0 ? const EdgeInsets.only(left: 16) : null,
                   child: CircleAvatar(
-                    radius: 40.0,
+                    radius: 24.0,
                     backgroundColor: Colors.white,
                     child: Image.network(
                       imageUrl,
