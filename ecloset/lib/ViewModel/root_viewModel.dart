@@ -8,5 +8,6 @@ class RootViewModel extends BaseModel {
 
   Future startUp() async {
     await Get.find<ClosetViewModel>().getCloset();
+    await Get.find<ClosetViewModel>().getOutfitList();
   }
 }
