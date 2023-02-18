@@ -1,8 +1,6 @@
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/widgets/app_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class NewsFeedPage extends StatelessWidget {
   const NewsFeedPage({Key? key}) : super(key: key);
@@ -140,7 +138,7 @@ class _ActionsRow extends StatelessWidget {
           ),
           TextButton.icon(
             onPressed: () {},
-            icon: const Icon(Icons.arrow_outward_sharp),
+            icon: const Icon(Icons.arrow_back),
             label: Text(
                 item.retweetsCount == 0 ? '' : item.retweetsCount.toString()),
           ),

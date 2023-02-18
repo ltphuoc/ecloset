@@ -39,12 +39,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
+                    const Expanded(
                       flex: 1,
                       child: CircleAvatar(
                         radius: 40,
                         backgroundImage: NetworkImage(
-                          "https://picsum.photos/id/237/200/300",
+                          "https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/329249548_621461426653659_6122221015205156424_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=OJO5JzLKrW4AX-rNiby&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfBtd6o9zDXLzvGOq3ZaaE0CDd63xmSn9PpQeXDxJyoA2g&oe=63F69015",
                         ),
                       ),
                     ),
@@ -168,20 +168,55 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     color: AppColors.brown,
                   ),
                 ),
-                const SizedBox(
-                  height: 32,
-                ),
-                GridView.count(
-                  crossAxisCount: 3,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  children: listUrl
-                      .map((e) => InkWell(
-                            child: Image.network(e, fit: BoxFit.cover),
-                            onTap: () {},
-                          ))
-                      .toList(),
-                )
+                DefaultTabController(
+                    length: 2, // length of tabs
+                    initialIndex: 0,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          const TabBar(
+                            labelColor: Colors.black,
+                            unselectedLabelColor: Colors.black,
+                            indicatorColor: Colors.black,
+                            tabs: [
+                              Tab(icon: Icon(Icons.grid_on)),
+                              Tab(icon: Icon(Icons.person_pin_outlined)),
+                            ],
+                          ),
+                          Container(
+                              height: 400, //height of TabBarView
+                              // decoration: BoxDecoration(
+                              //     border: Border(
+                              //         top: BorderSide(
+                              //             color: Colors.grey, width: 0.5))),
+                              child: TabBarView(children: <Widget>[
+                                GridView.count(
+                                  crossAxisCount: 3,
+                                  shrinkWrap: false,
+                                  children: listUrl
+                                      .map((e) => InkWell(
+                                            child: Image.network(e,
+                                                fit: BoxFit.cover),
+                                            onTap: () {},
+                                          ))
+                                      .toList(),
+                                ),
+                                Center(
+                                  child: GridView.count(
+                                    crossAxisCount: 3,
+                                    shrinkWrap: false,
+                                    children: listUrl
+                                        .sublist(0, 4)
+                                        .map((e) => InkWell(
+                                              child: Image.network(e,
+                                                  fit: BoxFit.cover),
+                                              onTap: () {},
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ]))
+                        ])),
               ],
             ),
           ),
