@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.textWhite,
       appBar: const MainAppBar(),
       endDrawer: const Drawer(),
       body: SafeArea(
@@ -30,11 +30,19 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 24),
+              child: _Brand(),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 24),
               child: _MyCloset(),
             ),
             Padding(
               padding: EdgeInsets.only(top: 24),
               child: _Recommend(),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 24),
+              child: _Collection(),
             ),
           ]),
         ),
@@ -54,8 +62,9 @@ class _Recommend extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          "Recommend",
-          style: AppStyles.h2.copyWith(fontWeight: FontWeight.w700),
+          "Category",
+          style: AppStyles.h2
+              .copyWith(fontWeight: FontWeight.w700, color: (AppColors.black)),
         ),
         const SizedBox(
           height: 16,
@@ -82,6 +91,172 @@ class _Recommend extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 32,
+            ),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 2 / 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class _Collection extends StatelessWidget {
+  const _Collection({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            "Collection",
+            style: AppStyles.h2.copyWith(
+                fontWeight: FontWeight.w700, color: (AppColors.black)),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 2 / 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 2 / 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 32,
+              ),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 2 / 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _Brand extends StatelessWidget {
+  const _Brand({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          "Brand",
+          style: AppStyles.h2
+              .copyWith(fontWeight: FontWeight.w700, color: (AppColors.black)),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 2 / 2,
+                child: Image.network(
+                    "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
+                //   [Container(
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(100),
+                //       color: Colors.grey,
+                //     ),
+                //   ),
+                // ],
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 2 / 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 2 / 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 2 / 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
                     color: Colors.grey,
                   ),
                 ),
@@ -110,7 +285,8 @@ class _MyCloset extends StatelessWidget {
           },
           child: Text(
             "My Closet",
-            style: AppStyles.h2.copyWith(fontWeight: FontWeight.w700),
+            style: AppStyles.h2.copyWith(
+                fontWeight: FontWeight.w700, color: (AppColors.black)),
           ),
         ),
         const SizedBox(
@@ -121,29 +297,26 @@ class _MyCloset extends StatelessWidget {
             Expanded(
               child: AspectRatio(
                 aspectRatio: 2 / 2,
-                child: Container(
-                  // height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey,
-                  ),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  children: [
+                    Image.network(
+                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
+                    Image.network(
+                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
+                    Image.network(
+                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
+                    Image.network(
+                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0")
+                  ],
                 ),
-              ),
-            ),
-            const SizedBox(
-              width: 32,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey,
-                  ),
-                ),
+
+                // child: Container(
+                //   // height: 150,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(10),
+                //     color: Colors.grey,
+                //   ),
               ),
             ),
           ],
@@ -163,15 +336,11 @@ class _Trending extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          "Trending",
-          style: AppStyles.h2.copyWith(fontWeight: FontWeight.w700),
-        ),
         const SizedBox(
-          height: 16,
+          height: 12,
         ),
         AspectRatio(
-          aspectRatio: 3 / 1.5,
+          aspectRatio: 4 / 2,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

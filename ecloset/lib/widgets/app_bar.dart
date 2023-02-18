@@ -22,7 +22,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       actions: [
         PopupMenuButton<AddMenuAction>(
-          color: AppColors.primaryColor,
+          color: AppColors.black,
           tooltip: "",
           icon: const Icon(Icons.add),
           onSelected: (value) {
