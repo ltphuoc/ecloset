@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/Widgets/custom_dialog.dart';
+import 'package:ecloset/api/api_client.dart';
 import 'package:get/get.dart' as Get;
 
 Map<String, dynamic> convertToQueryParams(
@@ -77,8 +78,7 @@ class CustomInterceptors extends Interceptor {
 
 class MyRequest {
   static BaseOptions options = new BaseOptions(
-      // baseUrl: 'https://localhost:5001/api/',
-      baseUrl: 'https://localhost:7269/api/',
+      baseUrl: baseUrl,
       headers: {
         Headers.contentTypeHeader: "application/json",
       },

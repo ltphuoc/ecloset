@@ -8,4 +8,4 @@ class ApiCLient {
   // }
 }
 
-const url = "192.168.0.101";
+const baseUrl = "https://ecloset.api.smjle.vn/api/";
