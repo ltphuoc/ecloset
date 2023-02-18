@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
-import 'package:ecloset/Pages/closet_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
@@ -57,10 +56,10 @@ List<SubProductCat> subProductCategories = [
 class AddEditItemPage extends StatefulWidget {
   const AddEditItemPage({
     super.key,
-    this.closet,
+    required this.closet,
   });
 
-  final ClosetDTO? closet;
+  final ClosetData closet;
 
   @override
   State<AddEditItemPage> createState() => _AddEditItemPageState();

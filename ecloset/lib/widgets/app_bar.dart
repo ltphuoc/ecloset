@@ -1,7 +1,9 @@
+import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum AddMenuAction { addEditItem, addOutfit, add3 }
 
@@ -27,6 +29,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.add),
           onSelected: (value) {
             if (value == AddMenuAction.addEditItem) {
+              Get.find<ClosetViewModel>().getCloset();
               Navigator.pushNamed(context, RouteName.addEditItemPage);
             } else if (value == AddMenuAction.addOutfit) {
               Navigator.pushNamed(context, RouteName.createOutfitPage);

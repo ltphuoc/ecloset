@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
           case RouteName.addEditItemPage:
             return CupertinoPageRoute(
                 builder: (context) => AddEditItemPage(
-                      closet: settings.arguments as ClosetDTO?,
+                      closet: settings.arguments as ClosetData,
                     ));
 
           case RouteName.outfitPage:

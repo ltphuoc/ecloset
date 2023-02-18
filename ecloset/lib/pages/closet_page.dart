@@ -82,9 +82,9 @@ class _ClosetPageState extends State<ClosetPage> {
       model: ClosetViewModel(),
       child: ScopedModelDescendant<ClosetViewModel>(
         builder: (context, child, model) {
-          var closetList = model.closetList ?? [];
+          var closetList = Get.find<ClosetViewModel>().closetList ?? [];
           bool isEmpty = false;
-          if (model.closetList == null || model.closetList!.isEmpty) {
+          if (closetList == null || closetList.isEmpty) {
             isEmpty = true;
           }
           return Scaffold(
@@ -155,7 +155,7 @@ class _ClosetPageState extends State<ClosetPage> {
                       children: <Widget>[
                         GridView.count(
                             crossAxisCount: 3,
-                            children: model.closetList!
+                            children: closetList
                                 .map((e) => InkWell(
                                       onTap: () {
                                         // doMultiSelect(e.image, setState);
@@ -211,7 +211,7 @@ class _ClosetPageState extends State<ClosetPage> {
                             Expanded(
                               child: GridView.count(
                                   crossAxisCount: 3,
-                                  children: model.closetList!
+                                  children: closetList
                                       .where((e) {
                                         if (_selectedTop != 0) {
                                           return e.subcategoryId ==
@@ -278,7 +278,7 @@ class _ClosetPageState extends State<ClosetPage> {
                             Expanded(
                               child: GridView.count(
                                   crossAxisCount: 3,
-                                  children: model.closetList!
+                                  children: closetList
                                       .where((e) {
                                         if (_selectedPant != 0) {
                                           return e.subcategoryId ==
@@ -345,7 +345,7 @@ class _ClosetPageState extends State<ClosetPage> {
                             Expanded(
                               child: GridView.count(
                                   crossAxisCount: 3,
-                                  children: model.closetList!
+                                  children: closetList
                                       .where((e) {
                                         if (_selectedFootwear != 0) {
                                           return e.subcategoryId ==
@@ -412,7 +412,7 @@ class _ClosetPageState extends State<ClosetPage> {
                             Expanded(
                               child: GridView.count(
                                   crossAxisCount: 3,
-                                  children: model.closetList!
+                                  children: closetList
                                       .where((e) {
                                         if (_selectedOther != 0) {
                                           return e.subcategoryId ==

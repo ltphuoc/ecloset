@@ -101,6 +101,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
   int? _selectedPant;
   int? _selectedFootwear;
   int? _selectedOther;
+  // ClosetViewModel? _closetViewModel;
 
   WidgetsToImageController controller = WidgetsToImageController();
 
@@ -122,7 +123,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
     super.initState();
     screen = const Size(800, 600);
     // fetchClosets();
-    Get.find<ClosetViewModel>().getCloset();
+    // Get.find<ClosetViewModel>().getCloset();
     _selectedTop = topBtn.first.id;
     _selectedPant = topBtn.first.id;
     _selectedFootwear = topBtn.first.id;
@@ -144,6 +145,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
         model: ClosetViewModel(),
         child: ScopedModelDescendant<ClosetViewModel>(
           builder: (context, child, model) {
+            var listCloset = Get.find<ClosetViewModel>().closetList;
             return Scaffold(
               backgroundColor: AppColors.primaryColor,
               appBar: AppBar(
@@ -176,7 +178,8 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                 backgroundColor: AppColors.primaryColor,
                 child: const Icon(Icons.add),
                 onPressed: () {
-                  _showBottomSheet(context, model.closetList ?? []);
+                  // List<ClosetData>? list = model.closetList;
+                  _showBottomSheet(context, listCloset);
                 },
               ),
               body: GestureDetector(
@@ -325,7 +328,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
   }
 
   void _showBottomSheet(
-      BuildContext context, List<ClosetDTO>? closetList) async {
+      BuildContext context, List<ClosetData>? closetList) async {
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,

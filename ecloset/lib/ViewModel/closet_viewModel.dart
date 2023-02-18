@@ -4,21 +4,23 @@ import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/ViewModel/base_model.dart';
 
 class ClosetViewModel extends BaseModel {
-  ClosetDAO? _closetDAO;
-  List<ClosetDTO>? closetList;
+  ClosetDAO? closetDAO;
+  List<ClosetData>? closetList;
 
   ClosetViewModel() {
-    _closetDAO = ClosetDAO();
+    closetDAO = ClosetDAO();
   }
 
-  Future getCloset() async {
+  Future<void> getCloset() async {
     try {
       setState(ViewStatus.Loading);
-      closetList = await _closetDAO?.getClosets();
+      final closets = await closetDAO?.getClosets();
+      closetList = closets;
+      // await Future.delayed(Duration(microseconds: 500));
       setState(ViewStatus.Completed);
     } catch (e) {
       print(e);
-      setState(ViewStatus.Error);
+      setState(ViewStatus.Completed);
     }
   }
 }
