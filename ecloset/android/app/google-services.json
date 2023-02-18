@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "643914377626-u85l4ef1mr4ic4b4qqge3mm9lg3bb423.apps.googleusercontent.com",
+          "client_id": "643914377626-3p37rl2s0a8ttqg8hfnrvpeqvlr9u4pv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecloset",
+            "certificate_hash": "e65bcf72b0eba2c6c9076509fb4d0553df828322"
+          }
+        },
+        {
+          "client_id": "643914377626-k4ua7nkr8p3ol5mp9a58qcro30re9v42.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.ecloset",
@@ -23,7 +31,15 @@
           }
         },
         {
-          "client_id": "643914377626-vi1gkesiu2cmm7hv8nm1kpnna9d96ibe.apps.googleusercontent.com",
+          "client_id": "643914377626-m1asj4g09j6jn2ocomjccelvdjfdikgf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecloset",
+            "certificate_hash": "dc5976d7b631fe81c521d556aa0d87af7df561c2"
+          }
+        },
+        {
+          "client_id": "643914377626-9ib739ailqu5e0rcga44kdapjn3jpglt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -36,7 +52,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "643914377626-vi1gkesiu2cmm7hv8nm1kpnna9d96ibe.apps.googleusercontent.com",
+              "client_id": "643914377626-9ib739ailqu5e0rcga44kdapjn3jpglt.apps.googleusercontent.com",
               "client_type": 3
             },
             {
