@@ -60,12 +60,17 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             ];
           },
         ),
-        Builder(
-            builder: (context) => IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-                icon: const Icon(Icons.settings))),
+        // Builder(
+        //       builder: (context) => IconButton(
+        //           onPressed: () {
+        //             Navigator.pushNamed(context, RouteName.settingPage);
+        //           },
+        //           icon: const Icon(Icons.settings))),
+        IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, RouteName.settingPage);
+            },
+            icon: const Icon(Icons.settings))
       ],
     );
   }

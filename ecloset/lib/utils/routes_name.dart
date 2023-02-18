@@ -15,4 +15,5 @@ class RouteName {
 
   static const String userProfilePage = 'user_profile_item_page';
   static const String profileSettingPage = 'profile_setting_item_page';
+  static const String settingPage = 'setting_page';
 }
