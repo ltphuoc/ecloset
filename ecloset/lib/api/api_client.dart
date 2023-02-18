@@ -8,4 +8,4 @@ class ApiCLient {
   // }
 }
 
-const baseUrl = "https://ecloset.api.smjle.vn/api/";
+const baseUrl = "https://ecloset.api.smjle.vn/";

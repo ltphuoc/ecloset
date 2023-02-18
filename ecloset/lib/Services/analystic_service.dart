@@ -22,10 +22,10 @@ class AnalyticsService {
 
   // User properties tells us what the user is
   Future setUserProperties(AccountDTO user) async {
-    await _analytics.setUserId(id: user.id.toString());
+    await _analytics.setUserId(id: user.accountId.toString());
     await _analytics.setUserProperty(
       name: 'name',
-      value: user.name,
+      value: user.contactLname,
     );
     // await _analytics.setUserProperty(
     //   name: 'gender',

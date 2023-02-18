@@ -14,11 +14,12 @@ import 'BaseDAO.dart';
 class AccountDAO extends BaseDAO {
   Future<AccountDTO> login(String idToken) async {
     try {
-      Response response = await request
-          .post("customer/GoogleLogin", data: {"idToken": idToken});
+      Response response =
+          await request.post("GoogleLogin", data: {"idToken": idToken});
       final user = response.data['data'];
       final userDTO = AccountDTO.fromJson(user);
-      final accessToken = user["accessToken"] as String;
+      // final accessToken = user["accessToken"] as String;
+      final accessToken = idToken;
 
       // set access token
       print("accessToken    $accessToken");
