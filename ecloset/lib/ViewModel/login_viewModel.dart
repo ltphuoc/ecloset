@@ -49,18 +49,18 @@ class LoginViewModel extends BaseModel {
         userInfo = await dao.login(idToken);
         await _analyticsService.setUserProperties(userInfo);
 
-        if (userInfo == null) {
+        if (userInfo != null) {
           await Get.find<RootViewModel>().startUp();
-          Get.rawSnackbar(
-              message: "Đăng nhập thành công!!",
-              duration: Duration(seconds: 2),
-              snackPosition: SnackPosition.BOTTOM,
-              margin: EdgeInsets.only(left: 8, right: 8, bottom: 32),
-              borderRadius: 8);
+          // Get.rawSnackbar(
+          //     message: "Đăng nhập thành công!!",
+          //     duration: Duration(seconds: 2),
+          //     snackPosition: SnackPosition.BOTTOM,
+          //     margin: EdgeInsets.only(left: 8, right: 8, bottom: 32),
+          //     borderRadius: 8);
 
-          await Get.offAllNamed(RouteName.login);
+          await Get.offAllNamed(RouteName.app);
         }
-        await Get.offAllNamed(RouteName.app);
+        // await Get.offAllNamed(RouteName.app);
       }
       await Future.delayed(Duration(microseconds: 500));
       setState(ViewStatus.Completed);

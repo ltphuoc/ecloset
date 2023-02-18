@@ -4,6 +4,7 @@ import 'package:ecloset/Pages/settings/setting_page.dart';
 import 'package:ecloset/Pages/sign_up.dart';
 import 'package:ecloset/Pages/user_profile_page.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
+import 'package:ecloset/ViewModel/login_viewModel.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:ecloset/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,7 @@ Future setup() async {
 
 void createRouteBindings() async {
   Get.put(RootViewModel());
+  Get.put(LoginViewModel());
   Get.put(ClosetViewModel());
   Get.put(SignUpPage());
   Get.put(HomePage());

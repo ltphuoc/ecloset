@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:ecloset/Model/DTO/index.dart';
+import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -68,7 +71,7 @@ class AddEditItemPage extends StatefulWidget {
 class _AddEditItemPageState extends State<AddEditItemPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isEdit = false;
-  int? _productCat;
+  int? _productId;
   int? _subProductCat;
   String? _productName;
   File? image;
@@ -97,9 +100,9 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
   void initState() {
     super.initState();
     _isEdit = widget.closet != null;
-    _productCat = widget.closet?.categoryId;
-    _subProductCat = widget.closet?.subcategoryId;
-    _productName = widget.closet?.productName;
+    // _productCat = widget.closet?.categoryId;
+    // _subProductCat = widget.closet?.subcategoryId;
+    // _productName = widget.closet?.productName;
   }
 
   void saveItem(context) async {
@@ -140,43 +143,43 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
     });
   }
 
-  void deleteItem(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: const Text('Please Confirm'),
-            content: const Text('Are you sure to remove this item?'),
-            actions: [
-              TextButton(
-                  onPressed: () async {
-                    var url =
-                        "https://localhost:7269/api/product/${widget.closet?.productId}";
-                    final response = await http.delete(Uri.parse(url));
-                    if (response.statusCode == 200) {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, RouteName.app, (route) => false);
-                      Navigator.pushNamed(
-                        context,
-                        RouteName.closetPage,
-                      );
-                    } else {
-                      Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content:
-                              Text('Failed to delete item, please try again')));
-                    }
-                  },
-                  child: const Text('Yes')),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('No'))
-            ],
-          );
-        });
-  }
+  // void deleteItem(context) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext ctx) {
+  //         return AlertDialog(
+  //           title: const Text('Please Confirm'),
+  //           content: const Text('Are you sure to remove this item?'),
+  //           actions: [
+  //             TextButton(
+  //                 onPressed: () async {
+  //                   var url =
+  //                       "https://localhost:7269/api/product/${widget.closet?.productId}";
+  //                   final response = await http.delete(Uri.parse(url));
+  //                   if (response.statusCode == 200) {
+  //                     Navigator.pushNamedAndRemoveUntil(
+  //                         context, RouteName.app, (route) => false);
+  //                     Navigator.pushNamed(
+  //                       context,
+  //                       RouteName.closetPage,
+  //                     );
+  //                   } else {
+  //                     Navigator.of(context).pop();
+  //                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //                         content:
+  //                             Text('Failed to delete item, please try again')));
+  //                   }
+  //                 },
+  //                 child: const Text('Yes')),
+  //             TextButton(
+  //                 onPressed: () {
+  //                   Navigator.of(context).pop();
+  //                 },
+  //                 child: const Text('No'))
+  //           ],
+  //         );
+  //       });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -189,12 +192,12 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
           if (_isEdit)
             IconButton(
                 onPressed: () {
-                  deleteItem(context);
+                  // deleteItem(context);
                 },
                 icon: const Icon(Icons.delete))
         ],
       ),
-      bottomNavigationBar: _productCat != null &&
+      bottomNavigationBar: _productId != null &&
               _productName != null &&
               _productName != "" &&
               _subProductCat != null
@@ -206,9 +209,19 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 "Save",
                 style: AppStyles.h4.copyWith(color: AppColors.black),
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  saveItem(context);
+                  ClosetViewModel root = Get.find<ClosetViewModel>();
+                  firebase_storage.Reference ref =
+                      firebase_storage.FirebaseStorage.instance.ref(
+                          "/foldername${DateTime.now().millisecondsSinceEpoch}");
+                  // firebase_storage.UploadTask uploadTask =
+                  //     ref.putFile(image!.absolute);
+                  final TaskSnapshot snapshot =
+                      await ref.putFile(image!.absolute);
+                  var newUrl = await snapshot.ref.getDownloadURL();
+                  root.addCloset(_productName as String, _productId as int,
+                      _subProductCat as int, newUrl);
                 }
               },
             )
@@ -300,7 +313,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 DropdownButtonFormField(
                     validator: (value) =>
                         value == null ? "Please select" : null,
-                    value: _productCat,
+                    value: _productId,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -317,7 +330,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                         .toList(),
                     onChanged: (value) {
                       setState(() {
-                        _productCat = value;
+                        _productId = value;
                       });
                     }),
                 const SizedBox(
@@ -343,7 +356,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                         counterText: "",
                         filled: true),
                     items: subProductCategories
-                        .where((e) => e.id == _productCat)
+                        .where((e) => e.id == _productId)
                         .map((e) => DropdownMenuItem(
                               value: e.catId,
                               child: Text(e.name.toString()),
