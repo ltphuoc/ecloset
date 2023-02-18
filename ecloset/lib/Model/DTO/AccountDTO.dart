@@ -1,75 +1,76 @@
 class AccountDTO {
-  int? id;
-  String? name;
-  String? phone;
+  int? accountId;
+  int? contactFname;
+  String? contactLname;
   String? email;
+  int? phone;
+  String? password;
+  int? roleId;
+  String? country;
+  String? city;
+  String? district;
+  String? province;
+  String? address;
+  String? avatar;
+  String? follower;
+  String? following;
   int? brandId;
-  DateTime? dateOfBirth;
-  String? imageUrl;
 
   AccountDTO(
-      {this.id,
-      this.name,
-      this.phone,
+      {this.accountId,
+      this.contactFname,
+      this.contactLname,
       this.email,
-      this.brandId,
-      this.dateOfBirth,
-      this.imageUrl});
+      this.phone,
+      this.password,
+      this.roleId,
+      this.country,
+      this.city,
+      this.district,
+      this.province,
+      this.address,
+      this.avatar,
+      this.follower,
+      this.following,
+      this.brandId});
 
   AccountDTO.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    phone = json['phone'];
+    accountId = json['accountId'];
+    contactFname = json['contactFname'];
+    contactLname = json['contactLname'];
     email = json['email'];
+    phone = json['phone'];
+    password = json['password'];
+    roleId = json['roleId'];
+    country = json['country'];
+    city = json['city'];
+    district = json['district'];
+    province = json['province'];
+    address = json['address'];
+    avatar = json['avatar'];
+    follower = json['follower'];
+    following = json['following'];
     brandId = json['brandId'];
-    dateOfBirth = DateTime.parse(json['dateOfBirth'] as String);
-    imageUrl = json['imageUrl'];
   }
-  // factory AccountDTO.fromJson(dynamic json) => AccountDTO(
-  //       id: json["id"],
-  //       name: json['name'] as String,
-  //       email: json['email'] as String,
-  //       phone: json['phone'] as String,
-  //       brandId: json['brandId'],
-  //       imageUrl: json['imageUrl'] as String,
-  //       // gender: (json['gender']),
-  //       // balance: json['balance'],
-  //       // point: json['point'],
-  //       // isFirstLogin: (json['is_first_login'] as bool) ?? false,
-  //       // ignore: unnecessary_null_comparison
-  //       // dateOfBirth: json['dateOfBirth'] as String != null ? DateTime.parse(json['dateOfBirth'] as String) : '',
-  //       dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
-
-  //       // referalCode: json['ref_code']
-  //     );
-
-  // static List<AccountDTO> fromList(dynamic jsonList) {
-  //   var list = jsonList as List;
-  //   return list.map((map) => AccountDTO.fromJson(map)).toList();
-  // }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['phone'] = this.phone;
+    data['accountId'] = this.accountId;
+    data['contactFname'] = this.contactFname;
+    data['contactLname'] = this.contactLname;
     data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['password'] = this.password;
+    data['roleId'] = this.roleId;
+    data['country'] = this.country;
+    data['city'] = this.city;
+    data['district'] = this.district;
+    data['province'] = this.province;
+    data['address'] = this.address;
+    data['avatar'] = this.avatar;
+    data['follower'] = this.follower;
+    data['following'] = this.following;
     data['brandId'] = this.brandId;
-    data['dateOfBirth'] = this.dateOfBirth;
-    data['imageUrl'] = this.imageUrl;
     return data;
   }
-
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     "id": id.toString(),
-  //     "name": name,
-  //     "email": email,
-  //     "phone": phone,
-  //     // "gender": gender,
-  //     "dateOfBirth": dateOfBirth?.toString(),
-  //     "imageUrl": imageUrl,
-  //     // "ref_code": referalCode
-  //   };
-  // }
 }

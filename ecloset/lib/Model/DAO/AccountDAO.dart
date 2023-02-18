@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:ecloset/Model/DTO/AccountDTO.dart';
+import 'package:ecloset/Services/firebase_auth.dart';
 import 'package:ecloset/utils/request.dart';
 import 'package:ecloset/utils/shared_pref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,11 +15,12 @@ import 'BaseDAO.dart';
 class AccountDAO extends BaseDAO {
   Future<AccountDTO> login(String idToken) async {
     try {
-      Response response = await request
-          .post("customer/GoogleLogin", data: {"idToken": idToken});
+      Response response =
+          await request.post("GoogleLogin", data: {"idToken": idToken});
       final user = response.data['data'];
       final userDTO = AccountDTO.fromJson(user);
-      final accessToken = user["accessToken"] as String;
+      // final accessToken = user["accessToken"] as String;
+      final accessToken = idToken;
 
       // set access token
       print("accessToken    $accessToken");
@@ -63,18 +65,11 @@ class AccountDAO extends BaseDAO {
   //   await request.post("/me/feedback", data: "'$feedBack'");
   // }
 
-  Future<void> _signOut() async {
-    await FirebaseAuth.instance.signOut();
-    await GoogleSignIn().signOut();
-    // Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+  Future<void> logOut() async {
+    await AuthService().signOut();
+    // String fcmToken = await PushNotificationService.getInstance().getFcmToken();
+    // await request.post("logout", data: {"fcm_token": fcmToken});
   }
-
-  // Future<void> logOut() async {
-  //   await AuthService().signOut();
-  //   String fcmToken = await PushNotificationService.getInstance().getFcmToken();
-  //   await request.post("logout", data: {"fcm_token": fcmToken});
-  // }
 
   Future<AccountDTO> updateUser(AccountDTO updateUser) async {
     var dataJson = updateUser.toJson();

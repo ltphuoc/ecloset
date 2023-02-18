@@ -78,7 +78,7 @@ class CustomInterceptors extends Interceptor {
 class MyRequest {
   static BaseOptions options = new BaseOptions(
       // baseUrl: 'https://localhost:5001/api/',
-      baseUrl: 'https://localhost:7269/api/',
+      baseUrl: 'https://ecloset.api.smjle.vn/',
       headers: {
         Headers.contentTypeHeader: "application/json",
       },
