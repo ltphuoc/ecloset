@@ -37,7 +37,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
           style: AppStyles.h3,
         ),
       ),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.whiteBg,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 32, left: 16, right: 16),
@@ -89,7 +89,8 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                     children: [
                       Text(
                         "Nickname",
-                        style: AppStyles.h4.copyWith(letterSpacing: 1.3),
+                        style: AppStyles.h4.copyWith(
+                            letterSpacing: 1.3, color: AppColors.black),
                       ),
                       const SizedBox(
                         height: 4,
@@ -97,12 +98,13 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                       Text("nickname",
                           style: AppStyles.h5.copyWith(
                               fontWeight: FontWeight.normal,
-                              letterSpacing: 1.3)),
+                              letterSpacing: 1.3,
+                              color: AppColors.black)),
                       const SizedBox(
                         height: 8,
                       ),
                       const Divider(
-                        color: AppColors.textWhite,
+                        color: AppColors.black,
                       )
                     ],
                   ),
@@ -177,11 +179,11 @@ class _EditProfileFieldState extends State<EditProfileField> {
             ? ElevatedButton(
                 style: const ButtonStyle(
                   backgroundColor:
-                      MaterialStatePropertyAll<Color>(AppColors.secondaryColor),
+                      MaterialStatePropertyAll<Color>(AppColors.primaryColor),
                 ),
                 child: Text(
                   "Save",
-                  style: AppStyles.h4.copyWith(color: AppColors.black),
+                  style: AppStyles.h4.copyWith(color: AppColors.textWhite),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -205,7 +207,7 @@ class _EditProfileFieldState extends State<EditProfileField> {
             title: Text(
               widget.title,
             )),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteBg,
         body: Padding(
           padding: const EdgeInsets.only(top: 32, left: 16, right: 16),
           child: Column(children: [
@@ -236,7 +238,7 @@ class _EditProfileFieldState extends State<EditProfileField> {
                 "Nickname can only use 5-15 lower case letters, numbers.",
                 style: AppStyles.h5.copyWith(
                     fontWeight: FontWeight.normal,
-                    color: _isValid ? Colors.white70 : Colors.red),
+                    color: _isValid ? Colors.black : Colors.red),
               ),
             )
           ]),

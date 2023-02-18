@@ -3,6 +3,7 @@ import 'package:ecloset/Pages/home_page.dart';
 import 'package:ecloset/Pages/user_profile_page.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/pages/closet_page.dart';
+import 'package:ecloset/pages/newsfeed.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _AppState extends State<App> {
   final List<Widget> _screens = [
     const HomePage(),
     const ClosetPage(),
-    Container(),
+    const NewsFeedPage(),
     const UserProfilePage(),
   ];
 

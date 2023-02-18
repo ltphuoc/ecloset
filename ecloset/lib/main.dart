@@ -15,6 +15,7 @@ import 'package:ecloset/Pages/profile_settings_page.dart';
 import 'package:ecloset/Pages/save_outfit_page.dart';
 import 'package:ecloset/Pages/start_up.dart';
 import 'package:ecloset/Pages/user_profile_page.dart';
+import 'package:ecloset/pages/newsfeed.dart';
 import 'package:ecloset/pages/settings/setting_page.dart';
 import 'package:ecloset/setup.dart';
 import 'package:ecloset/utils/pageNavigation.dart';
@@ -65,6 +66,9 @@ class MyApp extends StatelessWidget {
           case RouteName.homePage:
             return CupertinoPageRoute(
                 builder: (context) => HomePage(), settings: settings);
+          case RouteName.newsFeed:
+            return CupertinoPageRoute(
+                builder: (context) => NewsFeedPage(), settings: settings);
 
           case RouteName.closetPage:
             return CupertinoPageRoute(
