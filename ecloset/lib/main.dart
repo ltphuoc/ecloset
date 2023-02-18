@@ -95,9 +95,9 @@ class MyApp extends StatelessWidget {
             return CupertinoPageRoute(
                 builder: (context) => const UserProfilePage(),
                 settings: settings);
-          case RouteName.settingPage:
-            return CupertinoPageRoute(
-                builder: (context) => const SettingPage(), settings: settings);
+          // case RouteName.settingPage:
+          //   return CupertinoPageRoute(
+          //       builder: (context) => const SettingPage(), settings: settings);
           default:
             return MaterialPageRoute(builder: (context) {
               return const Scaffold(
