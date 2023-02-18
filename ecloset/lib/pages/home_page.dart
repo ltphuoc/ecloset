@@ -1,8 +1,10 @@
+import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/Pages/closet_page.dart';
 import 'package:ecloset/Widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -103,8 +105,9 @@ class _MyCloset extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          onTap: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ClosetPage())),
+          onTap: () {
+            Get.toNamed(RouteName.closetPage);
+          },
           child: Text(
             "My Closet",
             style: AppStyles.h2.copyWith(fontWeight: FontWeight.w700),

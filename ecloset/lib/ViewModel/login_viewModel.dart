@@ -43,8 +43,8 @@ class LoginViewModel extends BaseModel {
         User userToken = FirebaseAuth.instance.currentUser!;
         final idToken = await userToken.getIdToken();
         final fcmToken = await FirebaseMessaging.instance.getToken();
-        print('idToken: ' + idToken);
-        print('fcmToken: ' + fcmToken.toString());
+        log('idToken: ' + idToken);
+        log('fcmToken: ' + fcmToken.toString());
         // userInfo = await dao.login(idToken);
         // await _analyticsService.setUserProperties(userInfo);
         // ignore: unnecessary_null_comparison

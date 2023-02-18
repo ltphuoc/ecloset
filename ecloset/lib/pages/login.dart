@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/ViewModel/login_viewModel.dart';
 import 'package:ecloset/Widgets/button_global.dart';
 import 'package:ecloset/Widgets/text_form_field.dart';
@@ -5,6 +8,7 @@ import 'package:ecloset/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class Login extends StatelessWidget {
@@ -80,7 +84,12 @@ class Login extends StatelessWidget {
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 15, right: 15),
-                      child: ButtonGlobal(),
+                      child: ButtonGlobal(
+                        text: 'Sign In',
+                        onPressed: () {
+                          log(1);
+                        },
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -103,7 +112,9 @@ class Login extends StatelessWidget {
                   'Don\'t have an account?',
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(RouteName.signUp);
+                  },
                   child: Text(
                     ' Sign Up',
                     style: TextStyle(

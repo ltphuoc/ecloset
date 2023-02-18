@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ecloset/Model/DTO/index.dart';
+import 'package:ecloset/Pages/sign_up.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/firebase_options.dart';
 import 'package:ecloset/Pages/add_edit_item_page.dart';
@@ -17,7 +18,6 @@ import 'package:ecloset/Pages/user_profile_page.dart';
 import 'package:ecloset/setup.dart';
 import 'package:ecloset/utils/pageNavigation.dart';
 import 'package:ecloset/utils/request.dart';
-import 'package:ecloset/utils/routes.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,6 +52,8 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case RouteName.login:
             return ScaleRoute(page: Login());
+          case RouteName.signUp:
+            return ScaleRoute(page: SignUpPage());
           case RouteName.app:
             return CupertinoPageRoute(
                 builder: (context) => App(), settings: settings);
@@ -64,7 +66,7 @@ class MyApp extends StatelessWidget {
             return CupertinoPageRoute(
                 builder: (context) => ClosetPage(), settings: settings);
           case RouteName.addEditItemPage:
-            return MaterialPageRoute(
+            return CupertinoPageRoute(
                 builder: (context) => AddEditItemPage(
                       closet: settings.arguments as ClosetDTO?,
                     ));

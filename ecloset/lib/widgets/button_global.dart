@@ -4,12 +4,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class ButtonGlobal extends StatelessWidget {
-  const ButtonGlobal({super.key});
-
+  const ButtonGlobal({super.key, required this.text, required this.onPressed});
+  final String text;
+  final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        onPressed;
+      },
       child: Container(
         alignment: Alignment.center,
         height: 55,
@@ -23,8 +26,8 @@ class ButtonGlobal extends StatelessWidget {
             ),
           ],
         ),
-        child: const Text(
-          'Sign In',
+        child: Text(
+          text,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
