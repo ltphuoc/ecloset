@@ -88,7 +88,7 @@ class _ClosetPageState extends State<ClosetPage> {
             isEmpty = true;
           }
           return Scaffold(
-            backgroundColor: AppColors.primaryColor,
+            backgroundColor: Colors.grey.shade100,
             appBar: AppBar(
               centerTitle: true,
               title: Text(
@@ -112,28 +112,35 @@ class _ClosetPageState extends State<ClosetPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  ButtonsTabBar(
-                    backgroundColor: Colors.red,
-                    unselectedBackgroundColor: Colors.grey[300],
-                    unselectedLabelStyle: AppStyles.h4,
-                    labelStyle: AppStyles.h4,
-                    tabs: const [
-                      Tab(
-                        text: "All",
-                      ),
-                      Tab(
-                        text: "Top",
-                      ),
-                      Tab(
-                        text: "Pant",
-                      ),
-                      Tab(
-                        text: "Footwear",
-                      ),
-                      Tab(
-                        text: "Accessories",
-                      ),
-                    ],
+                  Container(
+                    padding: EdgeInsets.only(bottom: 4, top: 4),
+                    margin: EdgeInsets.only(bottom: 16),
+                    color: AppColors.primaryColor,
+                    width: Get.width,
+                    alignment: Alignment.center,
+                    child: ButtonsTabBar(
+                      backgroundColor: Colors.red,
+                      unselectedBackgroundColor: Colors.grey[300],
+                      unselectedLabelStyle: AppStyles.h4,
+                      labelStyle: AppStyles.h4,
+                      tabs: const [
+                        Tab(
+                          text: "All",
+                        ),
+                        Tab(
+                          text: "Top",
+                        ),
+                        Tab(
+                          text: "Pant",
+                        ),
+                        Tab(
+                          text: "Footwear",
+                        ),
+                        Tab(
+                          text: "Accessories",
+                        ),
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: TabBarView(

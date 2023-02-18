@@ -5,7 +5,7 @@ import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/Utils/request.dart';
 
 class ClosetDAO extends BaseDAO {
-  Future<List<ClosetData>?> getClosets({
+  Future<List<ClosetData>?> getClosetList({
     int page = 1,
     int size = 10,
     int? total,

@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../constant/app_colors.dart';
@@ -17,6 +20,10 @@ class SaveOutfitPage extends StatefulWidget {
 }
 
 class _SaveOutfitPageState extends State<SaveOutfitPage> {
+  String? outfitName;
+  // String? value;
+  // TextEditingController controller = TextEditingController(text: value);
+  String? description;
   @override
   void initState() {
     // TODO: implement initState
@@ -40,9 +47,23 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
         backgroundColor: AppColors.primaryColor,
         actions: [
           TextButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {}
-                saveOutfit(context);
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  firebase_storage.Reference ref =
+                      firebase_storage.FirebaseStorage.instance.ref(
+                          "/foldername${DateTime.now().millisecondsSinceEpoch}");
+                  final tempDir = await getTemporaryDirectory();
+                  File file = await File('${tempDir.path}/image.png').create();
+                  file.writeAsBytesSync(widget.imageByte);
+                  final TaskSnapshot snapshot =
+                      await ref.putFile(file.absolute);
+                  var newUrl = await snapshot.ref.getDownloadURL();
+                  ClosetViewModel root = Get.find<ClosetViewModel>();
+                  await root.saveOutfit(
+                      outfitName as String, newUrl, description as String);
+                  // firebase_storage.UploadTask uploadTask = ref.putFile(file.absolute);
+                }
+                // saveOutfit(context);
               },
               child: Text(
                 "Save",
@@ -82,14 +103,16 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   height: 16,
                 ),
                 TextFormField(
+                  controller: outfitName as TextEditingController,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: AppColors.textWhite,
-                      errorStyle: const TextStyle(height: 0),
-                      counterText: "",
-                      filled: true),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    fillColor: AppColors.textWhite,
+                    errorStyle: const TextStyle(height: 0),
+                    counterText: "",
+                    // filled: true,
+                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter name';
@@ -108,18 +131,22 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   height: 16,
                 ),
                 TextFormField(
+                  controller: description as TextEditingController,
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.newline,
-                  minLines: 3,
-                  maxLines: 5,
+                  maxLines: 6,
+                  autofocus: true,
+                  // minLines: 3,
+
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: AppColors.textWhite,
-                      errorStyle: const TextStyle(height: 0),
-                      counterText: "",
-                      filled: true),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    fillColor: AppColors.textWhite,
+                    errorStyle: const TextStyle(height: 0),
+                    counterText: "",
+                    // filled: true,
+                  ),
                 ),
               ],
             ),
@@ -129,17 +156,17 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
     );
   }
 
-  void saveOutfit(context) async {
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-        .ref("/foldername${DateTime.now().millisecondsSinceEpoch}");
-    final tempDir = await getTemporaryDirectory();
-    File file = await File('${tempDir.path}/image.png').create();
-    file.writeAsBytesSync(widget.imageByte);
-    firebase_storage.UploadTask uploadTask = ref.putFile(file.absolute);
+  // void saveOutfit(context) async {
+  //   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+  //       .ref("/foldername${DateTime.now().millisecondsSinceEpoch}");
+  //   final tempDir = await getTemporaryDirectory();
+  //   File file = await File('${tempDir.path}/image.png').create();
+  //   file.writeAsBytesSync(widget.imageByte);
+  //   firebase_storage.UploadTask uploadTask = ref.putFile(file.absolute);
 
-    Future.value(uploadTask).then((value) async {
-      var newUrl = await ref.getDownloadURL();
-      print(newUrl);
-    });
-  }
+  //   Future.value(uploadTask).then((value) async {
+  //     var newUrl = await ref.getDownloadURL();
+  //     print(newUrl);
+  //   });
+  // }
 }
