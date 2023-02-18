@@ -58,35 +58,38 @@ class _OutfitPageState extends State<OutfitPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Column(children: [
-                        GridView.builder(
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16.0,
-                            mainAxisSpacing: 16.0,
-                          ),
-                          itemCount: model.closetList?.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            var closet = model.closetList?[index];
-                            return Card(
-                              child: InkWell(
-                                child: closet?.image == null
-                                    ? Image.network(
-                                        "https://picsum.photos/200/300",
-                                        fit: BoxFit.cover)
-                                    : Image.memory(
-                                        base64Decode(closet?.image ?? '')),
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, RouteName.addEditItemPage,
-                                      arguments: closet);
+                        (model.closetList != null &&
+                                model.closetList!.isNotEmpty)
+                            ? GridView.builder(
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 16.0,
+                                  mainAxisSpacing: 16.0,
+                                ),
+                                itemCount: model.closetList?.length,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  var closet = model.closetList?[index];
+                                  return Card(
+                                    child: InkWell(
+                                      child: closet?.image == null
+                                          ? Image.network(
+                                              "https://picsum.photos/200/300",
+                                              fit: BoxFit.cover)
+                                          : Image.memory(base64Decode(
+                                              closet?.image ?? '')),
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, RouteName.addEditItemPage,
+                                            arguments: closet);
+                                      },
+                                    ),
+                                  );
                                 },
-                              ),
-                            );
-                          },
-                        ),
+                              )
+                            : const SizedBox(),
                       ]),
                     ),
                   ),
