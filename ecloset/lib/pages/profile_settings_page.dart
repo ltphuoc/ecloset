@@ -57,8 +57,10 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                                 image: FileImage(image!), fit: BoxFit.cover),
                           )
                         : BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(10), // radius of 10
+                            borderRadius: BorderRadius.circular(10),
+                            image: const DecorationImage(
+                                image: NetworkImage(
+                                    "https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/329249548_621461426653659_6122221015205156424_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=OJO5JzLKrW4AX-rNiby&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfBtd6o9zDXLzvGOq3ZaaE0CDd63xmSn9PpQeXDxJyoA2g&oe=63F69015")),
                             color: AppColors.textWhite,
                           ),
                     height: 100,
@@ -78,7 +80,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditProfileField(
+                        builder: (context) => const EditProfileField(
                             title: "Nickname", value: "nickname"),
                       ));
                 },

@@ -1,12 +1,9 @@
-import 'package:ecloset/ViewModel/login_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/pages/app.dart';
-import 'package:ecloset/pages/user_profile_page.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/button_global.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -23,7 +20,7 @@ class SettingPage extends StatelessWidget {
       backgroundColor: Colors.grey.shade100,
       body: Center(
         child: Container(
-          padding: EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           // constraints: const BoxConstraints(maxWidth: 400),
           child: ListView(
             children: [
@@ -35,12 +32,9 @@ class SettingPage extends StatelessWidget {
                     iconData: CupertinoIcons.profile_circled,
                     text1: 'Account',
                     text2: 'Personal Information',
-                    onPressed: () {
-                      // Navigator.pushNamed(context, RouteName.userProfilePage);
-                      Get.offAll(() => App());
-                    },
+                    onPressed: () {},
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   ButtonNavigateSettingPage(
@@ -50,7 +44,7 @@ class SettingPage extends StatelessWidget {
                     text2: 'Connected Credit Cards',
                     onPressed: () {},
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   ButtonNavigateSettingPage(
@@ -60,7 +54,7 @@ class SettingPage extends StatelessWidget {
                     text2: 'Change password',
                     onPressed: () {},
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   ButtonNavigateSettingPage(

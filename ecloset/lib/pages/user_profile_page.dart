@@ -1,7 +1,7 @@
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/Pages/profile_settings_page.dart';
 import 'package:ecloset/Widgets/app_bar.dart';
+import 'package:ecloset/constant/app_colors.dart';
+import 'package:ecloset/constant/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -29,7 +29,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
         appBar: const MainAppBar(),
         backgroundColor: AppColors.whiteBg,
-        // bottomNavigationBar: BottomBar(),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -55,7 +54,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         children: [
                           Column(
                             children: [
-                              Text("0",
+                              Text("9",
                                   style: AppStyles.h5.copyWith(
                                       fontWeight: FontWeight.normal,
                                       color: AppColors.black)),
@@ -69,7 +68,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ),
                           Column(
                             children: [
-                              Text("0",
+                              Text("87",
                                   style: AppStyles.h5.copyWith(
                                       fontWeight: FontWeight.normal,
                                       color: AppColors.black)),
@@ -177,18 +176,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           const TabBar(
                             labelColor: Colors.black,
                             unselectedLabelColor: Colors.black,
-                            indicatorColor: Colors.black,
+                            indicatorColor: AppColors.brown,
                             tabs: [
                               Tab(icon: Icon(Icons.grid_on)),
                               Tab(icon: Icon(Icons.person_pin_outlined)),
                             ],
                           ),
-                          Container(
-                              height: 400, //height of TabBarView
-                              // decoration: BoxDecoration(
-                              //     border: Border(
-                              //         top: BorderSide(
-                              //             color: Colors.grey, width: 0.5))),
+                          SizedBox(
+                              height: 400,
                               child: TabBarView(children: <Widget>[
                                 GridView.count(
                                   crossAxisCount: 3,

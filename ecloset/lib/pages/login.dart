@@ -7,7 +7,6 @@ import 'package:ecloset/Widgets/text_form_field.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -45,11 +44,10 @@ class Login extends StatelessWidget {
                       height: 30,
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      child: Text(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: const Text(
                         'Login to your account',
                         style: TextStyle(
-                          // color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -59,7 +57,7 @@ class Login extends StatelessWidget {
                       height: 30,
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 15, right: 15),
+                      padding: const EdgeInsets.only(left: 15, right: 15),
                       child: TextFormGlobal(
                         controller: emailController,
                         text: 'Email',
@@ -71,7 +69,7 @@ class Login extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 15, right: 15),
+                      padding: const EdgeInsets.only(left: 15, right: 15),
                       child: TextFormGlobal(
                         controller: passwordController,
                         text: 'Password',
@@ -83,7 +81,7 @@ class Login extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 15, right: 15),
+                      padding: const EdgeInsets.only(left: 15, right: 15),
                       child: ButtonGlobal(
                         text: 'Sign In',
                         onPressed: () {
@@ -101,21 +99,21 @@ class Login extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: Container(
-            padding: EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 8),
             alignment: Alignment.center,
             height: 50,
             color: Colors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Don\'t have an account?',
                 ),
                 InkWell(
                   onTap: () {
                     Get.toNamed(RouteName.signUp);
                   },
-                  child: Text(
+                  child: const Text(
                     ' Sign Up',
                     style: TextStyle(
                         color: AppColors.primaryColor,
@@ -137,7 +135,7 @@ class Login extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   '-Or sign in with-',
                   style: TextStyle(
                       color: AppColors.textGrey, fontWeight: FontWeight.w600),
@@ -147,7 +145,7 @@ class Login extends StatelessWidget {
                 height: 15,
               ),
               Container(
-                padding: EdgeInsets.only(left: 30, right: 30),
+                padding: const EdgeInsets.only(left: 30, right: 30),
                 child: Row(
                   children: [
                     Expanded(

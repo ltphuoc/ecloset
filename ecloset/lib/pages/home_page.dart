@@ -2,10 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecloset/Constant/view_status.dart';
 import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/ViewModel/blogs_viewModel.dart';
+import 'package:ecloset/Widgets/app_bar.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
-import 'package:ecloset/Pages/closet_page.dart';
-import 'package:ecloset/Widgets/app_bar.dart';
 import 'package:ecloset/widgets/shimmer_block.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -14,11 +13,17 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shimmer/shimmer.dart';
 
+List images = ['assets/images/img1.png', "assets/images/img11.png"];
+List imagess = ['assets/images/img2.png', "assets/images/tee.png"];
+
 List brandList = [
+  "https://cdn.logojoy.com/wp-content/uploads/2018/05/30171217/1253.png",
   "https://scontent.xx.fbcdn.net/v/t1.15752-9/312605451_368550622093275_6979727709408294604_n.png?stp=dst-png_p1080x2048&_nc_cat=108&ccb=1-7&_nc_sid=aee45a&_nc_ohc=KCTy2uEKoBAAX8zDY4Z&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdS376vjvFdjaoqYYkboLOeHjFdQ8O0TvXjDCv-G7t3VRw&oe=64184CD1",
   "https://scontent.xx.fbcdn.net/v/t1.15752-9/249849632_907607629858311_4690803459134502629_n.png?_nc_cat=107&ccb=1-7&_nc_sid=aee45a&_nc_ohc=q0DHoU6P0k0AX8LhBFo&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQeSvJRr-sMU7_SJ8efQHsmkZ2_8d91ZyiCtPAlpQTVxA&oe=64184C18",
   "https://scontent.xx.fbcdn.net/v/t1.15752-9/277967988_303371048543646_549985502856049414_n.png?_nc_cat=105&ccb=1-7&_nc_sid=aee45a&_nc_ohc=V3tfnRkURGsAX8xI_gH&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdSFjVgR95uY0c9YWIW-2Tw0mf6i970qtjwC92vSJ5XsPA&oe=64183723",
   "https://scontent.xx.fbcdn.net/v/t1.15752-9/331201020_504977688464540_8597117485664390504_n.png?_nc_cat=106&ccb=1-7&_nc_sid=aee45a&_nc_ohc=im-dPDlmKH8AX-_Fs8h&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdTLS5XrjxpKeoy_qw4RtAwr7N8pYjl-ug4hL3j83F6iFw&oe=641838A6",
+  "https://cdn.logojoy.com/wp-content/uploads/2018/05/30171233/1044.png",
+  "https://cdn.logojoy.com/wp-content/uploads/2018/05/30143359/2_big1.png"
 ];
 
 class HomePage extends StatefulWidget {
@@ -38,41 +43,39 @@ class _HomePageState extends State<HomePage> {
         child: ListView(children: const [
           Padding(
             padding: EdgeInsets.only(top: 16),
-            child: banner(),
+            child: Banner(),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 8, left: 24, right: 24),
+            padding: EdgeInsets.only(top: 4, left: 24, right: 24),
             child: _Brand(),
           ),
           Padding(
             padding: EdgeInsets.only(top: 24, left: 24, right: 24),
             child: _MyCloset(),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 24, left: 24, right: 24),
-            child: _Recommend(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 24, left: 24, right: 24),
-            child: _Collection(),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+          //   child: _Recommend(),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+          //   child: _Collection(),
+          // ),
         ]),
       ),
     );
   }
 }
 
-class banner extends StatelessWidget {
-  const banner({super.key});
+class Banner extends StatelessWidget {
+  const Banner({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScopedModel<BlogsViewModel>(
         model: BlogsViewModel(),
         child: Container(
-          // color: Colors.white,
-          padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-          // padding: EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
           child: ScopedModelDescendant<BlogsViewModel>(
             builder: (context, child, model) {
               ViewStatus status = model.status;
@@ -87,15 +90,14 @@ class banner extends StatelessWidget {
                   );
                 case ViewStatus.Empty:
                 case ViewStatus.Error:
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 default:
                   if (model.blogs == null || model.blogs.isEmpty) {
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
-                  return Container(
+                  return SizedBox(
                     height: (Get.width) * (747 / 1914),
                     width: (Get.width),
-                    // margin: EdgeInsets.only(bottom: 8, top: 8),
                     child: Swiper(
                         onTap: (index) async {
                           // await launch(
@@ -104,16 +106,17 @@ class banner extends StatelessWidget {
                         autoplay: model.blogs.length > 1 ? true : false,
                         autoplayDelay: 5000,
                         viewportFraction: 0.9,
-                        pagination: new SwiperPagination(
+                        pagination: const SwiperPagination(
                             alignment: Alignment.bottomCenter),
                         itemCount: model.blogs.length,
                         itemBuilder: (context, index) {
                           if (model.blogs[index]['images'] == null ||
-                              model.blogs[index]['images'] == "")
+                              model.blogs[index]['images'] == "") {
                             return Icon(
                               MdiIcons.imageBroken,
                               color: AppColors.primaryColor.withOpacity(0.5),
                             );
+                          }
 
                           return CachedNetworkImage(
                             imageUrl: model.blogs[index]['images'],
@@ -125,7 +128,8 @@ class banner extends StatelessWidget {
                               child: AspectRatio(
                                 aspectRatio: 16 / 9,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 8, right: 8),
+                                  margin:
+                                      const EdgeInsets.only(left: 8, right: 8),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.blue,
@@ -307,7 +311,8 @@ class _Brand extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
-            height: 60,
+            margin: const EdgeInsets.only(top: 16),
+            height: 50,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: brandList.length,
@@ -315,79 +320,15 @@ class _Brand extends StatelessWidget {
                 String imageUrl = brandList[index];
                 return Container(
                   margin: index != 0 ? const EdgeInsets.only(left: 16) : null,
-                  child: CircleAvatar(
-                    radius: 24.0,
-                    backgroundColor: Colors.white,
+                  child: ClipOval(
                     child: Image.network(
                       imageUrl,
                       fit: BoxFit.cover,
                     ),
-                    // backgroundImage: NetworkImage(imageUrl),
                   ),
                 );
               },
             ))
-
-        // Row(
-        //   children: <Widget>[
-        //     Expanded(
-        //       child: AspectRatio(
-        //         aspectRatio: 2 / 2,
-        //         child: Image.network(
-        //             "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
-        //         //   [Container(
-        //         //     decoration: BoxDecoration(
-        //         //       borderRadius: BorderRadius.circular(100),
-        //         //       color: Colors.grey,
-        //         //     ),
-        //         //   ),
-        //         // ],
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       width: 12,
-        //     ),
-        //     Expanded(
-        //       child: AspectRatio(
-        //         aspectRatio: 2 / 2,
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(100),
-        //             color: Colors.grey,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       width: 12,
-        //     ),
-        //     Expanded(
-        //       child: AspectRatio(
-        //         aspectRatio: 2 / 2,
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(100),
-        //             color: Colors.grey,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       width: 12,
-        //     ),
-        //     Expanded(
-        //       child: AspectRatio(
-        //         aspectRatio: 2 / 2,
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(100),
-        //             color: Colors.grey,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // )
       ],
     );
   }
@@ -408,7 +349,7 @@ class _MyCloset extends StatelessWidget {
             Get.toNamed(RouteName.closetPage);
           },
           child: Text(
-            "My Closet",
+            "Hot Outfits Today",
             style: AppStyles.h2.copyWith(
                 fontWeight: FontWeight.w700, color: (AppColors.black)),
           ),
@@ -420,28 +361,47 @@ class _MyCloset extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  children: [
-                    Image.network(
-                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
-                    Image.network(
-                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
-                    Image.network(
-                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0"),
-                    Image.network(
-                        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/331405420_724249545774216_6768026406247350442_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=1d2UpT6aYUcAX8Oo-ov&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfBZSXhhpzbJyWcvw6Iz3QIWfHYEOBSdn11uQRylkZmNzg&oe=63F5D0E0")
-                  ],
-                ),
-
-                // child: Container(
-                //   // height: 150,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(10),
-                //     color: Colors.grey,
-                //   ),
-              ),
+                  aspectRatio: 1 / 1,
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white54,
+                        ),
+                        child: Image.asset(
+                          images[index],
+                          fit: BoxFit.fill,
+                        ),
+                      );
+                    },
+                    autoplay: true,
+                    itemCount: images.length,
+                  )),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              child: AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white54,
+                        ),
+                        child: Image.asset(
+                          imagess[index],
+                          fit: BoxFit.fill,
+                        ),
+                      );
+                    },
+                    autoplay: true,
+                    autoplayDelay: 3500,
+                    itemCount: imagess.length,
+                  )),
             ),
           ],
         )

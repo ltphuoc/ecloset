@@ -211,14 +211,15 @@ final List<FeedItem> _feedItems = [
         "A son asked his father (a programmer) why the sun rises in the east, and sets in the west. His response? It works, don’t touch!",
     user: _users[0],
     imageUrl:
-        "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/327710272_737932247554684_1428310151488897058_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=174925&_nc_ohc=9YaglbpZW7IAX-O8EnH&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfCk-3Z0Ny0tEuvSTD5_AeaACR7TeMt81cl9026W-9Jabw&oe=63F66111",
+        "https://www.shutterstock.com/image-vector/paper-doll-template-on-transparent-260nw-1945559077.jpg",
     likesCount: 100,
     commentsCount: 10,
     retweetsCount: 1,
   ),
   FeedItem(
       user: _users[1],
-      imageUrl: "https://picsum.photos/id/1001/960/540",
+      imageUrl:
+          "https://www.shutterstock.com/image-vector/business-dressed-casual-people-standing-600w-688444012.jpg",
       likesCount: 10,
       commentsCount: 2),
   FeedItem(
@@ -232,7 +233,8 @@ final List<FeedItem> _feedItems = [
       user: _users[1],
       content:
           "Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the Universe trying to produce bigger and better idiots. So far, the Universe is winning.",
-      imageUrl: "https://picsum.photos/id/1002/960/540",
+      imageUrl:
+          "https://www.shutterstock.com/image-vector/casual-office-people-vector-illustration-600w-674674822.jpg",
       likesCount: 500,
       commentsCount: 202,
       retweetsCount: 120),

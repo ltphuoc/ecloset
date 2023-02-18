@@ -1,20 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecloset/Model/DTO/ClosetDTO.dart';
+import 'package:ecloset/Pages/save_outfit_page.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_fonts.dart';
 import 'package:ecloset/constant/app_styles.dart';
-import 'package:ecloset/Pages/closet_page.dart';
-import 'package:ecloset/Pages/save_outfit_page.dart';
-import 'package:ecloset/utils/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:scoped_model/scoped_model.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
@@ -55,10 +51,10 @@ List<SubCat> footwearBtn = [
 ];
 List<SubCat> otherBtn = [
   SubCat(id: 0, name: "All"),
-  SubCat(id: 13, name: "Hat"),
-  SubCat(id: 14, name: "Glasses"),
-  SubCat(id: 15, name: "Belt"),
-  SubCat(id: 16, name: "Wallet"),
+  SubCat(id: 17, name: "Hat"),
+  SubCat(id: 18, name: "Glasses"),
+  SubCat(id: 19, name: "Belt"),
+  SubCat(id: 20, name: "Wallet"),
 ];
 
 class ContainerList {
@@ -90,7 +86,6 @@ class CreateOutfitPage extends StatefulWidget {
 
 class _CreateOutfitPageState extends State<CreateOutfitPage> {
   List list = [];
-  // List<Closet> closetList = [];
   late Offset _initPos;
   Offset _currentPos = const Offset(0, 0);
   late double _currentScale;
@@ -101,29 +96,14 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
   int? _selectedPant;
   int? _selectedFootwear;
   int? _selectedOther;
-  // ClosetViewModel? _closetViewModel;
 
   WidgetsToImageController controller = WidgetsToImageController();
-
-  // void fetchClosets() async {
-  //   try {
-  //     const url = 'https://localhost:7269/api/product/list';
-  //     final response = await http.get(Uri.parse(url));
-  //     final json = jsonDecode(response.body);
-  //     setState(() {
-  //       closetList = List<Closet>.from(json.map((i) => Closet.fromJson(i)));
-  //     });
-  //   } on Exception catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
 
   @override
   void initState() {
     super.initState();
     screen = const Size(800, 600);
-    // fetchClosets();
-    // Get.find<ClosetViewModel>().getCloset();
+
     _selectedTop = topBtn.first.id;
     _selectedPant = topBtn.first.id;
     _selectedFootwear = topBtn.first.id;
@@ -178,7 +158,6 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                 backgroundColor: AppColors.primaryColor,
                 child: const Icon(Icons.add),
                 onPressed: () {
-                  // List<ClosetData>? list = model.closetList;
                   _showBottomSheet(context, listCloset);
                 },
               ),
@@ -344,8 +323,8 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                           const TabBar(
                             isScrollable: true,
                             labelColor: AppColors.secondaryColor,
-                            indicatorColor: AppColors.primaryColor,
-                            unselectedLabelColor: Colors.black,
+                            indicatorColor: AppColors.secondaryColor,
+                            unselectedLabelColor: Colors.black87,
                             tabs: [
                               Tab(
                                   child: Text(
@@ -405,7 +384,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                     e.image, setState);
                                               },
                                               child: Stack(
-                                                alignment: Alignment.topLeft,
+                                                fit: StackFit.expand,
                                                 children: [
                                                   Container(
                                                     decoration: BoxDecoration(
@@ -417,16 +396,20 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                             'https://picsum.photos/300',
                                                         fit: BoxFit.cover),
                                                   ),
-                                                  Icon(
-                                                    list.any((element) =>
-                                                            element.url ==
-                                                            e.image)
-                                                        ? Icons.check_circle
-                                                        : Icons
-                                                            .radio_button_unchecked,
-                                                    size: 24,
-                                                    color:
-                                                        AppColors.primaryColor,
+                                                  Positioned(
+                                                    top: 0,
+                                                    right: 0,
+                                                    child: Icon(
+                                                      list.any((element) =>
+                                                              element.url ==
+                                                              e.image)
+                                                          ? Icons.check_circle
+                                                          : Icons
+                                                              .radio_button_unchecked,
+                                                      size: 24,
+                                                      color: AppColors
+                                                          .secondaryColor,
+                                                    ),
                                                   )
                                                 ],
                                               ),
@@ -473,8 +456,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                           e.image, setState);
                                                     },
                                                     child: Stack(
-                                                      alignment:
-                                                          Alignment.topLeft,
+                                                      fit: StackFit.expand,
                                                       children: [
                                                         Container(
                                                           decoration:
@@ -488,17 +470,22 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                               fit:
                                                                   BoxFit.cover),
                                                         ),
-                                                        Icon(
-                                                          list.any((element) =>
-                                                                  element.url ==
-                                                                  e.image)
-                                                              ? Icons
-                                                                  .check_circle
-                                                              : Icons
-                                                                  .radio_button_unchecked,
-                                                          size: 24,
-                                                          color: AppColors
-                                                              .primaryColor,
+                                                        Positioned(
+                                                          top: 0,
+                                                          right: 0,
+                                                          child: Icon(
+                                                            list.any((element) =>
+                                                                    element
+                                                                        .url ==
+                                                                    e.image)
+                                                                ? Icons
+                                                                    .check_circle
+                                                                : Icons
+                                                                    .radio_button_unchecked,
+                                                            size: 24,
+                                                            color: AppColors
+                                                                .secondaryColor,
+                                                          ),
                                                         )
                                                       ],
                                                     ),
@@ -545,8 +532,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                           e.image, setState);
                                                     },
                                                     child: Stack(
-                                                      alignment:
-                                                          Alignment.topLeft,
+                                                      fit: StackFit.expand,
                                                       children: [
                                                         Container(
                                                           decoration:
@@ -560,17 +546,22 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                               fit:
                                                                   BoxFit.cover),
                                                         ),
-                                                        Icon(
-                                                          list.any((element) =>
-                                                                  element.url ==
-                                                                  e.image)
-                                                              ? Icons
-                                                                  .check_circle
-                                                              : Icons
-                                                                  .radio_button_unchecked,
-                                                          size: 24,
-                                                          color: AppColors
-                                                              .primaryColor,
+                                                        Positioned(
+                                                          top: 0,
+                                                          right: 0,
+                                                          child: Icon(
+                                                            list.any((element) =>
+                                                                    element
+                                                                        .url ==
+                                                                    e.image)
+                                                                ? Icons
+                                                                    .check_circle
+                                                                : Icons
+                                                                    .radio_button_unchecked,
+                                                            size: 24,
+                                                            color: AppColors
+                                                                .secondaryColor,
+                                                          ),
                                                         )
                                                       ],
                                                     ),
@@ -618,8 +609,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                           e.image, setState);
                                                     },
                                                     child: Stack(
-                                                      alignment:
-                                                          Alignment.topLeft,
+                                                      fit: StackFit.expand,
                                                       children: [
                                                         Container(
                                                           decoration:
@@ -633,17 +623,22 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                               fit:
                                                                   BoxFit.cover),
                                                         ),
-                                                        Icon(
-                                                          list.any((element) =>
-                                                                  element.url ==
-                                                                  e.image)
-                                                              ? Icons
-                                                                  .check_circle
-                                                              : Icons
-                                                                  .radio_button_unchecked,
-                                                          size: 24,
-                                                          color: AppColors
-                                                              .primaryColor,
+                                                        Positioned(
+                                                          top: 0,
+                                                          right: 0,
+                                                          child: Icon(
+                                                            list.any((element) =>
+                                                                    element
+                                                                        .url ==
+                                                                    e.image)
+                                                                ? Icons
+                                                                    .check_circle
+                                                                : Icons
+                                                                    .radio_button_unchecked,
+                                                            size: 24,
+                                                            color: AppColors
+                                                                .secondaryColor,
+                                                          ),
                                                         )
                                                       ],
                                                     ),
@@ -691,8 +686,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                           e.image, setState);
                                                     },
                                                     child: Stack(
-                                                      alignment:
-                                                          Alignment.topLeft,
+                                                      fit: StackFit.expand,
                                                       children: [
                                                         Container(
                                                           decoration:
@@ -706,17 +700,22 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                               fit:
                                                                   BoxFit.cover),
                                                         ),
-                                                        Icon(
-                                                          list.any((element) =>
-                                                                  element.url ==
-                                                                  e.image)
-                                                              ? Icons
-                                                                  .check_circle
-                                                              : Icons
-                                                                  .radio_button_unchecked,
-                                                          size: 24,
-                                                          color: AppColors
-                                                              .primaryColor,
+                                                        Positioned(
+                                                          top: 0,
+                                                          right: 0,
+                                                          child: Icon(
+                                                            list.any((element) =>
+                                                                    element
+                                                                        .url ==
+                                                                    e.image)
+                                                                ? Icons
+                                                                    .check_circle
+                                                                : Icons
+                                                                    .radio_button_unchecked,
+                                                            size: 24,
+                                                            color: AppColors
+                                                                .secondaryColor,
+                                                          ),
                                                         )
                                                       ],
                                                     ),

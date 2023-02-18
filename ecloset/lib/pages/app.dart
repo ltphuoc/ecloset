@@ -1,13 +1,12 @@
-import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/Pages/home_page.dart';
 import 'package:ecloset/Pages/user_profile_page.dart';
-import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/pages/closet_page.dart';
 import 'package:ecloset/pages/newsfeed.dart';
-import 'package:ecloset/utils/routes_name.dart';
-import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
+import '../Utils/routes_name.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -29,7 +28,6 @@ class _AppState extends State<App> {
   var closeManually = false;
   var renderOverlay = true;
   var useRAnimation = true;
-  var rmicons = false;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -71,84 +69,37 @@ class _AppState extends State<App> {
           isOpenOnStart: false,
           children: [
             SpeedDialChild(
-              child: !rmicons ? const Icon(Icons.post_add) : null,
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              child: const Icon(Icons.post_add),
+              backgroundColor: AppColors.lightBrown,
+              foregroundColor: Colors.black54,
+              labelBackgroundColor: Colors.amber[50],
+              labelStyle: const TextStyle(color: Colors.black54),
               label: 'Add new post',
-              onTap: () => setState(() => rmicons = !rmicons),
+              onTap: () {},
             ),
             SpeedDialChild(
-              child: !rmicons ? const Icon(Icons.abc) : null,
-              backgroundColor: Colors.deepOrange,
-              foregroundColor: Colors.white,
-              labelBackgroundColor: AppColors.whiteBg,
+              child: const Icon(Icons.document_scanner_outlined),
+              backgroundColor: AppColors.lightBrown,
+              foregroundColor: Colors.black54,
+              labelBackgroundColor: Colors.amber[50],
+              labelStyle: const TextStyle(color: Colors.black54),
               label: 'Add new outfit',
-              onTap: () => debugPrint('SECOND CHILD'),
+              onTap: () =>
+                  {Navigator.pushNamed(context, RouteName.createOutfitPage)},
             ),
             SpeedDialChild(
-              child: !rmicons ? const Icon(Icons.abc) : null,
-              backgroundColor: Colors.indigo,
-              foregroundColor: Colors.white,
+              child: const Icon(Icons.checkroom),
+              backgroundColor: AppColors.lightBrown,
+              foregroundColor: Colors.black54,
+              labelBackgroundColor: Colors.amber[50],
+              labelStyle: const TextStyle(color: Colors.black54),
               label: 'Add new clothes',
               visible: true,
-              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text(("Third Child Pressed")))),
-              onLongPress: () => debugPrint('THIRD CHILD LONG PRESS'),
+              onTap: () =>
+                  {Navigator.pushNamed(context, RouteName.addEditItemPage)},
             ),
           ],
         ),
-
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {},
-        //   tooltip: 'Increment',
-        //   elevation: 2.0,
-        //   backgroundColor: AppColors.primaryColor,
-        //   child: PopupMenuButton<AddMenuAction>(
-        //     offset: const Offset(100, -180),
-        //     color: AppColors.whiteBg,
-        //     tooltip: "",
-        //     icon: const Icon(Icons.add),
-        //     onSelected: (value) {
-        //       if (value == AddMenuAction.addEditItem) {
-        //         Navigator.pushNamed(context, RouteName.addEditItemPage);
-        //       } else if (value == AddMenuAction.addOutfit) {
-        //         Navigator.pushNamed(context, RouteName.createOutfitPage);
-        //       }
-        //     },
-        //     shape: const RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.all(Radius.circular(15.0))),
-        //     itemBuilder: (context) {
-        //       return <PopupMenuEntry<AddMenuAction>>[
-        //         PopupMenuItem<AddMenuAction>(
-        //           value: AddMenuAction.addEditItem,
-        //           child: Text('Add new item',
-        //               style: AppStyles.h4.copyWith(
-        //                 color: AppColors.black,
-        //               )),
-        //         ),
-        //         PopupMenuItem<AddMenuAction>(
-        //           value: AddMenuAction.addOutfit,
-        //           child: Text(
-        //             'Add new outfit',
-        //             style: AppStyles.h4.copyWith(
-        //               color: AppColors.black,
-        //             ),
-        //           ),
-        //         ),
-        //         PopupMenuItem<AddMenuAction>(
-        //           value: AddMenuAction.add3,
-        //           child: Text(
-        //             'Add new collection',
-        //             style: AppStyles.h4.copyWith(
-        //               color: AppColors.black,
-        //             ),
-        //           ),
-        //         ),
-        //       ];
-        //     },
-        //   ),
-        // ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(), //shape of notch
@@ -190,22 +141,17 @@ class _AppState extends State<App> {
                   },
                 ),
               ),
-              Container(
-                // margin: const EdgeInsets.only(left: 56),
-
-                child: IconButton(
-                  icon: Icon(
-                    Icons.group,
-                    color: _selectedIndex == 2
-                        ? AppColors.brown
-                        : AppColors.greyBg,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _selectedIndex = 2;
-                    });
-                  },
+              IconButton(
+                icon: Icon(
+                  Icons.group,
+                  color:
+                      _selectedIndex == 2 ? AppColors.brown : AppColors.greyBg,
                 ),
+                onPressed: () {
+                  setState(() {
+                    _selectedIndex = 2;
+                  });
+                },
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16),
@@ -226,36 +172,6 @@ class _AppState extends State<App> {
             ],
           ),
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   items: const [
-        //     BottomNavigationBarItem(
-        //       tooltip: "",
-        //       icon: Icon(Icons.home),
-        //       label: "Home",
-        //     ),
-        //     BottomNavigationBarItem(
-        //       tooltip: "",
-        //       icon: Icon(Icons.abc),
-        //       label: "Abc",
-        //     ),
-        //     BottomNavigationBarItem(
-        //       tooltip: "",
-        //       icon: Icon(Icons.abc),
-        //       label: "Abc",
-        //     ),
-        //     BottomNavigationBarItem(
-        //       tooltip: "",
-        //       icon: Icon(Icons.people),
-        //       label: "Profile",
-        //     ),
-        //   ],
-        //   type: BottomNavigationBarType.fixed,
-        //   backgroundColor: AppColors.primaryColor,
-        //   selectedItemColor: AppColors.secondaryColor,
-        //   unselectedItemColor: AppColors.textWhite,
-        //   currentIndex: _selectedIndex,
-        //   onTap: _onItemTapped,
-        // ),
       ),
     );
   }

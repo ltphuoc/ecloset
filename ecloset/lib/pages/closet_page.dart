@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:buttons_tabbar/buttons_tabbar.dart';
-import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:scoped_model/scoped_model.dart';
-
-import '../utils/routes_name.dart';
 
 class SubCat {
   int id;
@@ -46,10 +41,10 @@ List<SubCat> footwearBtn = [
 ];
 List<SubCat> otherBtn = [
   SubCat(id: 0, name: "All"),
-  SubCat(id: 13, name: "Hat"),
-  SubCat(id: 14, name: "Glasses"),
-  SubCat(id: 15, name: "Belt"),
-  SubCat(id: 16, name: "Wallet"),
+  SubCat(id: 17, name: "Hat"),
+  SubCat(id: 18, name: "Glasses"),
+  SubCat(id: 19, name: "Belt"),
+  SubCat(id: 20, name: "Wallet"),
 ];
 
 class ClosetPage extends StatefulWidget {
@@ -60,7 +55,6 @@ class ClosetPage extends StatefulWidget {
 }
 
 class _ClosetPageState extends State<ClosetPage> {
-  // List<ClosetDTO> closetList = [];
   int id = 1;
   int? _selectedTop;
   int? _selectedPant;
@@ -83,63 +77,46 @@ class _ClosetPageState extends State<ClosetPage> {
       child: ScopedModelDescendant<ClosetViewModel>(
         builder: (context, child, model) {
           var closetList = Get.find<ClosetViewModel>().closetList ?? [];
-          bool isEmpty = false;
-          if (closetList == null || closetList.isEmpty) {
-            isEmpty = true;
-          }
+          if (closetList.isEmpty) {}
           return Scaffold(
             backgroundColor: Colors.grey.shade100,
-            appBar: AppBar(
-              centerTitle: true,
-              title: Text(
-                "My Closet",
-                style: AppStyles.h3,
-              ),
-              backgroundColor: AppColors.primaryColor,
-              // actions: [
-              //   IconButton(
-              //     tooltip: "Add new item",
-              //     icon: const Icon(Icons.add),
-              //     onPressed: () {
-              //       Navigator.pushNamed(context, RouteName.addEditItemPage);
-              //     },
-              //   )
-              // ],
-            ),
+            appBar: const MainAppBar(),
             body: SafeArea(
                 child: DefaultTabController(
               length: 5,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.only(bottom: 4, top: 4),
-                    margin: EdgeInsets.only(bottom: 16),
-                    color: AppColors.primaryColor,
-                    width: Get.width,
                     alignment: Alignment.center,
-                    child: ButtonsTabBar(
-                      backgroundColor: Colors.red,
-                      unselectedBackgroundColor: Colors.grey[300],
-                      unselectedLabelStyle: AppStyles.h4,
-                      labelStyle: AppStyles.h4,
-                      tabs: const [
-                        Tab(
-                          text: "All",
-                        ),
-                        Tab(
-                          text: "Top",
-                        ),
-                        Tab(
-                          text: "Pant",
-                        ),
-                        Tab(
-                          text: "Footwear",
-                        ),
-                        Tab(
-                          text: "Accessories",
-                        ),
-                      ],
+                    margin: const EdgeInsets.only(top: 8),
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: ButtonsTabBar(
+                        buttonMargin: const EdgeInsets.all(8.0),
+                        backgroundColor: AppColors.brown,
+                        unselectedBackgroundColor: AppColors.primaryColor,
+                        unselectedLabelStyle: AppStyles.h4,
+                        labelStyle: AppStyles.h4,
+                        tabs: const [
+                          Tab(
+                            text: "All",
+                          ),
+                          Tab(
+                            text: "Top",
+                          ),
+                          Tab(
+                            text: "Pant",
+                          ),
+                          Tab(
+                            text: "Footwear",
+                          ),
+                          Tab(
+                            text: "Accessories",
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -152,29 +129,14 @@ class _ClosetPageState extends State<ClosetPage> {
                                       onTap: () {
                                         // doMultiSelect(e.image, setState);
                                       },
-                                      child: Stack(
-                                        alignment: Alignment.topLeft,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(width: 0.1),
-                                            ),
-                                            child: Image.network(
-                                                e.image ??
-                                                    'https://picsum.photos/300',
-                                                fit: BoxFit.cover),
-                                          ),
-                                          // Icon(
-                                          //   list.any((element) =>
-                                          //           element.url ==
-                                          //           e.image)
-                                          //       ? Icons.check_circle
-                                          //       : Icons
-                                          //           .radio_button_unchecked,
-                                          //   size: 24,
-                                          //   color: AppColors.primaryColor,
-                                          // )
-                                        ],
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(width: 0.1),
+                                        ),
+                                        child: Image.network(
+                                            e.image ??
+                                                'https://picsum.photos/300',
+                                            fit: BoxFit.cover),
                                       ),
                                     ))
                                 .toList()),
@@ -192,7 +154,7 @@ class _ClosetPageState extends State<ClosetPage> {
                                         e.name,
                                         style: AppStyles.h4.copyWith(
                                             color: _selectedTop == e.id
-                                                ? AppColors.secondaryColor
+                                                ? AppColors.brown
                                                 : AppColors.textGrey),
                                       )))
                                   .toList(),
@@ -217,31 +179,14 @@ class _ClosetPageState extends State<ClosetPage> {
                                               // doMultiSelect(
                                               //     e.image, setState);
                                             },
-                                            child: Stack(
-                                              alignment: Alignment.topLeft,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    border:
-                                                        Border.all(width: 0.1),
-                                                  ),
-                                                  child: Image.network(
-                                                      e.image ??
-                                                          'https://picsum.photos/300',
-                                                      fit: BoxFit.cover),
-                                                ),
-                                                // Icon(
-                                                //   list.any((element) =>
-                                                //           element.url ==
-                                                //           e.image)
-                                                //       ? Icons.check_circle
-                                                //       : Icons
-                                                //           .radio_button_unchecked,
-                                                //   size: 24,
-                                                //   color: AppColors
-                                                //       .primaryColor,
-                                                // )
-                                              ],
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(width: 0.1),
+                                              ),
+                                              child: Image.network(
+                                                  e.image ??
+                                                      'https://picsum.photos/300',
+                                                  fit: BoxFit.cover),
                                             ),
                                           ))
                                       .toList()),
@@ -262,7 +207,7 @@ class _ClosetPageState extends State<ClosetPage> {
                                         e.name,
                                         style: AppStyles.h4.copyWith(
                                             color: _selectedPant == e.id
-                                                ? AppColors.secondaryColor
+                                                ? AppColors.brown
                                                 : AppColors.textGrey),
                                       )))
                                   .toList(),
@@ -284,31 +229,14 @@ class _ClosetPageState extends State<ClosetPage> {
                                               // doMultiSelect(
                                               //     e.image, setState);
                                             },
-                                            child: Stack(
-                                              alignment: Alignment.topLeft,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    border:
-                                                        Border.all(width: 0.1),
-                                                  ),
-                                                  child: Image.network(
-                                                      e.image ??
-                                                          'https://picsum.photos/300',
-                                                      fit: BoxFit.cover),
-                                                ),
-                                                // Icon(
-                                                //   list.any((element) =>
-                                                //           element.url ==
-                                                //           e.image)
-                                                //       ? Icons.check_circle
-                                                //       : Icons
-                                                //           .radio_button_unchecked,
-                                                //   size: 24,
-                                                //   color: AppColors
-                                                //       .primaryColor,
-                                                // )
-                                              ],
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(width: 0.1),
+                                              ),
+                                              child: Image.network(
+                                                  e.image ??
+                                                      'https://picsum.photos/300',
+                                                  fit: BoxFit.cover),
                                             ),
                                           ))
                                       .toList()),
@@ -329,7 +257,7 @@ class _ClosetPageState extends State<ClosetPage> {
                                         e.name,
                                         style: AppStyles.h4.copyWith(
                                             color: _selectedFootwear == e.id
-                                                ? AppColors.secondaryColor
+                                                ? AppColors.brown
                                                 : AppColors.textGrey),
                                       )))
                                   .toList(),
@@ -351,31 +279,14 @@ class _ClosetPageState extends State<ClosetPage> {
                                               // doMultiSelect(
                                               //     e.image, setState);
                                             },
-                                            child: Stack(
-                                              alignment: Alignment.topLeft,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    border:
-                                                        Border.all(width: 0.1),
-                                                  ),
-                                                  child: Image.network(
-                                                      e.image ??
-                                                          'https://picsum.photos/300',
-                                                      fit: BoxFit.cover),
-                                                ),
-                                                // Icon(
-                                                //   list.any((element) =>
-                                                //           element.url ==
-                                                //           e.image)
-                                                //       ? Icons.check_circle
-                                                //       : Icons
-                                                //           .radio_button_unchecked,
-                                                //   size: 24,
-                                                //   color: AppColors
-                                                //       .primaryColor,
-                                                // )
-                                              ],
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(width: 0.1),
+                                              ),
+                                              child: Image.network(
+                                                  e.image ??
+                                                      'https://picsum.photos/300',
+                                                  fit: BoxFit.cover),
                                             ),
                                           ))
                                       .toList()),
@@ -396,7 +307,7 @@ class _ClosetPageState extends State<ClosetPage> {
                                         e.name,
                                         style: AppStyles.h4.copyWith(
                                             color: _selectedOther == e.id
-                                                ? AppColors.secondaryColor
+                                                ? AppColors.brown
                                                 : AppColors.textGrey),
                                       )))
                                   .toList(),
@@ -418,31 +329,14 @@ class _ClosetPageState extends State<ClosetPage> {
                                               // doMultiSelect(
                                               //     e.image, setState);
                                             },
-                                            child: Stack(
-                                              alignment: Alignment.topLeft,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    border:
-                                                        Border.all(width: 0.1),
-                                                  ),
-                                                  child: Image.network(
-                                                      e.image ??
-                                                          'https://picsum.photos/300',
-                                                      fit: BoxFit.cover),
-                                                ),
-                                                // Icon(
-                                                //   list.any((element) =>
-                                                //           element.url ==
-                                                //           e.image)
-                                                //       ? Icons.check_circle
-                                                //       : Icons
-                                                //           .radio_button_unchecked,
-                                                //   size: 24,
-                                                //   color: AppColors
-                                                //       .primaryColor,
-                                                // )
-                                              ],
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(width: 0.1),
+                                              ),
+                                              child: Image.network(
+                                                  e.image ??
+                                                      'https://picsum.photos/300',
+                                                  fit: BoxFit.cover),
                                             ),
                                           ))
                                       .toList()),

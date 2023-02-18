@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
-import 'package:ecloset/Pages/closet_page.dart';
+import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:scoped_model/scoped_model.dart';
 
 import '../utils/routes_name.dart';
@@ -43,15 +40,6 @@ class _OutfitPageState extends State<OutfitPage> {
                   style: AppStyles.h3,
                 ),
                 backgroundColor: AppColors.primaryColor,
-                // actions: [
-                //   IconButton(
-                //     tooltip: "Add new outfit",
-                //     icon: const Icon(Icons.add),
-                //     onPressed: () {
-                //       Navigator.pushNamed(context, RouteName.createOutfitPage);
-                //     },
-                //   )
-                // ],
               ),
               body: SafeArea(
                 child: Container(

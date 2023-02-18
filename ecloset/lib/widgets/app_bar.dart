@@ -23,12 +23,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 0,
       actions: [
-        // Builder(
-        //       builder: (context) => IconButton(
-        //           onPressed: () {
-        //             Navigator.pushNamed(context, RouteName.settingPage);
-        //           },
-        //           icon: const Icon(Icons.settings))),
         IconButton(
             onPressed: () {
               Navigator.pushNamed(context, RouteName.settingPage);
