@@ -28,7 +28,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const MainAppBar(),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteBg,
         // bottomNavigationBar: BottomBar(),
         body: SingleChildScrollView(
           child: Padding(
@@ -58,11 +58,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Text("0",
                                   style: AppStyles.h5.copyWith(
                                       fontWeight: FontWeight.normal,
-                                      color: AppColors.textGrey)),
+                                      color: AppColors.black)),
                               Text(
                                 "Posts",
-                                style: AppStyles.h5
-                                    .copyWith(fontWeight: FontWeight.normal),
+                                style: AppStyles.h5.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.black),
                               )
                             ],
                           ),
@@ -71,11 +72,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Text("0",
                                   style: AppStyles.h5.copyWith(
                                       fontWeight: FontWeight.normal,
-                                      color: AppColors.textGrey)),
+                                      color: AppColors.black)),
                               Text(
                                 "Followers",
-                                style: AppStyles.h5
-                                    .copyWith(fontWeight: FontWeight.normal),
+                                style: AppStyles.h5.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.black),
                               )
                             ],
                           ),
@@ -84,11 +86,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               Text("0",
                                   style: AppStyles.h5.copyWith(
                                       fontWeight: FontWeight.normal,
-                                      color: AppColors.textGrey)),
+                                      color: AppColors.black)),
                               Text(
                                 "Following",
-                                style: AppStyles.h5
-                                    .copyWith(fontWeight: FontWeight.normal),
+                                style: AppStyles.h5.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                    color: AppColors.black),
                               ),
                             ],
                           ),
@@ -109,8 +112,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             height: 8,
                           ),
                           Text("User Name",
-                              style: AppStyles.h5
-                                  .copyWith(fontWeight: FontWeight.normal)),
+                              style: AppStyles.h5.copyWith(
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.black)),
                         ],
                       ),
                     ),
@@ -139,6 +143,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: Divider(
+                    height: 10,
+                    thickness: 1.3,
+                    indent: 10,
+                    color: AppColors.brown,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Center(
+                    child: Text("Tủ quần áo của tôi <3"),
+                  ),
+                ),
                 const SizedBox(
                   height: 32,
                 ),
@@ -147,11 +166,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children: listUrl
-                      .map((e) => Card(
-                            child: InkWell(
-                              child: Image.network(e, fit: BoxFit.cover),
-                              onTap: () {},
-                            ),
+                      .map((e) => InkWell(
+                            child: Image.network(e, fit: BoxFit.cover),
+                            onTap: () {},
                           ))
                       .toList(),
                 )

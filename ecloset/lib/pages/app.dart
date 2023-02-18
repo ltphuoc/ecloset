@@ -1,6 +1,9 @@
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/Pages/home_page.dart';
 import 'package:ecloset/Pages/user_profile_page.dart';
+import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/utils/routes_name.dart';
+import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatefulWidget {
@@ -29,16 +32,62 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        elevation: 2.0,
-      ),
+
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   tooltip: 'Increment',
+      //   elevation: 2.0,
+      //   backgroundColor: AppColors.primaryColor,
+      //   child: PopupMenuButton<AddMenuAction>(
+      //     offset: const Offset(100, 0),
+      //     color: AppColors.whiteBg,
+      //     tooltip: "",
+      //     icon: const Icon(Icons.add),
+      //     onSelected: (value) {
+      //       if (value == AddMenuAction.addEditItem) {
+      //         Navigator.pushNamed(context, RouteName.addEditItemPage);
+      //       } else if (value == AddMenuAction.addOutfit) {
+      //         Navigator.pushNamed(context, RouteName.createOutfitPage);
+      //       }
+      //     },
+      //     shape: const RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.all(Radius.circular(15.0))),
+      //     itemBuilder: (context) {
+      //       return <PopupMenuEntry<AddMenuAction>>[
+      //         PopupMenuItem<AddMenuAction>(
+      //           value: AddMenuAction.addEditItem,
+      //           child: Text('Add new item',
+      //               style: AppStyles.h4.copyWith(
+      //                 color: AppColors.black,
+      //               )),
+      //         ),
+      //         PopupMenuItem<AddMenuAction>(
+      //           value: AddMenuAction.addOutfit,
+      //           child: Text(
+      //             'Add new outfit',
+      //             style: AppStyles.h4.copyWith(
+      //               color: AppColors.black,
+      //             ),
+      //           ),
+      //         ),
+      //         PopupMenuItem<AddMenuAction>(
+      //           value: AddMenuAction.add3,
+      //           child: Text(
+      //             'Add new collection',
+      //             style: AppStyles.h4.copyWith(
+      //               color: AppColors.black,
+      //             ),
+      //           ),
+      //         ),
+      //       ];
+      //     },
+      //   ),
+      // ),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(), //shape of notch
-        notchMargin: 5,
+        notchMargin: 3,
+        color: AppColors.primaryColor,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,6 +95,7 @@ class _AppState extends State<App> {
             IconButton(
               icon: Icon(
                 Icons.home,
+                color: _selectedIndex == 0 ? AppColors.brown : AppColors.greyBg,
               ),
               onPressed: () {
                 setState(() {
@@ -55,7 +105,8 @@ class _AppState extends State<App> {
             ),
             IconButton(
               icon: Icon(
-                Icons.abc,
+                Icons.checkroom,
+                color: _selectedIndex == 1 ? AppColors.brown : AppColors.greyBg,
               ),
               onPressed: () {
                 setState(() {
@@ -65,7 +116,8 @@ class _AppState extends State<App> {
             ),
             IconButton(
               icon: Icon(
-                Icons.abc,
+                Icons.group,
+                color: _selectedIndex == 2 ? AppColors.brown : AppColors.greyBg,
               ),
               onPressed: () {
                 setState(() {
@@ -75,7 +127,8 @@ class _AppState extends State<App> {
             ),
             IconButton(
               icon: Icon(
-                Icons.people,
+                Icons.person,
+                color: _selectedIndex == 3 ? AppColors.brown : AppColors.greyBg,
               ),
               onPressed: () {
                 setState(() {
