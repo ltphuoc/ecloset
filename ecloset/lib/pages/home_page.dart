@@ -465,7 +465,7 @@ Widget buildImage(String? imgUrl, VoidCallback onPressed) {
                 )
               : Center(
                   child: Text(
-                    'Xem Thêm',
+                    'View More',
                     style: TextStyle(color: AppColors.primaryColor),
                   ),
                 ),
