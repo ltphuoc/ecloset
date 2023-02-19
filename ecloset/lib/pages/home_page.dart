@@ -466,7 +466,7 @@ class _MyOutFIt extends StatelessWidget {
                     Get.toNamed(RouteName.outfitPage);
                   },
                   child: Text(
-                    "View your outfit",
+                    "My outfit",
                     style: AppStyles.h3.copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

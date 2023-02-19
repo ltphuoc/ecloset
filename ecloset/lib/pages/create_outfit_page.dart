@@ -171,7 +171,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                   controller: controller,
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: AppColors.greyBg,
+                      color: AppColors.whiteBg,
                     ),
                     child: Stack(
                       children: list.map((value) {
@@ -307,6 +307,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
   void _showBottomSheet(
       BuildContext context, List<ClosetData>? closetList) async {
     await showModalBottomSheet(
+        backgroundColor: AppColors.whiteBg,
         isScrollControlled: true,
         context: context,
         builder: (ctx) => StatefulBuilder(

@@ -79,7 +79,7 @@ class _ClosetPageState extends State<ClosetPage> {
           var closetList = Get.find<ClosetViewModel>().closetList ?? [];
           if (closetList.isEmpty) {}
           return Scaffold(
-            backgroundColor: Colors.grey.shade100,
+            backgroundColor: AppColors.whiteBg,
             appBar: const MainAppBar(),
             body: SafeArea(
                 child: DefaultTabController(
