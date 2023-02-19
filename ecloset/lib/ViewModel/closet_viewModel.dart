@@ -89,7 +89,7 @@ class ClosetViewModel extends BaseModel {
           outfitName: outFit?.outfitName,
           subcategoryId: outFit?.subcategoryId,
           supplierId: outFit?.supplierId));
-      Get.offAll(() => OutfitPage());
+      Get.toNamed(RouteName.outfitPage);
       setState(ViewStatus.Completed);
     } catch (e) {
       print(e);

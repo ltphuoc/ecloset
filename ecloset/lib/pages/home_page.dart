@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             child: _MyOutFIt(),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+            padding: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
             child: _MyCloset(),
           ),
           // Padding(
@@ -351,7 +351,7 @@ class _MyCloset extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Get.toNamed(RouteName.closetPage);
+            // Get.toNamed(RouteName.closetPage);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -363,18 +363,18 @@ class _MyCloset extends StatelessWidget {
               ),
               // ElevatedButton(
               //     style: ButtonStyle(
-              //         backgroundColor: MaterialStatePropertyAll<Color>(
-              //             AppColors.primaryColor)),
+              //         backgroundColor:
+              //             MaterialStatePropertyAll<Color>(Colors.white)),
               //     onPressed: () {
               //       Get.toNamed(RouteName.outfitPage);
               //     },
               //     child: Text(
-              //       "View your outfit",
+              //       "Xem thêm",
               //       style: AppStyles.h3.copyWith(
               //           fontWeight: FontWeight.w600,
-              //           color: Colors.white,
+              //           color: AppColors.primaryColor,
               //           fontFamily: 'Nunito',
-              //           fontSize: 16),
+              //           fontSize: 12),
               //     )),
             ],
           ),
@@ -387,23 +387,48 @@ class _MyCloset extends StatelessWidget {
           child: ScopedModelDescendant<ClosetViewModel>(
             builder: (context, child, model) {
               var outFitList = Get.find<ClosetViewModel>().outFitList;
+              bool hasLength = true;
+              if (outFitList?.isEmpty == 0) {
+                hasLength = false;
+              }
               return Row(
                 children: <Widget>[
-                  const SizedBox(
-                    width: 8,
-                  ),
+                  // const SizedBox(
+                  //   width: 8,
+                  // ),
                   Expanded(
                     child: AspectRatio(
-                      aspectRatio: 1 / 1,
+                      aspectRatio: 1 / 1.8,
                       child: GridView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: outFitList?.length,
+                        itemCount: 1,
+                        // itemCount: outFitList?.length,
+
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             // mainAxisExtent: 8,
                             // crossAxisSpacing: 8,
-                            crossAxisCount: 3),
-                        itemBuilder: (context, index) =>
-                            buildImage(outFitList![index].image!),
+                            crossAxisCount: 2),
+                        itemBuilder: (context, index) => buildImage(
+                            hasLength ? outFitList![0].image! : '', () {}),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 1 / 1.8,
+                      child: GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 1,
+                        // itemCount: outFitList?.length,
+
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            // mainAxisExtent: 8,
+                            // crossAxisSpacing: 8,
+                            crossAxisCount: 2),
+                        itemBuilder: (context, index) => buildImage(
+                            hasLength ? null : outFitList![index].image!, () {
+                          Get.toNamed(RouteName.outfitPage);
+                        }),
                       ),
                     ),
                   ),
@@ -417,19 +442,33 @@ class _MyCloset extends StatelessWidget {
   }
 }
 
-Widget buildImage(String imgUrl) {
-  return Card(
-    margin: EdgeInsets.zero,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    child: Container(
-      margin: EdgeInsets.all(8),
-      child: ClipRRect(
+Widget buildImage(String? imgUrl, VoidCallback onPressed) {
+  bool hasImg = true;
+  if (imgUrl == null) {
+    hasImg = false;
+  }
+  return InkWell(
+    onTap: onPressed,
+    child: Card(
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          imgUrl,
-          fit: BoxFit.cover,
+      ),
+      child: Container(
+        margin: EdgeInsets.all(8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: hasImg
+              ? Image.network(
+                  imgUrl!,
+                  fit: BoxFit.fill,
+                )
+              : Center(
+                  child: Text(
+                    'Xem Thêm',
+                    style: TextStyle(color: AppColors.primaryColor),
+                  ),
+                ),
         ),
       ),
     ),
@@ -458,21 +497,21 @@ class _MyOutFIt extends StatelessWidget {
                 style: AppStyles.h2.copyWith(
                     fontWeight: FontWeight.w700, color: (AppColors.black)),
               ),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll<Color>(
-                          AppColors.primaryColor)),
-                  onPressed: () {
-                    Get.toNamed(RouteName.outfitPage);
-                  },
-                  child: Text(
-                    "View your outfit",
-                    style: AppStyles.h3.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontFamily: 'Nunito',
-                        fontSize: 16),
-                  )),
+              // ElevatedButton(
+              //     style: ButtonStyle(
+              //         backgroundColor: MaterialStatePropertyAll<Color>(
+              //             AppColors.primaryColor)),
+              //     onPressed: () {
+              //       Get.toNamed(RouteName.outfitPage);
+              //     },
+              //     child: Text(
+              //       "View your outfit",
+              //       style: AppStyles.h3.copyWith(
+              //           fontWeight: FontWeight.w600,
+              //           color: Colors.white,
+              //           fontFamily: 'Nunito',
+              //           fontSize: 16),
+              //     )),
             ],
           ),
         ),
