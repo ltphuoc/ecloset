@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecloset/Constant/view_status.dart';
 import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/ViewModel/blogs_viewModel.dart';
+import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/Widgets/app_bar.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
@@ -48,6 +49,10 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsets.only(top: 4, left: 24, right: 24),
             child: _Brand(),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+            child: _MyOutFIt(),
           ),
           Padding(
             padding: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -336,6 +341,103 @@ class _Brand extends StatelessWidget {
 
 class _MyCloset extends StatelessWidget {
   const _MyCloset({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(RouteName.closetPage);
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Your Outfits",
+                style: AppStyles.h2.copyWith(
+                    fontWeight: FontWeight.w700, color: (AppColors.black)),
+              ),
+              // ElevatedButton(
+              //     style: ButtonStyle(
+              //         backgroundColor: MaterialStatePropertyAll<Color>(
+              //             AppColors.primaryColor)),
+              //     onPressed: () {
+              //       Get.toNamed(RouteName.outfitPage);
+              //     },
+              //     child: Text(
+              //       "View your outfit",
+              //       style: AppStyles.h3.copyWith(
+              //           fontWeight: FontWeight.w600,
+              //           color: Colors.white,
+              //           fontFamily: 'Nunito',
+              //           fontSize: 16),
+              //     )),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        ScopedModel(
+          model: ClosetViewModel(),
+          child: ScopedModelDescendant<ClosetViewModel>(
+            builder: (context, child, model) {
+              var outFitList = Get.find<ClosetViewModel>().outFitList;
+              return Row(
+                children: <Widget>[
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: AspectRatio(
+                      aspectRatio: 1 / 1,
+                      child: GridView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: outFitList?.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            // mainAxisExtent: 8,
+                            // crossAxisSpacing: 8,
+                            crossAxisCount: 3),
+                        itemBuilder: (context, index) =>
+                            buildImage(outFitList![index].image!),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        )
+      ],
+    );
+  }
+}
+
+Widget buildImage(String imgUrl) {
+  return Card(
+    margin: EdgeInsets.zero,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Container(
+      margin: EdgeInsets.all(8),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          imgUrl,
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+  );
+}
+
+class _MyOutFIt extends StatelessWidget {
+  const _MyOutFIt({
     Key? key,
   }) : super(key: key);
 
