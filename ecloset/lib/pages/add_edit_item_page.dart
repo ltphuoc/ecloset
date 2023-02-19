@@ -186,7 +186,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.whiteBg,
       appBar: AppBar(
         // leading: ,
         backgroundColor: AppColors.primaryColor,
@@ -245,7 +245,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 ),
                 Text(
                   _isEdit ? "Edit item" : "Add new item",
-                  style: AppStyles.h2,
+                  style: AppStyles.h2.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
                   height: 16,
@@ -280,7 +280,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 ),
                 Text(
                   "Name",
-                  style: AppStyles.h4,
+                  style: AppStyles.h4.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
                   height: 16,
@@ -310,7 +310,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 ),
                 Text(
                   "Type of clothes",
-                  style: AppStyles.h4,
+                  style: AppStyles.h4.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
                   height: 16,
@@ -343,7 +343,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 ),
                 Text(
                   "Category",
-                  style: AppStyles.h4,
+                  style: AppStyles.h4.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
                   height: 16,

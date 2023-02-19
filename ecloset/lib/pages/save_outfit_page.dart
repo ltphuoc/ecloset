@@ -37,7 +37,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.whiteBg,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -100,7 +100,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                 ),
                 Text(
                   "Name of your outfit",
-                  style: AppStyles.h4,
+                  style: AppStyles.h4.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
                   height: 16,
@@ -128,7 +128,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                 ),
                 Text(
                   "Note (optional)",
-                  style: AppStyles.h4,
+                  style: AppStyles.h4.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
                   height: 16,

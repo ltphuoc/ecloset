@@ -189,70 +189,86 @@ final List<User> _users = [
     "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/327710272_737932247554684_1428310151488897058_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=174925&_nc_ohc=9YaglbpZW7IAX-O8EnH&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfCk-3Z0Ny0tEuvSTD5_AeaACR7TeMt81cl9026W-9Jabw&oe=63F66111",
   ),
   User(
-    "Thanh Phước",
-    "thanhphuoc",
-    "https://picsum.photos/id/1066/80/80",
+    "Thanh Phuớc",
+    "phuoc8ngon",
+    "https://i.pinimg.com/736x/1b/04/2f/1b042fb20a1cb6e6804098108a1ee999.jpg",
   ),
   User(
     "Hiếu Kiên",
     "hiukien2602",
-    "https://picsum.photos/id/1072/80/80",
+    "https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/105769059_733271360831379_6505452146093227896_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-wSOQMLs4nIAX_newoa&_nc_oc=AQlyvaLnGZQUNpUYfDYSTB9IFXkNk5HbaaF4z2DwEZrvz9q_KqWGzINfxNkPbuOcfi4&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfAk3yMHuZtd66TuE0cAiT3aX8Xt0bCuaeC1DUIkLNrwxw&oe=6418FC94",
   ),
   User(
-    "Jill Doe",
-    "jill_doe",
-    "https://picsum.photos/id/133/80/80",
+    "Anh Huy",
+    "cavoi",
+    "https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/294099829_3229360537331699_6212995226639694682_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=OV1yHCW3lyQAX-_kvHb&_nc_oc=AQmq0aZs4xKKnQMaDK7AgrN3OfnmquYDXkIW0WdYFZv1uqezUe921GzCMqZzcgsWgzQ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfB8w0RRkYt-2J3y7l5TQPST6DRJLcUNPzf_U1KYreVCig&oe=63F703F1",
+  ),
+  User(
+    "Hihi",
+    "haha",
+    "https://s.congtys.com/avatar/22G521D956-default.jpg",
   )
 ];
 
 final List<FeedItem> _feedItems = [
   FeedItem(
-    content:
-        "A son asked his father (a programmer) why the sun rises in the east, and sets in the west. His response? It works, don’t touch!",
+    content: "Fashions fade, style is eterna",
     user: _users[0],
     imageUrl:
-        "https://www.shutterstock.com/image-vector/paper-doll-template-on-transparent-260nw-1945559077.jpg",
+        "https://i.pinimg.com/564x/2c/d7/6b/2cd76bd2f04db9f28a8b6d184c09585b.jpg",
     likesCount: 100,
     commentsCount: 10,
     retweetsCount: 1,
   ),
   FeedItem(
+      user: _users[4],
+      imageUrl:
+          "https://i.pinimg.com/236x/dc/e1/be/dce1be915b9d70fe44d9ee67be41b4ba.jpg",
+      likesCount: 20,
+      commentsCount: 15,
+      retweetsCount: 12),
+  FeedItem(
+      user: _users[4],
+      imageUrl:
+          "https://i.pinimg.com/236x/16/38/9f/16389f4527b75a58f8d62d75bedc7cb8.jpg",
+      likesCount: 20,
+      commentsCount: 0,
+      retweetsCount: 6),
+  FeedItem(
       user: _users[1],
       imageUrl:
-          "https://www.shutterstock.com/image-vector/business-dressed-casual-people-standing-600w-688444012.jpg",
+          "https://images.herzindagi.info/image/2022/Oct/HZ_style_main-liamtra-fashion.jpg",
       likesCount: 10,
       commentsCount: 2),
   FeedItem(
-      user: _users[0],
-      content:
-          "How many programmers does it take to change a light bulb? None, that’s a hardware problem.",
-      likesCount: 50,
-      commentsCount: 22,
-      retweetsCount: 30),
-  FeedItem(
       user: _users[1],
       content:
-          "Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the Universe trying to produce bigger and better idiots. So far, the Universe is winning.",
+          "Fashion is a form of ugliness so intolerable that we have to alter it every six months",
       imageUrl:
-          "https://www.shutterstock.com/image-vector/casual-office-people-vector-illustration-600w-674674822.jpg",
+          "https://i.pinimg.com/564x/04/a7/48/04a748726a66ad745fdeed5023d52d36.jpg",
       likesCount: 500,
       commentsCount: 202,
       retweetsCount: 120),
   FeedItem(
     user: _users[2],
-    content: "Good morning!",
-    imageUrl: "https://picsum.photos/id/1003/960/540",
+    content:
+        "Don’t be into trends. Don’t make fashion own you, but you decide what you are, what you want to express by the way you dress and the way you live",
+    imageUrl:
+        "https://i.pinimg.com/736x/04/65/78/0465784c11d21bd41ce4ed499cc18a5e.jpg",
   ),
   FeedItem(
     user: _users[1],
-    imageUrl: "https://picsum.photos/id/1004/960/540",
+    imageUrl:
+        "https://i.pinimg.com/564x/81/a8/3d/81a83dc89c260fc85158ad860e67e000.jpg",
   ),
   FeedItem(
     user: _users[3],
-    imageUrl: "https://picsum.photos/id/1005/960/540",
+    imageUrl:
+        "https://i.pinimg.com/564x/26/c9/72/26c972da9804453955b03b5ebb803ef5.jpg",
   ),
   FeedItem(
     user: _users[0],
-    imageUrl: "https://picsum.photos/id/1006/960/540",
+    imageUrl:
+        "https://i.pinimg.com/564x/a9/9e/2b/a99e2b4e142034cb694bdeb037bd6d20.jpg",
   ),
 ];
