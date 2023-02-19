@@ -155,7 +155,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                 ],
               ),
               floatingActionButton: FloatingActionButton(
-                backgroundColor: AppColors.primaryColor,
+                backgroundColor: AppColors.brown,
                 child: const Icon(Icons.add),
                 onPressed: () {
                   _showBottomSheet(context, listCloset);
@@ -167,134 +167,140 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                     _isSelectItem = false;
                   });
                 },
-                child: WidgetsToImage(
-                  controller: controller,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.whiteBg,
-                    ),
-                    child: Stack(
-                      children: list.map((value) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _isSelectItem = true;
-                              int index = list.indexOf(value);
-                              if (index == -1) return;
-                              list.add(list.removeAt(index));
-                            });
-                          },
-                          onScaleStart: (details) {
-                            _initPos = details.focalPoint;
-                            _currentPos =
-                                Offset(value.xPosition, value.yPosition);
-                            _currentScale = value.scale;
-                            _currentRotation = value.rotation;
-                          },
-                          onScaleUpdate: (details) {
-                            final delta = details.focalPoint - _initPos;
-                            final left =
-                                (delta.dx / screen.width) + _currentPos.dx;
-                            final top =
-                                (delta.dy / screen.height) + _currentPos.dy;
+                child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: WidgetsToImage(
+                    controller: controller,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.whiteBg,
+                      ),
+                      child: Stack(
+                        children: list.map((value) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isSelectItem = true;
+                                int index = list.indexOf(value);
+                                if (index == -1) return;
+                                list.add(list.removeAt(index));
+                              });
+                            },
+                            onScaleStart: (details) {
+                              _initPos = details.focalPoint;
+                              _currentPos =
+                                  Offset(value.xPosition, value.yPosition);
+                              _currentScale = value.scale;
+                              _currentRotation = value.rotation;
+                            },
+                            onScaleUpdate: (details) {
+                              final delta = details.focalPoint - _initPos;
+                              final left =
+                                  (delta.dx / screen.width) + _currentPos.dx;
+                              final top =
+                                  (delta.dy / screen.height) + _currentPos.dy;
 
-                            setState(() {
-                              value.xPosition = Offset(left, top).dx;
-                              value.yPosition = Offset(left, top).dy;
-                              value.rotation =
-                                  details.rotation + _currentRotation;
-                              value.scale = details.scale * _currentScale;
-                            });
-                          },
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: value.xPosition * screen.width,
-                                top: value.yPosition * screen.height,
-                                child: Transform.scale(
-                                  scale: value.scale,
-                                  child: Transform.rotate(
-                                    angle: value.rotation,
-                                    child: SizedBox(
-                                      height: value.height,
-                                      width: value.width,
-                                      child: FittedBox(
-                                        fit: BoxFit.fill,
-                                        child: Listener(
-                                            onPointerDown: (details) {
-                                              _initPos = details.position;
-                                              _currentPos = Offset(
-                                                  value.xPosition,
-                                                  value.yPosition);
-                                              _currentScale = value.scale;
-                                              _currentRotation = value.rotation;
-                                            },
-                                            child: DottedBorder(
-                                              color: value == list.last &&
-                                                      _isSelectItem
-                                                  ? Colors.black
-                                                  : Colors.transparent,
-                                              dashPattern: const [8, 8],
-                                              strokeWidth: 2,
-                                              borderType: BorderType.RRect,
-                                              radius: const Radius.circular(12),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                        Radius.circular(12)),
-                                                child: Column(
-                                                  // mainAxisAlignment:
-                                                  //     MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    value == list.last &&
-                                                            _isSelectItem
-                                                        ? IconButton(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    right: 56,
-                                                                    top: 8,
-                                                                    bottom: 16),
-                                                            icon: const Icon(
-                                                              Icons.close,
-                                                              size: 80,
+                              setState(() {
+                                value.xPosition = Offset(left, top).dx;
+                                value.yPosition = Offset(left, top).dy;
+                                value.rotation =
+                                    details.rotation + _currentRotation;
+                                value.scale = details.scale * _currentScale;
+                              });
+                            },
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: value.xPosition * screen.width,
+                                  top: value.yPosition * screen.height,
+                                  child: Transform.scale(
+                                    scale: value.scale,
+                                    child: Transform.rotate(
+                                      angle: value.rotation,
+                                      child: SizedBox(
+                                        height: value.height,
+                                        width: value.width,
+                                        child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: Listener(
+                                              onPointerDown: (details) {
+                                                _initPos = details.position;
+                                                _currentPos = Offset(
+                                                    value.xPosition,
+                                                    value.yPosition);
+                                                _currentScale = value.scale;
+                                                _currentRotation =
+                                                    value.rotation;
+                                              },
+                                              child: DottedBorder(
+                                                color: value == list.last &&
+                                                        _isSelectItem
+                                                    ? Colors.black
+                                                    : Colors.transparent,
+                                                dashPattern: const [8, 8],
+                                                strokeWidth: 2,
+                                                borderType: BorderType.RRect,
+                                                radius:
+                                                    const Radius.circular(12),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                          Radius.circular(12)),
+                                                  child: Column(
+                                                    // mainAxisAlignment:
+                                                    //     MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      value == list.last &&
+                                                              _isSelectItem
+                                                          ? IconButton(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      right: 56,
+                                                                      top: 8,
+                                                                      bottom:
+                                                                          16),
+                                                              icon: const Icon(
+                                                                Icons.close,
+                                                                size: 80,
+                                                              ),
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  list.remove(
+                                                                      value);
+                                                                });
+                                                              },
+                                                              color: Colors.red,
+                                                            )
+                                                          : IconButton(
+                                                              icon: const Icon(
+                                                                size: 32,
+                                                                Icons.close,
+                                                              ),
+                                                              onPressed: () {},
+                                                              color: Colors
+                                                                  .transparent,
                                                             ),
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                list.remove(
-                                                                    value);
-                                                              });
-                                                            },
-                                                            color: Colors.red,
-                                                          )
-                                                        : IconButton(
-                                                            icon: const Icon(
-                                                              size: 32,
-                                                              Icons.close,
-                                                            ),
-                                                            onPressed: () {},
-                                                            color: Colors
-                                                                .transparent,
-                                                          ),
-                                                    Image.network(
-                                                      (value.url),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ],
+                                                      Image.network(
+                                                        (value.url),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            )),
+                                              )),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      }).toList(),
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ),

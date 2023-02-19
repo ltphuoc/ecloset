@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
+import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +52,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
           TextButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
+                  loadingScreen(context);
                   firebase_storage.Reference ref =
                       firebase_storage.FirebaseStorage.instance.ref(
                           "/foldername${DateTime.now().millisecondsSinceEpoch}");
@@ -59,6 +63,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                       await ref.putData(widget.imageByte);
                   var newUrl = await snapshot.ref.getDownloadURL();
                   ClosetViewModel root = Get.find<ClosetViewModel>();
+                  Navigator.pop(context);
                   await root.saveOutfit(
                       outfitName as String, newUrl, description as String);
                   // firebase_storage.UploadTask uploadTask = ref.putFile(file.absolute);
@@ -85,11 +90,13 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                 ),
                 InkWell(
                   child: AspectRatio(
-                    aspectRatio: 1 / 1.5,
+                    aspectRatio: 1 / 1.3,
                     child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black54)),
                       // height: 350,
                       width: double.infinity,
-                      color: Colors.white,
                       child: Image.memory(widget.imageByte, fit: BoxFit.fill),
                     ),
                   ),
@@ -116,6 +123,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                     counterText: "",
                     // filled: true,
                   ),
+                  autofocus: true,
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter name';

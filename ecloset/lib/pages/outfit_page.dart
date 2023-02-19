@@ -32,7 +32,7 @@ class _OutfitPageState extends State<OutfitPage> {
           builder: (context, child, model) {
             var outFitList = Get.find<ClosetViewModel>().outFitList;
             return Scaffold(
-              backgroundColor: AppColors.primaryColor,
+              backgroundColor: AppColors.whiteBg,
               appBar: AppBar(
                 centerTitle: true,
                 title: Text(
@@ -44,7 +44,7 @@ class _OutfitPageState extends State<OutfitPage> {
               body: SafeArea(
                 child: Container(
                   height: Get.height,
-                  color: Colors.grey.shade100,
+                  // color: AppColors.whiteBg,
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -65,9 +65,13 @@ class _OutfitPageState extends State<OutfitPage> {
                                   itemBuilder: (context, index) {
                                     var outFit = outFitList[index];
                                     return Card(
+                                      color: AppColors.whiteBg,
                                       child: InkWell(
-                                        child: Image.network(outFit.image ??
-                                            'https://picsum.photos/300'),
+                                        child: Image.network(
+                                          outFit.image ??
+                                              'https://picsum.photos/300',
+                                          fit: BoxFit.fitHeight,
+                                        ),
                                         onTap: () {
                                           Navigator.pushNamed(context,
                                               RouteName.addEditItemPage,

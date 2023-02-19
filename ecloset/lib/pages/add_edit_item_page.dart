@@ -188,6 +188,8 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
     return Scaffold(
       backgroundColor: AppColors.whiteBg,
       appBar: AppBar(
+        title: const Text("Add new clothes"),
+        centerTitle: true,
         // leading: ,
         backgroundColor: AppColors.primaryColor,
         actions: [
@@ -240,13 +242,13 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  _isEdit ? "Edit item" : "Add new item",
-                  style: AppStyles.h2.copyWith(color: AppColors.black),
-                ),
+                // const SizedBox(
+                //   height: 16,
+                // ),
+                // Text(
+                //   _isEdit ? "Edit item" : "Add new item",
+                //   style: AppStyles.h2.copyWith(color: AppColors.black),
+                // ),
                 const SizedBox(
                   height: 16,
                 ),
