@@ -242,41 +242,42 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                 borderRadius:
                                                     const BorderRadius.all(
                                                         Radius.circular(12)),
-                                                child: Stack(
-                                                  fit: StackFit.passthrough,
+                                                child: Column(
+                                                  // mainAxisAlignment:
+                                                  //     MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
                                                   children: [
-                                                    Positioned(
-                                                        right: 40,
-                                                        top: -5,
-                                                        child: value ==
-                                                                    list.last &&
-                                                                _isSelectItem
-                                                            ? IconButton(
-                                                                icon:
-                                                                    const Icon(
-                                                                  Icons.close,
-                                                                  size: 80,
-                                                                ),
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    list.remove(
-                                                                        value);
-                                                                  });
-                                                                },
-                                                                color:
-                                                                    Colors.red,
-                                                              )
-                                                            : IconButton(
-                                                                icon:
-                                                                    const Icon(
-                                                                  size: 80,
-                                                                  Icons.close,
-                                                                ),
-                                                                onPressed:
-                                                                    () {},
-                                                                color: Colors
-                                                                    .transparent,
-                                                              )),
+                                                    value == list.last &&
+                                                            _isSelectItem
+                                                        ? IconButton(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    right: 56,
+                                                                    top: 8,
+                                                                    bottom: 16),
+                                                            icon: const Icon(
+                                                              Icons.close,
+                                                              size: 80,
+                                                            ),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                list.remove(
+                                                                    value);
+                                                              });
+                                                            },
+                                                            color: Colors.red,
+                                                          )
+                                                        : IconButton(
+                                                            icon: const Icon(
+                                                              size: 32,
+                                                              Icons.close,
+                                                            ),
+                                                            onPressed: () {},
+                                                            color: Colors
+                                                                .transparent,
+                                                          ),
                                                     Image.network(
                                                       (value.url),
                                                       fit: BoxFit.cover,
