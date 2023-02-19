@@ -189,8 +189,8 @@ final List<User> _users = [
     "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/327710272_737932247554684_1428310151488897058_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=174925&_nc_ohc=9YaglbpZW7IAX-O8EnH&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfCk-3Z0Ny0tEuvSTD5_AeaACR7TeMt81cl9026W-9Jabw&oe=63F66111",
   ),
   User(
-    "Hồng Ngân",
-    "bangbang",
+    "Thanh Phuớc",
+    "phuoc8ngon",
     "https://i.pinimg.com/736x/1b/04/2f/1b042fb20a1cb6e6804098108a1ee999.jpg",
   ),
   User(
@@ -221,13 +221,6 @@ final List<FeedItem> _feedItems = [
           "https://images.herzindagi.info/image/2022/Oct/HZ_style_main-liamtra-fashion.jpg",
       likesCount: 10,
       commentsCount: 2),
-  FeedItem(
-      user: _users[0],
-      content:
-          "If you can’t be better than your competition, just dress better",
-      likesCount: 50,
-      commentsCount: 22,
-      retweetsCount: 30),
   FeedItem(
       user: _users[1],
       content:
