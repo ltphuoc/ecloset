@@ -17,4 +17,5 @@ class RouteName {
   static const String profileSettingPage = 'profile_setting_item_page';
   static const String settingPage = 'setting_page';
   static const String newsFeed = 'newsfeed';
+  static const String updatePremium = 'update_premium';
 }

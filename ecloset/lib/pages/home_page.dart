@@ -357,13 +357,19 @@ class _MyCloset extends StatelessWidget {
                     fontWeight: FontWeight.w700, color: (AppColors.black)),
               ),
               ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll<Color>(
+                          AppColors.primaryColor)),
                   onPressed: () {
                     Get.toNamed(RouteName.outfitPage);
                   },
                   child: Text(
                     "View your outfit",
                     style: AppStyles.h3.copyWith(
-                        fontWeight: FontWeight.w500, color: (AppColors.black)),
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontFamily: 'Nunito',
+                        fontSize: 16),
                   )),
             ],
           ),

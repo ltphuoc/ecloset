@@ -14,7 +14,7 @@ class OutFitDAO extends BaseDAO {
     List<OutFitDTO> outFitList;
     final res = await request.get(
       'api/Outfit',
-      queryParameters: {"page": page, "size": size}..addAll(params),
+      queryParameters: {"Page": page, "PageSize": size}..addAll(params),
     );
     final jsonList = res.data['data'];
     metaDataDTO = MetaDataDTO.fromJson(res.data['metadata']);

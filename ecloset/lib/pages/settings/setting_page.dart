@@ -42,7 +42,9 @@ class SettingPage extends StatelessWidget {
                     iconData: CupertinoIcons.creditcard,
                     text1: 'Update Premium',
                     text2: 'Connected Credit Cards',
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(RouteName.updatePremium);
+                    },
                   ),
                   const SizedBox(
                     height: 15,
