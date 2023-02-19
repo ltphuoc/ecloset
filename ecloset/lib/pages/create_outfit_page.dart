@@ -242,15 +242,12 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                 borderRadius:
                                                     const BorderRadius.all(
                                                         Radius.circular(12)),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
+                                                child: Stack(
+                                                  fit: StackFit.passthrough,
                                                   children: [
-                                                    Align(
-                                                        alignment:
-                                                            Alignment.topRight,
+                                                    Positioned(
+                                                        right: 40,
+                                                        top: -5,
                                                         child: value ==
                                                                     list.last &&
                                                                 _isSelectItem
@@ -258,7 +255,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                                 icon:
                                                                     const Icon(
                                                                   Icons.close,
-                                                                  size: 32,
+                                                                  size: 80,
                                                                 ),
                                                                 onPressed: () {
                                                                   setState(() {
@@ -272,7 +269,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                                             : IconButton(
                                                                 icon:
                                                                     const Icon(
-                                                                  size: 32,
+                                                                  size: 80,
                                                                   Icons.close,
                                                                 ),
                                                                 onPressed:
