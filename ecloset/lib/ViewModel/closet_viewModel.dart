@@ -10,6 +10,7 @@ import 'package:ecloset/ViewModel/login_viewModel.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:ecloset/pages/app.dart';
 import 'package:ecloset/utils/routes_name.dart';
+import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -61,11 +62,13 @@ class ClosetViewModel extends BaseModel {
       String productName, int proId, int proCat, String url) async {
     try {
       setState(ViewStatus.Loading);
+      showLoading();
       var checkUrl = closetList?.map((e) => e.image);
       if (checkUrl == url) {
         url = '';
       }
       closet = await closetDAO?.addCloset(productName, proId, proCat, url);
+      hideDialog();
       await Get.find<RootViewModel>().startUp();
       // await Future.delayed(Duration(microseconds: 500));
       Get.offAll(() => App());
@@ -80,7 +83,9 @@ class ClosetViewModel extends BaseModel {
       String outfitName, String img, String description) async {
     try {
       setState(ViewStatus.Loading);
+      showLoading();
       outFit = await _dao?.saveOutfit(outfitName, img, description);
+      hideDialog();
       outFitList?.add(OutFitDTO(
           outfitId: outFit?.outfitId,
           categoryId: outFit?.categoryId,

@@ -7,6 +7,7 @@ import 'package:ecloset/ViewModel/base_model.dart';
 import 'package:ecloset/Constant/view_status.dart';
 import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
+import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class LoginViewModel extends BaseModel {
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
       if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
+        showLoading();
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth?.accessToken,
           idToken: googleAuth?.idToken,
@@ -48,7 +50,7 @@ class LoginViewModel extends BaseModel {
         log('fcmToken: ' + fcmToken.toString());
         userInfo = await dao.login(idToken);
         await _analyticsService.setUserProperties(userInfo);
-
+        hideDialog();
         if (userInfo != null) {
           await Get.find<RootViewModel>().startUp();
           // Get.rawSnackbar(
@@ -57,6 +59,7 @@ class LoginViewModel extends BaseModel {
           //     snackPosition: SnackPosition.BOTTOM,
           //     margin: EdgeInsets.only(left: 8, right: 8, bottom: 32),
           //     borderRadius: 8);
+          // await Future.delayed(Duration(microseconds: 500));
 
           await Get.offAllNamed(RouteName.app);
         }
