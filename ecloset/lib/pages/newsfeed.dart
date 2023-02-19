@@ -202,10 +202,25 @@ final List<User> _users = [
     "Anh Huy",
     "cavoi",
     "https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/294099829_3229360537331699_6212995226639694682_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=OV1yHCW3lyQAX-_kvHb&_nc_oc=AQmq0aZs4xKKnQMaDK7AgrN3OfnmquYDXkIW0WdYFZv1uqezUe921GzCMqZzcgsWgzQ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfB8w0RRkYt-2J3y7l5TQPST6DRJLcUNPzf_U1KYreVCig&oe=63F703F1",
+  ),
+  User(
+    "Hihi",
+    "haha",
+    "https://s.congtys.com/avatar/22G521D956-default.jpg",
   )
 ];
 
 final List<FeedItem> _feedItems = [
+  FeedItem(
+    user: _users[4],
+    imageUrl:
+        "https://i.pinimg.com/236x/dc/e1/be/dce1be915b9d70fe44d9ee67be41b4ba.jpg",
+  ),
+  FeedItem(
+    user: _users[4],
+    imageUrl:
+        "https://i.pinimg.com/236x/16/38/9f/16389f4527b75a58f8d62d75bedc7cb8.jpg",
+  ),
   FeedItem(
     content: "Fashions fade, style is eterna",
     user: _users[0],
