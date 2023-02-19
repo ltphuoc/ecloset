@@ -212,16 +212,6 @@ final List<User> _users = [
 
 final List<FeedItem> _feedItems = [
   FeedItem(
-    user: _users[4],
-    imageUrl:
-        "https://i.pinimg.com/236x/dc/e1/be/dce1be915b9d70fe44d9ee67be41b4ba.jpg",
-  ),
-  FeedItem(
-    user: _users[4],
-    imageUrl:
-        "https://i.pinimg.com/236x/16/38/9f/16389f4527b75a58f8d62d75bedc7cb8.jpg",
-  ),
-  FeedItem(
     content: "Fashions fade, style is eterna",
     user: _users[0],
     imageUrl:
@@ -230,6 +220,20 @@ final List<FeedItem> _feedItems = [
     commentsCount: 10,
     retweetsCount: 1,
   ),
+  FeedItem(
+      user: _users[4],
+      imageUrl:
+          "https://i.pinimg.com/236x/dc/e1/be/dce1be915b9d70fe44d9ee67be41b4ba.jpg",
+      likesCount: 20,
+      commentsCount: 15,
+      retweetsCount: 12),
+  FeedItem(
+      user: _users[4],
+      imageUrl:
+          "https://i.pinimg.com/236x/16/38/9f/16389f4527b75a58f8d62d75bedc7cb8.jpg",
+      likesCount: 20,
+      commentsCount: 0,
+      retweetsCount: 6),
   FeedItem(
       user: _users[1],
       imageUrl:
