@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
+import 'package:ecloset/api/api_client.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -73,7 +75,8 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
   int? _subProductCat;
   String? _productName;
   File? image;
-
+  Uint8List? imageFile;
+  String? imagePath;
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
   // DatabaseReference databaseRef = FirebaseDatabase.instance.ref("Image");
@@ -84,9 +87,10 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
           .pickImage(source: ImageSource.gallery, imageQuality: 80);
       if (image == null) return;
 
-      setState(() {
-        this.image = File(image.path);
-      });
+      imagePath = image.path;
+      imageFile = await image.readAsBytes();
+      this.image = File(image.path);
+      setState(() {});
     } on Exception catch (e) {
       SnackBar(
         content: Text(e.toString()),
@@ -210,13 +214,16 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   ClosetViewModel root = Get.find<ClosetViewModel>();
+                  imageFile = await ApiCLient().removeBgApi(imagePath!);
+                  setState(() {});
+
                   firebase_storage.Reference ref =
                       firebase_storage.FirebaseStorage.instance.ref(
                           "/foldername${DateTime.now().millisecondsSinceEpoch}");
                   // firebase_storage.UploadTask uploadTask =
                   //     ref.putFile(image!.absolute);
-                  final TaskSnapshot snapshot =
-                      await ref.putFile(image!.absolute);
+                  final TaskSnapshot snapshot = await ref.putData(imageFile!);
+
                   var newUrl = await snapshot.ref.getDownloadURL();
                   root.addCloset(_productName as String, _productId as int,
                       _subProductCat as int, newUrl);

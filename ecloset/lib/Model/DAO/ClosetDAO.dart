@@ -7,14 +7,14 @@ import 'package:ecloset/Utils/request.dart';
 class ClosetDAO extends BaseDAO {
   Future<List<ClosetData>?> getClosetList({
     int page = 1,
-    int size = 10,
+    int size = 30,
     int? total,
     Map<String, dynamic> params = const {},
   }) async {
     List<ClosetData> closetList;
     final res = await request.get(
       'api/product',
-      queryParameters: {"page": page, "size": size}..addAll(params),
+      queryParameters: {"Page": page, "PageSize": size}..addAll(params),
     );
     final jsonList = res.data['result']['data'];
     metaDataDTO = MetaDataDTO.fromJson(res.data["result"]['metadata']);

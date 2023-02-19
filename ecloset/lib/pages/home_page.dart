@@ -348,10 +348,24 @@ class _MyCloset extends StatelessWidget {
           onTap: () {
             Get.toNamed(RouteName.closetPage);
           },
-          child: Text(
-            "Hot Outfits Today",
-            style: AppStyles.h2.copyWith(
-                fontWeight: FontWeight.w700, color: (AppColors.black)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Hot Outfits",
+                style: AppStyles.h2.copyWith(
+                    fontWeight: FontWeight.w700, color: (AppColors.black)),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(RouteName.outfitPage);
+                  },
+                  child: Text(
+                    "View your outfit",
+                    style: AppStyles.h3.copyWith(
+                        fontWeight: FontWeight.w500, color: (AppColors.black)),
+                  )),
+            ],
           ),
         ),
         const SizedBox(
