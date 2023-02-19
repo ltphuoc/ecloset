@@ -18,4 +18,6 @@ class RouteName {
   static const String settingPage = 'setting_page';
   static const String newsFeed = 'newsfeed';
   static const String updatePremium = 'update_premium';
+
+  static const String outfitDetail = 'outfit_detail_page';
 }

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecloset/Constant/view_status.dart';
-import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/ViewModel/blogs_viewModel.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/Widgets/app_bar.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/shimmer_block.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -409,7 +409,9 @@ class _MyCloset extends StatelessWidget {
                             // crossAxisSpacing: 8,
                             crossAxisCount: 2),
                         itemBuilder: (context, index) => buildImage(
-                            hasLength ? outFitList![0].image! : '', () {}),
+                            hasLength ? outFitList![0].image! : '', () {
+                          Get.toNamed(RouteName.outfitDetail);
+                        }),
                       ),
                     ),
                   ),
