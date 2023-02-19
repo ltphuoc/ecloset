@@ -54,9 +54,9 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                           "/foldername${DateTime.now().millisecondsSinceEpoch}");
                   final tempDir = await getTemporaryDirectory();
                   File file = await File('${tempDir.path}/image.png').create();
-                  file.writeAsBytesSync(widget.imageByte);
+                  // file.writeAsBytesSync(widget.imageByte);
                   final TaskSnapshot snapshot =
-                      await ref.putFile(file.absolute);
+                      await ref.putData(widget.imageByte);
                   var newUrl = await snapshot.ref.getDownloadURL();
                   ClosetViewModel root = Get.find<ClosetViewModel>();
                   await root.saveOutfit(
@@ -84,11 +84,14 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   height: 16,
                 ),
                 InkWell(
-                  child: Container(
-                    height: 350,
-                    width: double.infinity,
-                    color: Colors.white,
-                    child: Image.memory(widget.imageByte, fit: BoxFit.fill),
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1.5,
+                    child: Container(
+                      // height: 350,
+                      width: double.infinity,
+                      color: Colors.white,
+                      child: Image.memory(widget.imageByte, fit: BoxFit.fill),
+                    ),
                   ),
                   onTap: () {},
                 ),
@@ -135,9 +138,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.newline,
                   maxLines: 6,
-                  autofocus: true,
-                  // minLines: 3,
-
+                  minLines: 3,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
