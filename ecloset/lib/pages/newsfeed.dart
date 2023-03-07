@@ -71,16 +71,19 @@ class NewsFeedPage extends StatelessWidget {
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
                                 child: Text(item.content!),
                               ),
-                            if (item.imageUrl != null)
+                            if (item.imageUrl != "" && item.imageUrl != null)
                               Container(
                                 height: 400,
                                 margin: const EdgeInsets.only(top: 8.0),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(item.imageUrl!),
-                                    )),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                      item.imageUrl!,
+                                    ),
+                                  ),
+                                ),
                               ),
                             _ActionsRow(item: item)
                           ],
@@ -186,7 +189,7 @@ final List<User> _users = [
   User(
     "Lê Bảo",
     "lebaopham",
-    "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/327710272_737932247554684_1428310151488897058_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=174925&_nc_ohc=9YaglbpZW7IAX-O8EnH&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfCk-3Z0Ny0tEuvSTD5_AeaACR7TeMt81cl9026W-9Jabw&oe=63F66111",
+    "",
   ),
   User(
     "Thanh Phuớc",
@@ -196,12 +199,12 @@ final List<User> _users = [
   User(
     "Hiếu Kiên",
     "hiukien2602",
-    "https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/105769059_733271360831379_6505452146093227896_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=-wSOQMLs4nIAX_newoa&_nc_oc=AQlyvaLnGZQUNpUYfDYSTB9IFXkNk5HbaaF4z2DwEZrvz9q_KqWGzINfxNkPbuOcfi4&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfAk3yMHuZtd66TuE0cAiT3aX8Xt0bCuaeC1DUIkLNrwxw&oe=6418FC94",
+    "",
   ),
   User(
     "Anh Huy",
     "cavoi",
-    "https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/294099829_3229360537331699_6212995226639694682_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=OV1yHCW3lyQAX-_kvHb&_nc_oc=AQmq0aZs4xKKnQMaDK7AgrN3OfnmquYDXkIW0WdYFZv1uqezUe921GzCMqZzcgsWgzQ&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfB8w0RRkYt-2J3y7l5TQPST6DRJLcUNPzf_U1KYreVCig&oe=63F703F1",
+    "",
   ),
   User(
     "Hihi",

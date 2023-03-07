@@ -1,7 +1,6 @@
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
-import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -16,12 +15,10 @@ class OutfitPage extends StatefulWidget {
 }
 
 class _OutfitPageState extends State<OutfitPage> {
-  // List<Closet> closetList = [];
   int id = 1;
   @override
   void initState() {
     super.initState();
-    fetchClosets();
   }
 
   @override
@@ -42,41 +39,41 @@ class _OutfitPageState extends State<OutfitPage> {
                 backgroundColor: AppColors.primaryColor,
               ),
               body: SafeArea(
-                child: Container(
+                child: SizedBox(
                   height: Get.height,
-                  // color: AppColors.whiteBg,
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 12),
                         child: Column(children: [
                           (outFitList != null && outFitList.isNotEmpty)
                               ? GridView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 16.0,
-                                    mainAxisSpacing: 16.0,
-                                  ),
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 12.0,
+                                          mainAxisSpacing: 12.0,
+                                          childAspectRatio: 366 / 512),
                                   itemCount: outFitList.length,
                                   scrollDirection: Axis.vertical,
                                   itemBuilder: (context, index) {
                                     var outFit = outFitList[index];
-                                    return Card(
-                                      color: AppColors.whiteBg,
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.whiteBg,
+                                          border: Border.all(
+                                              width: 0.5,
+                                              color: AppColors.primaryColor)),
                                       child: InkWell(
                                         child: Image.network(
                                           outFit.image ??
                                               'https://picsum.photos/300',
-                                          fit: BoxFit.fitHeight,
+                                          fit: BoxFit.fill,
                                         ),
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              RouteName.addEditItemPage,
-                                              arguments: outFit);
-                                        },
+                                        onTap: () {},
                                       ),
                                     );
                                   },
@@ -91,18 +88,5 @@ class _OutfitPageState extends State<OutfitPage> {
             );
           },
         ));
-  }
-
-  void fetchClosets() async {
-    // try {
-    //   const url = 'https://localhost:7269/api/product/list';
-    //   final response = await http.get(Uri.parse(url));
-    //   final json = jsonDecode(response.body);
-    //   setState(() {
-    //     closetList = List<Closet>.from(json.map((i) => Closet.fromJson(i)));
-    //   });
-    // } on Exception catch (e) {
-    //   print(e.toString());
-    // }
   }
 }

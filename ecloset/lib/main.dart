@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     // );
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Ecloset',
+      title: 'eCloset',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case RouteName.login:
@@ -125,6 +125,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: StartUpView(),
+      // home: App(),
     );
   }
 }

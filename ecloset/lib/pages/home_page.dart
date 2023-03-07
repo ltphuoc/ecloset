@@ -40,35 +40,195 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.whiteBg,
       appBar: const MainAppBar(),
-      body: SafeArea(
-        child: ListView(children: const [
-          Padding(
-            padding: EdgeInsets.only(top: 16),
-            child: Banner(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 4, left: 24, right: 24),
-            child: _Brand(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 24, left: 24, right: 24),
-            child: _MyOutFIt(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 24),
-            child: _MyCloset(),
-          ),
-          // Padding(
-          //   padding: EdgeInsets.only(top: 24, left: 24, right: 24),
-          //   child: _Recommend(),
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.only(top: 24, left: 24, right: 24),
-          //   child: _Collection(),
-          // ),
-        ]),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Banner(),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 12, left: 24, right: 24),
+              child: _Brand(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: DefaultTabController(
+                  length: 2, // length of tabs
+                  initialIndex: 0,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        TabBar(
+                          indicatorColor: Colors.black,
+                          labelStyle: AppStyles.h4,
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.grey,
+                          tabs: const [
+                            Tab(text: 'Closet'),
+                            Tab(text: 'Outfit'),
+                          ],
+                        ),
+                        Container(
+                            height: 300, //height of TabBarView
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    top: BorderSide(
+                                        color: Colors.grey, width: 0.5))),
+                            child: TabBarView(children: <Widget>[
+                              Closet(),
+                              ScopedModel(
+                                model: ClosetViewModel(),
+                                child: ScopedModelDescendant<ClosetViewModel>(
+                                  builder: (context, child, model) {
+                                    var outFitList = Get.find<ClosetViewModel>()
+                                            .outFitList ??
+                                        [];
+                                    if (outFitList.isEmpty) {}
+                                    return Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: GridView(
+                                          // physics: NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  crossAxisSpacing: 12.0,
+                                                  mainAxisSpacing: 12.0,
+                                                  childAspectRatio: 366 / 512),
+                                          scrollDirection: Axis.vertical,
+                                          children: outFitList.reversed
+                                              .map((e) => Container(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: Colors.black,
+                                                        width: 0.5,
+                                                      ),
+                                                    ),
+                                                    child: InkWell(
+                                                      child: Image.network(
+                                                        e.image ??
+                                                            'https://picsum.photos/300',
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                      onTap: () {
+                                                        // Navigator.pushNamed(context,
+                                                        //     RouteName.addEditItemPage,
+                                                        //     arguments: outFit);
+                                                      },
+                                                    ),
+                                                  ))
+                                              .toList()),
+                                    );
+                                  },
+                                ),
+                              )
+                            ]))
+                      ])),
+            ),
+          ]),
+        ),
       ),
     );
+  }
+}
+
+class Closet extends StatefulWidget {
+  const Closet({
+    super.key,
+  });
+
+  @override
+  State<Closet> createState() => _ClosetState();
+}
+
+class _ClosetState extends State<Closet> {
+  @override
+  void initState() {
+    super.initState();
+    Get.find<ClosetViewModel>().getCloset();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScopedModel(
+        model: ClosetViewModel(),
+        child: ScopedModelDescendant<ClosetViewModel>(
+            builder: (context, child, model) {
+          var closetList = Get.find<ClosetViewModel>().closetList ?? [];
+          if (closetList.isEmpty) {}
+          return Padding(
+            padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                    child: InkWell(
+                  onTap: () {
+                    Get.toNamed(RouteName.closetPage);
+                  },
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: AppColors.lightBrown1,
+                      ),
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        children: closetList
+                            .sublist(0, 4)
+                            .map(
+                              (e) => Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.lightBrown,
+                                    width: 0.2,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.network(
+                                    e.image ?? 'https://picsum.photos/300',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                )),
+                const SizedBox(width: 16),
+                Expanded(
+                    child: InkWell(
+                  onTap: () {
+                    Get.toNamed(RouteName.outfitPage);
+                  },
+                  child: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: AppColors.lightBrown1,
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(Icons.add),
+                              Text("Create a closet"),
+                            ],
+                          ),
+                        )),
+                  ),
+                )),
+              ],
+            ),
+          );
+        }));
   }
 }
 
@@ -315,8 +475,7 @@ class _Brand extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-            margin: const EdgeInsets.only(top: 16),
+        SizedBox(
             height: 50,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -351,7 +510,7 @@ class _MyCloset extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // Get.toNamed(RouteName.closetPage);
+            Get.toNamed(RouteName.outfitPage);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -361,84 +520,33 @@ class _MyCloset extends StatelessWidget {
                 style: AppStyles.h2.copyWith(
                     fontWeight: FontWeight.w700, color: (AppColors.black)),
               ),
-              // ElevatedButton(
-              //     style: ButtonStyle(
-              //         backgroundColor:
-              //             MaterialStatePropertyAll<Color>(Colors.white)),
-              //     onPressed: () {
-              //       Get.toNamed(RouteName.outfitPage);
-              //     },
-              //     child: Text(
-              //       "Xem thêm",
-              //       style: AppStyles.h3.copyWith(
-              //           fontWeight: FontWeight.w600,
-              //           color: AppColors.primaryColor,
-              //           fontFamily: 'Nunito',
-              //           fontSize: 12),
-              //     )),
             ],
           ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 1 / 1.5,
+                child: Container(
+                    child: Image.network(
+                        "https://scontent.xx.fbcdn.net/v/t1.15752-9/331725377_1802152456828435_3677846231838722172_n.png?_nc_cat=102&ccb=1-7&_nc_sid=aee45a&_nc_ohc=ZdIFDvavCX8AX8qd5xS&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdT2xasNtJN_jmYsaf1ByEv0wY3cKYphIDSJW5ZrLKMCtg&oe=64192D7B")),
+              ),
+            ),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 1 / 1.5,
+                child: Container(
+                    child: Image.network(
+                        "https://scontent.xx.fbcdn.net/v/t1.15752-9/331725377_1802152456828435_3677846231838722172_n.png?_nc_cat=102&ccb=1-7&_nc_sid=aee45a&_nc_ohc=ZdIFDvavCX8AX8qd5xS&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdT2xasNtJN_jmYsaf1ByEv0wY3cKYphIDSJW5ZrLKMCtg&oe=64192D7B")),
+              ),
+            )
+          ],
         ),
         const SizedBox(
           height: 16,
         ),
-        ScopedModel(
-          model: ClosetViewModel(),
-          child: ScopedModelDescendant<ClosetViewModel>(
-            builder: (context, child, model) {
-              var outFitList = Get.find<ClosetViewModel>().outFitList;
-              bool hasLength = true;
-              if (outFitList?.isEmpty == 0) {
-                hasLength = false;
-              }
-              return Row(
-                children: <Widget>[
-                  // const SizedBox(
-                  //   width: 8,
-                  // ),
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1.8,
-                      child: GridView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 1,
-                        // itemCount: outFitList?.length,
-
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            // mainAxisExtent: 8,
-                            // crossAxisSpacing: 8,
-                            crossAxisCount: 2),
-                        itemBuilder: (context, index) => buildImage(
-                            hasLength ? outFitList![0].image! : '', () {
-                          Get.toNamed(RouteName.outfitDetail);
-                        }),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1.8,
-                      child: GridView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 1,
-                        // itemCount: outFitList?.length,
-
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            // mainAxisExtent: 8,
-                            // crossAxisSpacing: 8,
-                            crossAxisCount: 2),
-                        itemBuilder: (context, index) => buildImage(
-                            hasLength ? null : outFitList![index].image!, () {
-                          Get.toNamed(RouteName.outfitPage);
-                        }),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        )
       ],
     );
   }
@@ -457,7 +565,7 @@ Widget buildImage(String? imgUrl, VoidCallback onPressed) {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
-        margin: EdgeInsets.all(8),
+        margin: const EdgeInsets.all(8),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: hasImg
@@ -465,7 +573,7 @@ Widget buildImage(String? imgUrl, VoidCallback onPressed) {
                   imgUrl!,
                   fit: BoxFit.fill,
                 )
-              : Center(
+              : const Center(
                   child: Text(
                     'View More',
                     style: TextStyle(color: AppColors.primaryColor),

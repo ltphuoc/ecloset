@@ -102,7 +102,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
   @override
   void initState() {
     super.initState();
-    screen = const Size(800, 600);
+    screen = const Size(800, 1080);
 
     _selectedTop = topBtn.first.id;
     _selectedPant = topBtn.first.id;
@@ -168,7 +168,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                   });
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(40.0),
+                  padding: const EdgeInsets.all(0.0),
                   child: WidgetsToImage(
                     controller: controller,
                     child: Container(
