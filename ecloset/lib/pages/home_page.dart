@@ -27,14 +27,9 @@ List brandList = [
   "https://cdn.logojoy.com/wp-content/uploads/2018/05/30143359/2_big1.png"
 ];
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             const SliverPadding(
               padding: EdgeInsets.only(top: 8),
               sliver: SliverToBoxAdapter(
-                child: Banner(),
+                child: _Banner(),
               ),
             ),
             const SliverPadding(
@@ -74,54 +69,11 @@ class _HomePageState extends State<HomePage> {
                     Tab(text: 'Outfit'),
                   ],
                 ),
-                Expanded(
+                const Expanded(
                   child: TabBarView(
                     children: <Widget>[
-                      const Closet(),
-                      ScopedModel(
-                        model: ClosetViewModel(),
-                        child: ScopedModelDescendant<ClosetViewModel>(
-                          builder: (context, child, model) {
-                            var outFitList =
-                                Get.find<ClosetViewModel>().outFitList ?? [];
-                            if (outFitList.isEmpty) {}
-                            return Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: GridView(
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 12.0,
-                                  mainAxisSpacing: 12.0,
-                                  childAspectRatio: 366 / 512,
-                                ),
-                                scrollDirection: Axis.vertical,
-                                children: outFitList.reversed
-                                    .map(
-                                      (e) => Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: AppColors.primaryColor,
-                                            width: 0.8,
-                                          ),
-                                        ),
-                                        child: InkWell(
-                                          child: Image.network(
-                                            e.image ??
-                                                'https://picsum.photos/300',
-                                            fit: BoxFit.fill,
-                                          ),
-                                          onTap: () {},
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      _Closet(),
+                      _Outfit(),
                     ],
                   ),
                 ),
@@ -134,22 +86,61 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class Closet extends StatefulWidget {
-  const Closet({
-    super.key,
-  });
+class _Outfit extends StatelessWidget {
+  const _Outfit({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<Closet> createState() => _ClosetState();
+  Widget build(BuildContext context) {
+    return ScopedModel(
+      model: ClosetViewModel(),
+      child: ScopedModelDescendant<ClosetViewModel>(
+        builder: (context, child, model) {
+          var outFitList = Get.find<ClosetViewModel>().outFitList ?? [];
+          if (outFitList.isEmpty) {}
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: GridView(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12.0,
+                mainAxisSpacing: 12.0,
+                childAspectRatio: 366 / 512,
+              ),
+              scrollDirection: Axis.vertical,
+              children: outFitList.reversed
+                  .map(
+                    (e) => Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.primaryColor,
+                          width: 0.8,
+                        ),
+                      ),
+                      child: InkWell(
+                        child: Image.network(
+                          e.image ?? 'https://picsum.photos/300',
+                          fit: BoxFit.fill,
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
 
-class _ClosetState extends State<Closet> {
-  @override
-  void initState() {
-    super.initState();
-    Get.find<ClosetViewModel>().getCloset();
-  }
-
+class _Closet extends StatelessWidget {
+  const _Closet({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ScopedModel(
@@ -177,6 +168,7 @@ class _ClosetState extends State<Closet> {
                         color: AppColors.lightBrown1,
                       ),
                       child: GridView.count(
+                        physics: const NeverScrollableScrollPhysics(),
                         crossAxisCount: 2,
                         children: closetList
                             .sublist(0, 4)
@@ -233,8 +225,10 @@ class _ClosetState extends State<Closet> {
   }
 }
 
-class Banner extends StatelessWidget {
-  const Banner({super.key});
+class _Banner extends StatelessWidget {
+  const _Banner({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -331,141 +325,6 @@ class Banner extends StatelessWidget {
   }
 }
 
-class _Recommend extends StatelessWidget {
-  const _Recommend({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          "Category",
-          style: AppStyles.h2
-              .copyWith(fontWeight: FontWeight.w700, color: (AppColors.black)),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 32,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 32,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 2 / 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-}
-
-class _Collection extends StatelessWidget {
-  const _Collection({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 40),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            "Collection",
-            style: AppStyles.h2.copyWith(
-                fontWeight: FontWeight.w700, color: (AppColors.black)),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: AspectRatio(
-                  aspectRatio: 2 / 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Expanded(
-                child: AspectRatio(
-                  aspectRatio: 2 / 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 32,
-              ),
-              Expanded(
-                child: AspectRatio(
-                  aspectRatio: 2 / 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
 class _Brand extends StatelessWidget {
   const _Brand({
     Key? key,
@@ -477,7 +336,7 @@ class _Brand extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(
-            height: 50,
+            height: 40,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: brandList.length,
@@ -498,213 +357,3 @@ class _Brand extends StatelessWidget {
     );
   }
 }
-
-class _MyCloset extends StatelessWidget {
-  const _MyCloset({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(RouteName.outfitPage);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Your Outfits",
-                style: AppStyles.h2.copyWith(
-                    fontWeight: FontWeight.w700, color: (AppColors.black)),
-              ),
-            ],
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1 / 1.5,
-                child: Container(
-                    child: Image.network(
-                        "https://scontent.xx.fbcdn.net/v/t1.15752-9/331725377_1802152456828435_3677846231838722172_n.png?_nc_cat=102&ccb=1-7&_nc_sid=aee45a&_nc_ohc=ZdIFDvavCX8AX8qd5xS&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdT2xasNtJN_jmYsaf1ByEv0wY3cKYphIDSJW5ZrLKMCtg&oe=64192D7B")),
-              ),
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1 / 1.5,
-                child: Container(
-                    child: Image.network(
-                        "https://scontent.xx.fbcdn.net/v/t1.15752-9/331725377_1802152456828435_3677846231838722172_n.png?_nc_cat=102&ccb=1-7&_nc_sid=aee45a&_nc_ohc=ZdIFDvavCX8AX8qd5xS&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdT2xasNtJN_jmYsaf1ByEv0wY3cKYphIDSJW5ZrLKMCtg&oe=64192D7B")),
-              ),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-      ],
-    );
-  }
-}
-
-Widget buildImage(String? imgUrl, VoidCallback onPressed) {
-  bool hasImg = true;
-  if (imgUrl == null) {
-    hasImg = false;
-  }
-  return InkWell(
-    onTap: onPressed,
-    child: Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: hasImg
-              ? Image.network(
-                  imgUrl!,
-                  fit: BoxFit.fill,
-                )
-              : const Center(
-                  child: Text(
-                    'View More',
-                    style: TextStyle(color: AppColors.primaryColor),
-                  ),
-                ),
-        ),
-      ),
-    ),
-  );
-}
-
-class _MyOutFIt extends StatelessWidget {
-  const _MyOutFIt({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(RouteName.closetPage);
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Hot Outfits",
-                style: AppStyles.h2.copyWith(
-                    fontWeight: FontWeight.w700, color: (AppColors.black)),
-              ),
-              // ElevatedButton(
-              //     style: ButtonStyle(
-              //         backgroundColor: MaterialStatePropertyAll<Color>(
-              //             AppColors.primaryColor)),
-              //     onPressed: () {
-              //       Get.toNamed(RouteName.outfitPage);
-              //     },
-              //     child: Text(
-              //       "View your outfit",
-              //       style: AppStyles.h3.copyWith(
-              //           fontWeight: FontWeight.w600,
-              //           color: Colors.white,
-              //           fontFamily: 'Nunito',
-              //           fontSize: 16),
-              //     )),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: AspectRatio(
-                  aspectRatio: 1 / 1,
-                  child: Swiper(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white54,
-                        ),
-                        child: Image.asset(
-                          images[index],
-                          fit: BoxFit.fill,
-                        ),
-                      );
-                    },
-                    autoplay: true,
-                    itemCount: images.length,
-                  )),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: AspectRatio(
-                  aspectRatio: 1 / 1,
-                  child: Swiper(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white54,
-                        ),
-                        child: Image.asset(
-                          imagess[index],
-                          fit: BoxFit.fill,
-                        ),
-                      );
-                    },
-                    autoplay: true,
-                    autoplayDelay: 3500,
-                    itemCount: imagess.length,
-                  )),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-}
-
-// class _Trending extends StatelessWidget {
-//   const _Trending({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.stretch,
-//       children: [
-//         const SizedBox(
-//           height: 12,
-//         ),
-//         AspectRatio(
-//           aspectRatio: 4 / 2,
-//           child: Container(
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(10),
-//               color: Colors.grey,
-//             ),
-//           ),
-//         )
-//       ],
-//     );
-//   }
-// }

@@ -629,7 +629,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                   ? Icons.check_circle
                   : Icons.radio_button_unchecked,
               size: 24,
-              color: AppColors.secondaryColor,
+              color: AppColors.primaryColor,
             ),
           )
         ],

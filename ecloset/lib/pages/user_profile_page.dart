@@ -43,7 +43,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       child: CircleAvatar(
                         radius: 40,
                         backgroundImage: NetworkImage(
-                          "https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/329249548_621461426653659_6122221015205156424_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=OJO5JzLKrW4AX-rNiby&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfBtd6o9zDXLzvGOq3ZaaE0CDd63xmSn9PpQeXDxJyoA2g&oe=63F69015",
+                          "https://picsum.photos/200",
                         ),
                       ),
                     ),
@@ -186,6 +186,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               height: 400,
                               child: TabBarView(children: <Widget>[
                                 GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
                                   crossAxisCount: 3,
                                   shrinkWrap: false,
                                   children: listUrl
@@ -198,6 +199,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 ),
                                 Center(
                                   child: GridView.count(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     crossAxisCount: 3,
                                     shrinkWrap: false,
                                     children: listUrl
