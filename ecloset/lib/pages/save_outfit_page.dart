@@ -31,7 +31,6 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.imageByte);
   }
 
   firebase_storage.FirebaseStorage storage =
@@ -58,7 +57,6 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                           "/foldername${DateTime.now().millisecondsSinceEpoch}");
                   final tempDir = await getTemporaryDirectory();
                   File file = await File('${tempDir.path}/image.png').create();
-                  // file.writeAsBytesSync(widget.imageByte);
                   final TaskSnapshot snapshot =
                       await ref.putData(widget.imageByte);
                   var newUrl = await snapshot.ref.getDownloadURL();
@@ -66,9 +64,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   Navigator.pop(context);
                   await root.saveOutfit(
                       outfitName as String, newUrl, description as String);
-                  // firebase_storage.UploadTask uploadTask = ref.putFile(file.absolute);
                 }
-                // saveOutfit(context);
               },
               child: Text(
                 "Save",
@@ -79,49 +75,58 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
-                InkWell(
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1.3,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black54)),
-                      // height: 350,
-                      width: double.infinity,
-                      child: Image.memory(widget.imageByte, fit: BoxFit.fill),
+                Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.width * 0.8,
+                  child: InkWell(
+                    child: AspectRatio(
+                      aspectRatio: 366 / 512,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppColors.primaryColor, width: 1.5)),
+                        width: double.infinity,
+                        child: Image.memory(widget.imageByte),
+                      ),
                     ),
+                    onTap: () {},
                   ),
-                  onTap: () {},
                 ),
                 const SizedBox(
-                  height: 32,
+                  height: 16,
                 ),
                 Text(
                   "Name of your outfit",
                   style: AppStyles.h4.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 TextFormField(
                   controller: outfitName as TextEditingController,
+                  cursorColor: AppColors.primaryColor,
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      gapPadding: 0.0,
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.5),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     fillColor: AppColors.textWhite,
                     errorStyle: const TextStyle(height: 0),
                     counterText: "",
-                    // filled: true,
                   ),
                   autofocus: true,
                   validator: (String? value) {
@@ -139,7 +144,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   style: AppStyles.h4.copyWith(color: AppColors.black),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 TextFormField(
                   controller: description as TextEditingController,
@@ -148,13 +153,18 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   maxLines: 6,
                   minLines: 3,
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      gapPadding: 0.0,
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.5),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     fillColor: AppColors.textWhite,
                     errorStyle: const TextStyle(height: 0),
                     counterText: "",
-                    // filled: true,
                   ),
                 ),
               ],

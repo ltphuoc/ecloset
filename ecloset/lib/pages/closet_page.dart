@@ -1,68 +1,13 @@
-import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:ecloset/Model/DTO/ClosetDTO.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class SubCat {
-  int id;
-  String name;
-
-  SubCat({required this.id, required this.name});
-}
-
-List<SubCat> cat = [
-  SubCat(id: 1, name: "Top"),
-  SubCat(id: 2, name: "Pant"),
-  SubCat(id: 3, name: "Footwear"),
-  SubCat(id: 4, name: "Accessories"),
-];
-
-List<SubCat> topBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 1, name: "T-Shirt"),
-  SubCat(id: 2, name: "Polo"),
-  SubCat(id: 3, name: "Shirt"),
-  SubCat(id: 4, name: "Jacket"),
-  SubCat(id: 5, name: "Hoodie"),
-  SubCat(id: 6, name: "Sweater"),
-  SubCat(id: 7, name: "Blazer"),
-];
-List<SubCat> pantBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 8, name: "Short"),
-  SubCat(id: 9, name: "Trousers"),
-  SubCat(id: 10, name: "Jeans"),
-  SubCat(id: 11, name: "Khaki"),
-  SubCat(id: 12, name: "Cargo"),
-];
-List<SubCat> footwearBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 13, name: "Trainers"),
-  SubCat(id: 14, name: "Sneakers"),
-  SubCat(id: 15, name: "Boots"),
-  SubCat(id: 16, name: "Sandals"),
-];
-List<SubCat> otherBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 17, name: "Hat"),
-  SubCat(id: 18, name: "Glasses"),
-  SubCat(id: 19, name: "Belt"),
-  SubCat(id: 20, name: "Wallet"),
-];
-
-String getNameById(int id, List<SubCat> list) {
-  for (var subCat in list) {
-    if (subCat.id == id) {
-      return subCat.name;
-    }
-  }
-  return "";
-}
+import '../constant/app_styles.dart';
+import '../utils/closet.dart';
 
 class ClosetPage extends StatefulWidget {
   const ClosetPage({Key? key}) : super(key: key);
@@ -73,18 +18,10 @@ class ClosetPage extends StatefulWidget {
 
 class _ClosetPageState extends State<ClosetPage> {
   int id = 1;
-  int? _selectedTop;
-  int? _selectedPant;
-  int? _selectedFootwear;
-  int? _selectedOther;
   @override
   void initState() {
     super.initState();
     Get.find<ClosetViewModel>().getCloset();
-    _selectedTop = topBtn.first.id;
-    _selectedPant = topBtn.first.id;
-    _selectedFootwear = topBtn.first.id;
-    _selectedOther = topBtn.first.id;
   }
 
   @override
@@ -120,40 +57,43 @@ class _ClosetPageState extends State<ClosetPage> {
           if (closetList.isEmpty) {}
           return Scaffold(
             backgroundColor: AppColors.whiteBg,
-            appBar: const MainAppBar(),
+            // appBar: const MainAppBar(),
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "All clothes",
+                style: AppStyles.h3,
+              ),
+              backgroundColor: AppColors.primaryColor,
+            ),
             body: SafeArea(
                 child: DefaultTabController(
               length: 5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(top: 8),
-                    width: Get.width,
-                    child: const TabBar(
-                      isScrollable: true,
-                      indicatorColor: AppColors.primaryColor,
-                      labelColor: AppColors.primaryColor,
-                      unselectedLabelColor: Colors.grey,
-                      tabs: [
-                        Tab(
-                          text: "All",
-                        ),
-                        Tab(
-                          text: "Top",
-                        ),
-                        Tab(
-                          text: "Pant",
-                        ),
-                        Tab(
-                          text: "Footwear",
-                        ),
-                        Tab(
-                          text: "Accessories",
-                        ),
-                      ],
-                    ),
+                  const TabBar(
+                    isScrollable: true,
+                    indicatorColor: AppColors.primaryColor,
+                    labelColor: AppColors.primaryColor,
+                    unselectedLabelColor: Colors.grey,
+                    tabs: [
+                      Tab(
+                        text: "All",
+                      ),
+                      Tab(
+                        text: "Top",
+                      ),
+                      Tab(
+                        text: "Pant",
+                      ),
+                      Tab(
+                        text: "Footwear",
+                      ),
+                      Tab(
+                        text: "Accessories",
+                      ),
+                    ],
                   ),
                   Expanded(
                     child: TabBarView(

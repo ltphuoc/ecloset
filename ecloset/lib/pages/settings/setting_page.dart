@@ -14,70 +14,62 @@ class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Settings"),
         backgroundColor: AppColors.primaryColor,
       ),
       backgroundColor: AppColors.whiteBg,
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          // constraints: const BoxConstraints(maxWidth: 400),
-          child: ListView(
-            children: [
-              _SingleSection(
-                title: "",
-                children: [
-                  ButtonNavigateSettingPage(
-                    bgColor: AppColors.primaryColor,
-                    iconData: CupertinoIcons.profile_circled,
-                    text1: 'Account',
-                    text2: 'Personal Information',
-                    onPressed: () {},
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ButtonNavigateSettingPage(
-                    bgColor: AppColors.primaryColor,
-                    iconData: CupertinoIcons.creditcard,
-                    text1: 'Update Premium',
-                    text2: 'Connected Credit Cards',
-                    onPressed: () {
-                      Get.toNamed(RouteName.updatePremium);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ButtonNavigateSettingPage(
-                    bgColor: AppColors.primaryColor,
-                    iconData: CupertinoIcons.creditcard,
-                    text1: 'Security',
-                    text2: 'Change password',
-                    onPressed: () {},
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ButtonNavigateSettingPage(
-                    bgColor: Colors.red,
-                    iconData: Icons.logout,
-                    text1: 'Log Out',
-                    text2: 'Are you sure?',
-                    onPressed: () {
-                      _signOut();
-                    },
-                  ),
-                  // _CustomListTile(
-                  //     onPressed: () {
-                  //       Navigator.pushNamed(context, RouteName.userProfilePage);
-                  //     },
-                  //     title: "Account",
-                  //     icon: CupertinoIcons.profile_circled),
-                ],
-              ),
-            ],
-          ),
+      body: Container(
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        child: ListView(
+          children: [
+            _SingleSection(
+              title: "",
+              children: [
+                ButtonNavigateSettingPage(
+                  bgColor: AppColors.primaryColor,
+                  iconData: CupertinoIcons.profile_circled,
+                  text1: 'Account',
+                  text2: 'Personal Information',
+                  onPressed: () {},
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ButtonNavigateSettingPage(
+                  bgColor: AppColors.primaryColor,
+                  iconData: CupertinoIcons.creditcard,
+                  text1: 'Update Premium',
+                  text2: 'Connected Credit Cards',
+                  onPressed: () {
+                    Get.toNamed(RouteName.updatePremium);
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ButtonNavigateSettingPage(
+                  bgColor: AppColors.primaryColor,
+                  iconData: CupertinoIcons.creditcard,
+                  text1: 'Security',
+                  text2: 'Change password',
+                  onPressed: () {},
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ButtonNavigateSettingPage(
+                  bgColor: Colors.red,
+                  iconData: Icons.logout,
+                  text1: 'Log Out',
+                  text2: 'Are you sure?',
+                  onPressed: () {
+                    _signOut();
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

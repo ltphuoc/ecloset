@@ -7,55 +7,14 @@ import 'package:ecloset/Model/DTO/ClosetDTO.dart';
 import 'package:ecloset/Pages/save_outfit_page.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/constant/app_fonts.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
+import '../utils/closet.dart';
 import '../widgets/loading_screen.dart';
-// import 'package:path_provider/path_provider.dart';
-
-class SubCat {
-  int id;
-  String name;
-
-  SubCat({required this.id, required this.name});
-}
-
-List<SubCat> topBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 1, name: "T-Shirt"),
-  SubCat(id: 2, name: "Polo"),
-  SubCat(id: 3, name: "Shirt"),
-  SubCat(id: 4, name: "Jacket"),
-  SubCat(id: 5, name: "Hoodie"),
-  SubCat(id: 6, name: "Sweater"),
-  SubCat(id: 7, name: "Blazer"),
-];
-List<SubCat> pantBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 8, name: "Short"),
-  SubCat(id: 9, name: "Trousers"),
-  SubCat(id: 10, name: "Jeans"),
-  SubCat(id: 11, name: "Khaki"),
-  SubCat(id: 12, name: "Cargo"),
-];
-List<SubCat> footwearBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 13, name: "Trainers"),
-  SubCat(id: 14, name: "Sneakers"),
-  SubCat(id: 15, name: "Boots"),
-  SubCat(id: 16, name: "Sandals"),
-];
-List<SubCat> otherBtn = [
-  SubCat(id: 0, name: "All"),
-  SubCat(id: 17, name: "Hat"),
-  SubCat(id: 18, name: "Glasses"),
-  SubCat(id: 19, name: "Belt"),
-  SubCat(id: 20, name: "Wallet"),
-];
 
 class ContainerList {
   double height;
@@ -109,15 +68,6 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
     _selectedFootwear = topBtn.first.id;
     _selectedOther = topBtn.first.id;
   }
-
-//  ContainerList(
-//         height: 150.0,
-//         width: 150.0,
-//         rotation: 0.0,
-//         scale: 1.0,
-//         xPosition: 0.1,
-//         yPosition: 0.1,
-//         url: "assets/images/tee.png"),)
 
   @override
   Widget build(BuildContext context) {
@@ -316,423 +266,322 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
         backgroundColor: AppColors.whiteBg,
         isScrollControlled: true,
         context: context,
-        builder: (ctx) => StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) =>
-                  SingleChildScrollView(
-                child: DefaultTabController(
-                    length: 5, // length of tabs
-                    initialIndex: 0,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const TabBar(
-                            isScrollable: true,
-                            labelColor: AppColors.secondaryColor,
-                            indicatorColor: AppColors.secondaryColor,
-                            unselectedLabelColor: Colors.black87,
-                            tabs: [
-                              Tab(
-                                  child: Text(
-                                "All",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.nunito,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700),
-                              )),
-                              Tab(
-                                  child: Text(
-                                "Tops",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.nunito,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700),
-                              )),
-                              Tab(
-                                  child: Text(
-                                "Pants",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.nunito,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700),
-                              )),
-                              Tab(
-                                  child: Text(
-                                "Footwear",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.nunito,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700),
-                              )),
-                              Tab(
-                                  child: Text(
-                                "Accessories",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.nunito,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700),
-                              )),
-                            ],
-                          ),
-                          Container(
-                              height: 400, //height of TabBarView
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: Colors.grey, width: 0.5))),
-                              child: TabBarView(children: [
-                                GridView.count(
-                                    crossAxisCount: 3,
-                                    children: closetList!
-                                        .map((e) => InkWell(
-                                              onTap: () {
-                                                doMultiSelect(
-                                                    e.image, setState);
-                                              },
-                                              child: Stack(
-                                                fit: StackFit.expand,
-                                                children: [
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 0.1),
-                                                    ),
-                                                    child: Image.network(
-                                                        e.image ??
-                                                            'https://picsum.photos/300',
-                                                        fit: BoxFit.cover),
-                                                  ),
-                                                  Positioned(
-                                                    top: 0,
-                                                    right: 0,
-                                                    child: Icon(
-                                                      list.any((element) =>
-                                                              element.url ==
-                                                              e.image)
-                                                          ? Icons.check_circle
-                                                          : Icons
-                                                              .radio_button_unchecked,
-                                                      size: 24,
-                                                      color: AppColors
-                                                          .secondaryColor,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ))
-                                        .toList()),
-                                Column(
-                                  children: [
-                                    Wrap(
-                                      children: topBtn
-                                          .map((e) => TextButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedTop = e.id;
-                                                });
-                                              },
-                                              child: Text(
-                                                e.name,
-                                                style: AppStyles.h4.copyWith(
-                                                    color: _selectedTop == e.id
-                                                        ? AppColors
-                                                            .secondaryColor
-                                                        : AppColors.textGrey),
-                                              )))
-                                          .toList(),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Expanded(
-                                      child: GridView.count(
-                                          crossAxisCount: 3,
-                                          children: closetList
-                                              .where((e) {
-                                                if (_selectedTop != 0) {
-                                                  return e.subcategoryId ==
-                                                      _selectedTop;
-                                                } else {
-                                                  return e.categoryId == 1;
-                                                }
-                                              })
-                                              .map((e) => InkWell(
-                                                    onTap: () {
-                                                      doMultiSelect(
-                                                          e.image, setState);
-                                                    },
-                                                    child: Stack(
-                                                      fit: StackFit.expand,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                width: 0.1),
-                                                          ),
-                                                          child: Image.network(
-                                                              e.image ??
-                                                                  'https://picsum.photos/300',
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                        ),
-                                                        Positioned(
-                                                          top: 0,
-                                                          right: 0,
-                                                          child: Icon(
-                                                            list.any((element) =>
-                                                                    element
-                                                                        .url ==
-                                                                    e.image)
-                                                                ? Icons
-                                                                    .check_circle
-                                                                : Icons
-                                                                    .radio_button_unchecked,
-                                                            size: 24,
-                                                            color: AppColors
-                                                                .secondaryColor,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ))
-                                              .toList()),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Wrap(
-                                      children: pantBtn
-                                          .map((e) => TextButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedPant = e.id;
-                                                });
-                                              },
-                                              child: Text(
-                                                e.name,
-                                                style: AppStyles.h4.copyWith(
-                                                    color: _selectedPant == e.id
-                                                        ? AppColors
-                                                            .secondaryColor
-                                                        : AppColors.textGrey),
-                                              )))
-                                          .toList(),
-                                    ),
-                                    Expanded(
-                                      child: GridView.count(
-                                          crossAxisCount: 3,
-                                          children: closetList
-                                              .where((e) {
-                                                if (_selectedPant != 0) {
-                                                  return e.subcategoryId ==
-                                                      _selectedPant;
-                                                } else {
-                                                  return e.categoryId == 2;
-                                                }
-                                              })
-                                              .map((e) => InkWell(
-                                                    onTap: () {
-                                                      doMultiSelect(
-                                                          e.image, setState);
-                                                    },
-                                                    child: Stack(
-                                                      fit: StackFit.expand,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                width: 0.1),
-                                                          ),
-                                                          child: Image.network(
-                                                              e.image ??
-                                                                  'https://picsum.photos/300',
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                        ),
-                                                        Positioned(
-                                                          top: 0,
-                                                          right: 0,
-                                                          child: Icon(
-                                                            list.any((element) =>
-                                                                    element
-                                                                        .url ==
-                                                                    e.image)
-                                                                ? Icons
-                                                                    .check_circle
-                                                                : Icons
-                                                                    .radio_button_unchecked,
-                                                            size: 24,
-                                                            color: AppColors
-                                                                .secondaryColor,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ))
-                                              .toList()),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Wrap(
-                                      children: footwearBtn
-                                          .map((e) => TextButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedFootwear = e.id;
-                                                });
-                                              },
-                                              child: Text(
-                                                e.name,
-                                                style: AppStyles.h4.copyWith(
-                                                    color: _selectedFootwear ==
-                                                            e.id
-                                                        ? AppColors
-                                                            .secondaryColor
-                                                        : AppColors.textGrey),
-                                              )))
-                                          .toList(),
-                                    ),
-                                    Expanded(
-                                      child: GridView.count(
-                                          crossAxisCount: 3,
-                                          children: closetList
-                                              .where((e) {
-                                                if (_selectedFootwear != 0) {
-                                                  return e.subcategoryId ==
-                                                      _selectedFootwear;
-                                                } else {
-                                                  return e.categoryId == 3;
-                                                }
-                                              })
-                                              .map((e) => InkWell(
-                                                    onTap: () {
-                                                      doMultiSelect(
-                                                          e.image, setState);
-                                                    },
-                                                    child: Stack(
-                                                      fit: StackFit.expand,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                width: 0.1),
-                                                          ),
-                                                          child: Image.network(
-                                                              e.image ??
-                                                                  'https://picsum.photos/300',
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                        ),
-                                                        Positioned(
-                                                          top: 0,
-                                                          right: 0,
-                                                          child: Icon(
-                                                            list.any((element) =>
-                                                                    element
-                                                                        .url ==
-                                                                    e.image)
-                                                                ? Icons
-                                                                    .check_circle
-                                                                : Icons
-                                                                    .radio_button_unchecked,
-                                                            size: 24,
-                                                            color: AppColors
-                                                                .secondaryColor,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ))
-                                              .toList()),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Wrap(
-                                      children: otherBtn
-                                          .map((e) => TextButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _selectedOther = e.id;
-                                                });
-                                              },
-                                              child: Text(
-                                                e.name,
-                                                style: AppStyles.h4.copyWith(
-                                                    color: _selectedOther ==
-                                                            e.id
-                                                        ? AppColors
-                                                            .secondaryColor
-                                                        : AppColors.textGrey),
-                                              )))
-                                          .toList(),
-                                    ),
-                                    Expanded(
-                                      child: GridView.count(
-                                          crossAxisCount: 3,
-                                          children: closetList
-                                              .where((e) {
-                                                if (_selectedOther != 0) {
-                                                  return e.subcategoryId ==
-                                                      _selectedOther;
-                                                } else {
-                                                  return e.categoryId == 4;
-                                                }
-                                              })
-                                              .map((e) => InkWell(
-                                                    onTap: () {
-                                                      doMultiSelect(
-                                                          e.image, setState);
-                                                    },
-                                                    child: Stack(
-                                                      fit: StackFit.expand,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                width: 0.1),
-                                                          ),
-                                                          child: Image.network(
-                                                              e.image ??
-                                                                  'https://picsum.photos/300',
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                        ),
-                                                        Positioned(
-                                                          top: 0,
-                                                          right: 0,
-                                                          child: Icon(
-                                                            list.any((element) =>
-                                                                    element
-                                                                        .url ==
-                                                                    e.image)
-                                                                ? Icons
-                                                                    .check_circle
-                                                                : Icons
-                                                                    .radio_button_unchecked,
-                                                            size: 24,
-                                                            color: AppColors
-                                                                .secondaryColor,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ))
-                                              .toList()),
-                                    ),
-                                  ],
-                                )
-                              ]))
-                        ])),
-              ),
-            ));
+        builder: (ctx) {
+          List topIds, pantIds, footwearIds, otherIds;
+          List categoryIds =
+              closetList!.map((closet) => closet.categoryId).toSet().toList();
+          List subCategoryIds =
+              closetList.map((closet) => closet.subcategoryId).toSet().toList();
+          if (categoryIds.isNotEmpty) {
+            categoryIds.add(0);
+            categoryIds = categoryIds.toList()..sort();
+          }
+          if (subCategoryIds.isNotEmpty) {
+            subCategoryIds.add(0);
+            subCategoryIds = subCategoryIds.toList()..sort();
+          }
+          topIds = subCategoryIds.where((e) => e <= 7).toList();
+          pantIds = subCategoryIds
+              .where((e) => (e <= 12 && e >= 8) || e == 0)
+              .toList();
+          footwearIds = subCategoryIds
+              .where((e) => (e <= 16 && e >= 13) || e == 0)
+              .toList();
+          otherIds = subCategoryIds
+              .where((e) => (e <= 20 && e >= 17) || e == 0)
+              .toList();
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) =>
+                SingleChildScrollView(
+              child: DefaultTabController(
+                  length: 5,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const TabBar(
+                          isScrollable: true,
+                          indicatorColor: AppColors.primaryColor,
+                          labelColor: AppColors.primaryColor,
+                          unselectedLabelColor: Colors.grey,
+                          tabs: [
+                            Tab(
+                              text: "All",
+                            ),
+                            Tab(
+                              text: "Top",
+                            ),
+                            Tab(
+                              text: "Pant",
+                            ),
+                            Tab(
+                              text: "Footwear",
+                            ),
+                            Tab(
+                              text: "Accessories",
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                            height: 400, //height of TabBarView
+                            child: TabBarView(children: [
+                              GridView.count(
+                                  crossAxisCount: 3,
+                                  children: closetList
+                                      .map((e) =>
+                                          closetItemIcon(e, list, setState))
+                                      .toList()),
+                              DefaultTabController(
+                                  animationDuration: Duration.zero,
+                                  length: topIds.length,
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: TabBar(
+                                            indicatorColor: Colors.transparent,
+                                            labelColor: Colors.black,
+                                            unselectedLabelColor: Colors.grey,
+                                            isScrollable: true,
+                                            tabs: topIds.map((e) {
+                                              return Tab(
+                                                text: getNameById(e, topBtn),
+                                              );
+                                            }).toList()),
+                                      ),
+                                      Expanded(
+                                        child: TabBarView(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            children: topIds.map((subCatId) {
+                                              return GridView.count(
+                                                  crossAxisCount: 3,
+                                                  children: closetList
+                                                      .where((e) {
+                                                        if (subCatId != 0) {
+                                                          return e.subcategoryId ==
+                                                              subCatId;
+                                                        }
+                                                        return e.categoryId ==
+                                                            1;
+                                                      })
+                                                      .map((e) =>
+                                                          closetItemIcon(e,
+                                                              list, setState))
+                                                      .toList());
+                                            }).toList()),
+                                      )
+                                    ],
+                                  )),
+                              // Column(
+                              //   children: [
+                              //     Wrap(
+                              //       children: topBtn
+                              //           .map((e) => TextButton(
+                              //               onPressed: () {
+                              //                 setState(() {
+                              //                   _selectedTop = e.id;
+                              //                 });
+                              //               },
+                              //               child: Text(
+                              //                 e.name,
+                              //                 style: AppStyles.h4.copyWith(
+                              //                     color: _selectedTop == e.id
+                              //                         ? AppColors.secondaryColor
+                              //                         : AppColors.textGrey),
+                              //               )))
+                              //           .toList(),
+                              //     ),
+                              //     const SizedBox(
+                              //       height: 8,
+                              //     ),
+                              //     Expanded(
+                              //       child: GridView.count(
+                              //           crossAxisCount: 3,
+                              //           children: closetList
+                              //               .where((e) {
+                              //                 if (_selectedTop != 0) {
+                              //                   return e.subcategoryId ==
+                              //                       _selectedTop;
+                              //                 } else {
+                              //                   return e.categoryId == 1;
+                              //                 }
+                              //               })
+                              //               .map((e) => InkWell(
+                              //                     onTap: () {
+                              //                       doMultiSelect(
+                              //                           e.image, setState);
+                              //                     },
+                              //                     child: Stack(
+                              //                       fit: StackFit.expand,
+                              //                       children: [
+                              //                         Container(
+                              //                           decoration:
+                              //                               BoxDecoration(
+                              //                             border: Border.all(
+                              //                                 width: 0.1),
+                              //                           ),
+                              //                           child: Image.network(
+                              //                               e.image ??
+                              //                                   'https://picsum.photos/300',
+                              //                               fit: BoxFit.cover),
+                              //                         ),
+                              //                         Positioned(
+                              //                           top: 0,
+                              //                           right: 0,
+                              //                           child: Icon(
+                              //                             list.any((element) =>
+                              //                                     element.url ==
+                              //                                     e.image)
+                              //                                 ? Icons
+                              //                                     .check_circle
+                              //                                 : Icons
+                              //                                     .radio_button_unchecked,
+                              //                             size: 24,
+                              //                             color: AppColors
+                              //                                 .secondaryColor,
+                              //                           ),
+                              //                         )
+                              //                       ],
+                              //                     ),
+                              //                   ))
+                              //               .toList()),
+                              //     ),
+                              //   ],
+                              // ),
+
+                              DefaultTabController(
+                                  animationDuration: Duration.zero,
+                                  length: pantIds.length,
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: TabBar(
+                                            indicatorColor: Colors.transparent,
+                                            labelColor: Colors.black,
+                                            unselectedLabelColor: Colors.grey,
+                                            isScrollable: true,
+                                            tabs: pantIds.map((e) {
+                                              return Tab(
+                                                text: getNameById(e, pantBtn),
+                                              );
+                                            }).toList()),
+                                      ),
+                                      Expanded(
+                                        child: TabBarView(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            children: pantIds.map((subCatId) {
+                                              return GridView.count(
+                                                  crossAxisCount: 3,
+                                                  children: closetList
+                                                      .where((e) {
+                                                        if (subCatId != 0) {
+                                                          return e.subcategoryId ==
+                                                              subCatId;
+                                                        }
+                                                        return e.categoryId ==
+                                                            2;
+                                                      })
+                                                      .map((e) =>
+                                                          closetItemIcon(e,
+                                                              list, setState))
+                                                      .toList());
+                                            }).toList()),
+                                      )
+                                    ],
+                                  )),
+                              DefaultTabController(
+                                  animationDuration: Duration.zero,
+                                  length: footwearIds.length,
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: TabBar(
+                                            indicatorColor: Colors.transparent,
+                                            labelColor: Colors.black,
+                                            unselectedLabelColor: Colors.grey,
+                                            isScrollable: true,
+                                            tabs: footwearIds.map((e) {
+                                              return Tab(
+                                                text:
+                                                    getNameById(e, footwearBtn),
+                                              );
+                                            }).toList()),
+                                      ),
+                                      Expanded(
+                                        child: TabBarView(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            children:
+                                                footwearIds.map((subCatId) {
+                                              return GridView.count(
+                                                  crossAxisCount: 3,
+                                                  children: closetList
+                                                      .where((e) {
+                                                        if (subCatId != 0) {
+                                                          return e.subcategoryId ==
+                                                              subCatId;
+                                                        }
+                                                        return e.categoryId ==
+                                                            3;
+                                                      })
+                                                      .map((e) =>
+                                                          closetItemIcon(e,
+                                                              list, setState))
+                                                      .toList());
+                                            }).toList()),
+                                      )
+                                    ],
+                                  )),
+                              DefaultTabController(
+                                  animationDuration: Duration.zero,
+                                  length: otherIds.length,
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: TabBar(
+                                            indicatorColor: Colors.transparent,
+                                            labelColor: Colors.black,
+                                            unselectedLabelColor: Colors.grey,
+                                            isScrollable: true,
+                                            tabs: otherIds.map((e) {
+                                              return Tab(
+                                                text: getNameById(e, otherBtn),
+                                              );
+                                            }).toList()),
+                                      ),
+                                      Expanded(
+                                        child: TabBarView(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            children: otherIds.map((subCatId) {
+                                              return GridView.count(
+                                                  crossAxisCount: 3,
+                                                  children: closetList
+                                                      .where((e) {
+                                                        if (subCatId != 0) {
+                                                          return e.subcategoryId ==
+                                                              subCatId;
+                                                        }
+                                                        return e.categoryId ==
+                                                            4;
+                                                      })
+                                                      .map((e) =>
+                                                          closetItemIcon(e,
+                                                              list, setState))
+                                                      .toList());
+                                            }).toList()),
+                                      )
+                                    ],
+                                  )),
+                            ]))
+                      ])),
+            ),
+          );
+        });
   }
 
   void doMultiSelect(image, setStateBottom) {
@@ -755,5 +604,36 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
       list = newList;
     });
     setStateBottom(() {});
+  }
+
+  InkWell closetItemIcon(ClosetData e, List list, setState) {
+    return InkWell(
+      onTap: () {
+        doMultiSelect(e.image, setState);
+      },
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.1),
+            ),
+            child: Image.network(e.image ?? 'https://picsum.photos/300',
+                fit: BoxFit.cover),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Icon(
+              list.any((element) => element.url == e.image)
+                  ? Icons.check_circle
+                  : Icons.radio_button_unchecked,
+              size: 24,
+              color: AppColors.secondaryColor,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

@@ -38,95 +38,96 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteBg,
       appBar: const MainAppBar(),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(children: [
-            const Padding(
+      backgroundColor: AppColors.whiteBg,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            const SliverPadding(
               padding: EdgeInsets.only(top: 8),
-              child: Banner(),
+              sliver: SliverToBoxAdapter(
+                child: Banner(),
+              ),
             ),
-            const Padding(
+            const SliverPadding(
               padding: EdgeInsets.only(top: 12, left: 24, right: 24),
-              child: _Brand(),
+              sliver: SliverToBoxAdapter(
+                child: _Brand(),
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: DefaultTabController(
-                  length: 2, // length of tabs
-                  initialIndex: 0,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        TabBar(
-                          indicatorColor: Colors.black,
-                          labelStyle: AppStyles.h4,
-                          labelColor: Colors.black,
-                          unselectedLabelColor: Colors.grey,
-                          tabs: const [
-                            Tab(text: 'Closet'),
-                            Tab(text: 'Outfit'),
-                          ],
-                        ),
-                        Container(
-                            height: 300, //height of TabBarView
-                            decoration: const BoxDecoration(
-                                border: Border(
-                                    top: BorderSide(
-                                        color: Colors.grey, width: 0.5))),
-                            child: TabBarView(children: <Widget>[
-                              Closet(),
-                              ScopedModel(
-                                model: ClosetViewModel(),
-                                child: ScopedModelDescendant<ClosetViewModel>(
-                                  builder: (context, child, model) {
-                                    var outFitList = Get.find<ClosetViewModel>()
-                                            .outFitList ??
-                                        [];
-                                    if (outFitList.isEmpty) {}
-                                    return Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: GridView(
-                                          // physics: NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 12.0,
-                                                  mainAxisSpacing: 12.0,
-                                                  childAspectRatio: 366 / 512),
-                                          scrollDirection: Axis.vertical,
-                                          children: outFitList.reversed
-                                              .map((e) => Container(
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: Colors.black,
-                                                        width: 0.5,
-                                                      ),
-                                                    ),
-                                                    child: InkWell(
-                                                      child: Image.network(
-                                                        e.image ??
-                                                            'https://picsum.photos/300',
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                      onTap: () {
-                                                        // Navigator.pushNamed(context,
-                                                        //     RouteName.addEditItemPage,
-                                                        //     arguments: outFit);
-                                                      },
-                                                    ),
-                                                  ))
-                                              .toList()),
-                                    );
-                                  },
+          ];
+        },
+        body: SafeArea(
+          child: DefaultTabController(
+            length: 2,
+            initialIndex: 0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TabBar(
+                  indicatorColor: Colors.black,
+                  labelStyle: AppStyles.h4,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  tabs: const [
+                    Tab(text: 'Closet'),
+                    Tab(text: 'Outfit'),
+                  ],
+                ),
+                Expanded(
+                  child: TabBarView(
+                    children: <Widget>[
+                      const Closet(),
+                      ScopedModel(
+                        model: ClosetViewModel(),
+                        child: ScopedModelDescendant<ClosetViewModel>(
+                          builder: (context, child, model) {
+                            var outFitList =
+                                Get.find<ClosetViewModel>().outFitList ?? [];
+                            if (outFitList.isEmpty) {}
+                            return Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: GridView(
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 12.0,
+                                  mainAxisSpacing: 12.0,
+                                  childAspectRatio: 366 / 512,
                                 ),
-                              )
-                            ]))
-                      ])),
+                                scrollDirection: Axis.vertical,
+                                children: outFitList.reversed
+                                    .map(
+                                      (e) => Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: AppColors.primaryColor,
+                                            width: 0.8,
+                                          ),
+                                        ),
+                                        child: InkWell(
+                                          child: Image.network(
+                                            e.image ??
+                                                'https://picsum.photos/300',
+                                            fit: BoxFit.fill,
+                                          ),
+                                          onTap: () {},
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ]),
+          ),
         ),
       ),
     );
@@ -183,8 +184,8 @@ class _ClosetState extends State<Closet> {
                               (e) => Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: AppColors.lightBrown,
-                                    width: 0.2,
+                                    color: AppColors.whiteBg,
+                                    width: 0.7,
                                   ),
                                 ),
                                 child: Padding(

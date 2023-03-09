@@ -3,6 +3,7 @@ import 'package:ecloset/Pages/user_profile_page.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/pages/closet_page.dart';
 import 'package:ecloset/pages/newsfeed.dart';
+import 'package:ecloset/pages/sell_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -19,7 +20,7 @@ class _AppState extends State<App> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
     const HomePage(),
-    const ClosetPage(),
+    const SellItemPage(),
     const NewsFeedPage(),
     const UserProfilePage(),
   ];

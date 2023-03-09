@@ -211,7 +211,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                       AppColors.secondaryColor)),
               child: Text(
                 "Save",
-                style: AppStyles.h4.copyWith(color: AppColors.black),
+                style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
               ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
@@ -242,26 +242,22 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const SizedBox(
-                //   height: 16,
-                // ),
-                // Text(
-                //   _isEdit ? "Edit item" : "Add new item",
-                //   style: AppStyles.h2.copyWith(color: AppColors.black),
-                // ),
                 const SizedBox(
                   height: 16,
                 ),
                 InkWell(
                   child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              width: 1.5, color: AppColors.primaryColor)),
                       height: 300,
                       width: double.infinity,
-                      color: Colors.white,
                       child: _isEdit
                           ? Image.network(
-                              widget.closet?.image ??
+                              widget.closet.image ??
                                   'https://picsum.photos/300',
-                              fit: BoxFit.cover)
+                              fit: BoxFit.fill)
                           : image != null
                               ? Image.file(
                                   image!,
@@ -271,21 +267,21 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                                   child: Text(
                                   "Upload your item",
                                   style: AppStyles.h4.copyWith(
-                                    color: AppColors.black,
+                                    color: AppColors.primaryColor,
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ))),
                   onTap: () => pickImage(context),
                 ),
                 const SizedBox(
-                  height: 32,
+                  height: 16,
                 ),
                 Text(
                   "Name",
-                  style: AppStyles.h4.copyWith(color: AppColors.black),
+                  style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 TextFormField(
                   initialValue: _productName,
@@ -293,13 +289,20 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                         _productName = value;
                       })),
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: AppColors.textWhite,
-                      errorStyle: const TextStyle(height: 0),
-                      counterText: "",
-                      filled: true),
+                    filled: true,
+                    fillColor: AppColors.textWhite,
+                    focusedBorder: OutlineInputBorder(
+                      gapPadding: 0.0,
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                          color: AppColors.primaryColor, width: 1.5),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    errorStyle: const TextStyle(height: 0),
+                    counterText: "",
+                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter name';
@@ -312,23 +315,30 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 ),
                 Text(
                   "Type of clothes",
-                  style: AppStyles.h4.copyWith(color: AppColors.black),
+                  style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 DropdownButtonFormField(
                     validator: (value) =>
                         value == null ? "Please select" : null,
                     value: _productId,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        fillColor: AppColors.textWhite,
-                        errorStyle: const TextStyle(height: 0),
-                        counterText: "",
-                        filled: true),
+                      filled: true,
+                      fillColor: AppColors.textWhite,
+                      focusedBorder: OutlineInputBorder(
+                        gapPadding: 0.0,
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.5),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      errorStyle: const TextStyle(height: 0),
+                      counterText: "",
+                    ),
                     items: productCategories
                         .map((e) => DropdownMenuItem(
                               value: e.id,
@@ -345,23 +355,30 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                 ),
                 Text(
                   "Category",
-                  style: AppStyles.h4.copyWith(color: AppColors.black),
+                  style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 DropdownButtonFormField(
                     validator: (value) =>
                         value == null ? "Please select" : null,
                     value: _subProductCat,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        fillColor: AppColors.textWhite,
-                        errorStyle: const TextStyle(height: 0),
-                        counterText: "",
-                        filled: true),
+                      filled: true,
+                      fillColor: AppColors.textWhite,
+                      focusedBorder: OutlineInputBorder(
+                        gapPadding: 0.0,
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            color: AppColors.primaryColor, width: 1.5),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      errorStyle: const TextStyle(height: 0),
+                      counterText: "",
+                    ),
                     items: subProductCategories
                         .where((e) => e.id == _productId)
                         .map((e) => DropdownMenuItem(
