@@ -4,18 +4,16 @@ import 'package:ecloset/Constant/view_status.dart';
 import 'package:ecloset/Model/DAO/ClosetDAO.dart';
 import 'package:ecloset/Model/DAO/OutFitDAO.dart';
 import 'package:ecloset/Model/DTO/index.dart';
-import 'package:ecloset/Pages/outfit_page.dart';
 import 'package:ecloset/ViewModel/base_model.dart';
-import 'package:ecloset/ViewModel/login_viewModel.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:ecloset/pages/app.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/loading_screen.dart';
-import 'package:get/get.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:get/get.dart';
 
 class ClosetViewModel extends BaseModel {
-  AccountDTO? acc;
+  // AccountDTO? acc;
   ClosetDAO? closetDAO;
   OutFitDAO? _dao;
   ClosetData? closet;

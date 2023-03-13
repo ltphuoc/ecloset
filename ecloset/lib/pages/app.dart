@@ -1,13 +1,12 @@
 import 'package:ecloset/Pages/home_page.dart';
-import 'package:ecloset/Pages/user_profile_page.dart';
 import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/pages/closet_page.dart';
-import 'package:ecloset/pages/newsfeed.dart';
+import 'package:ecloset/pages/profile/user_profile_page.dart';
 import 'package:ecloset/pages/sell_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../Utils/routes_name.dart';
+import 'community/newsfeed.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

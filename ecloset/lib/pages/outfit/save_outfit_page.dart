@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../constant/app_colors.dart';
-import '../constant/app_styles.dart';
+import '../../constant/app_colors.dart';
+import '../../constant/app_styles.dart';
 
 class SaveOutfitPage extends StatefulWidget {
   SaveOutfitPage({super.key, required this.imageByte});

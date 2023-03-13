@@ -1,11 +1,9 @@
 import 'package:ecloset/Model/DAO/AccountDAO.dart';
-import 'package:ecloset/ViewModel/base_model.dart';
-import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/Utils/shared_pref.dart';
-
+import 'package:ecloset/ViewModel/base_model.dart';
+import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class StartUpViewModel extends BaseModel {
   StartUpViewModel() {

@@ -1,13 +1,13 @@
 import 'package:ecloset/Model/DTO/ClosetDTO.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/widgets/app_bar.dart';
+// import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import '../constant/app_styles.dart';
-import '../utils/closet.dart';
+import '../../constant/app_styles.dart';
+import '../../utils/closet.dart';
 
 class ClosetPage extends StatefulWidget {
   const ClosetPage({Key? key}) : super(key: key);

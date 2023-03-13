@@ -4,17 +4,17 @@ import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecloset/Model/DTO/ClosetDTO.dart';
-import 'package:ecloset/Pages/save_outfit_page.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
+import 'package:ecloset/pages/outfit/save_outfit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
-import '../utils/closet.dart';
-import '../widgets/loading_screen.dart';
+import '../../utils/closet.dart';
+import '../../widgets/loading_screen.dart';
 
 class ContainerList {
   double height;

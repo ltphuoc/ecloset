@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import '../utils/routes_name.dart';
-
 class OutfitPage extends StatefulWidget {
   const OutfitPage({super.key});
 

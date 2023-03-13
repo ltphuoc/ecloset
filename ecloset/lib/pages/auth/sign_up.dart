@@ -3,7 +3,6 @@ import 'package:ecloset/ViewModel/signUp_viewModel.dart';
 import 'package:ecloset/Widgets/button_global.dart';
 import 'package:ecloset/Widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 

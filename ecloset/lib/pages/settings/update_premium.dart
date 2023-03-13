@@ -1,7 +1,5 @@
 import 'package:ecloset/Constant/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class UpdatePremierum extends StatelessWidget {
   const UpdatePremierum({super.key});
@@ -16,7 +14,7 @@ class UpdatePremierum extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/premium.png"),
             fit: BoxFit.cover,

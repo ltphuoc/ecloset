@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:ecloset/Model/DTO/AccountDTO.dart';
 import 'package:ecloset/utils/request.dart';

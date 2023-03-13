@@ -1,16 +1,15 @@
 import 'dart:developer';
 
+import 'package:ecloset/Constant/view_status.dart';
 import 'package:ecloset/Model/DAO/AccountDAO.dart';
 import 'package:ecloset/Model/DTO/AccountDTO.dart';
 import 'package:ecloset/Services/analystic_service.dart';
-import 'package:ecloset/ViewModel/base_model.dart';
-import 'package:ecloset/Constant/view_status.dart';
 import 'package:ecloset/Utils/routes_name.dart';
+import 'package:ecloset/ViewModel/base_model.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

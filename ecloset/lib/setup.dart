@@ -1,12 +1,13 @@
-import 'package:ecloset/Pages/closet_page.dart';
 import 'package:ecloset/Pages/home_page.dart';
 import 'package:ecloset/Pages/settings/setting_page.dart';
-import 'package:ecloset/Pages/sign_up.dart';
-import 'package:ecloset/Pages/user_profile_page.dart';
+
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/ViewModel/login_viewModel.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:ecloset/firebase_options.dart';
+import 'package:ecloset/pages/auth/sign_up.dart';
+import 'package:ecloset/pages/closet/closet_page.dart';
+import 'package:ecloset/pages/profile/user_profile_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 

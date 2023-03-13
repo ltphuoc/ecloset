@@ -1,32 +1,31 @@
 import 'dart:io';
 
-import 'package:ecloset/Model/DTO/index.dart';
-import 'package:ecloset/Pages/sign_up.dart';
-import 'package:ecloset/constant/app_colors.dart';
-import 'package:ecloset/firebase_options.dart';
-import 'package:ecloset/Pages/add_edit_item_page.dart';
-import 'package:ecloset/Pages/app.dart';
-import 'package:ecloset/Pages/closet_page.dart';
-import 'package:ecloset/Pages/create_outfit_page.dart';
-import 'package:ecloset/Pages/home_page.dart';
-import 'package:ecloset/Pages/login.dart';
-import 'package:ecloset/Pages/outfit_page.dart';
-import 'package:ecloset/Pages/profile_settings_page.dart';
-import 'package:ecloset/Pages/save_outfit_page.dart';
-import 'package:ecloset/Pages/start_up.dart';
-import 'package:ecloset/Pages/user_profile_page.dart';
-import 'package:ecloset/pages/newsfeed.dart';
-import 'package:ecloset/pages/outfit_detail_page.dart';
-import 'package:ecloset/pages/settings/setting_page.dart';
-import 'package:ecloset/pages/update_premium.dart';
+import 'package:ecloset/pages/app.dart';
+import 'package:ecloset/pages/auth/login.dart';
+import 'package:ecloset/pages/auth/sign_up.dart';
+import 'package:ecloset/pages/closet/closet_page.dart';
+import 'package:ecloset/pages/community/newsfeed.dart';
+import 'package:ecloset/pages/outfit/create_outfit_page.dart';
+import 'package:ecloset/pages/outfit/outfit_detail_page.dart';
+import 'package:ecloset/pages/outfit/outfit_page.dart';
+import 'package:ecloset/pages/outfit/save_outfit_page.dart';
+import 'package:ecloset/pages/profile/profile_settings_page.dart';
+import 'package:ecloset/pages/profile/user_profile_page.dart';
+import 'package:ecloset/pages/settings/update_premium.dart';
 import 'package:ecloset/setup.dart';
 import 'package:ecloset/utils/pageNavigation.dart';
-import 'package:ecloset/utils/request.dart';
-import 'package:ecloset/utils/routes_name.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+
+import 'Model/DTO/ClosetDTO.dart';
+
+import 'Pages/add_edit_item_page.dart';
+import 'Pages/home_page.dart';
+import 'Pages/settings/setting_page.dart';
+import 'Pages/start_up.dart';
+import 'Utils/request.dart';
+import 'Utils/routes_name.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

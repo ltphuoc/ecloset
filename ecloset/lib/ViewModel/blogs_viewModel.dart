@@ -39,7 +39,6 @@ class BlogsViewModel extends BaseModel {
       //   return;
       // }
       await Future.delayed(Duration(microseconds: 500));
-      // check truong hop product tra ve rong (do khong co menu nao trong TG do)
       setState(ViewStatus.Completed);
     } catch (e) {
       // blogs = null;
