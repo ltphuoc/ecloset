@@ -4,7 +4,23 @@ import 'package:ecloset/Model/DTO/MetaDataDTO.dart';
 import 'package:ecloset/Model/DTO/index.dart';
 import 'package:ecloset/Utils/request.dart';
 
+import '../../utils/shared_pref.dart';
+
 class OutFitDAO extends BaseDAO {
+  Future<OutFitDTO?> getOutfit(id) async {
+    OutFitDTO outfit;
+    final res = await request.get(
+      "api/outfit/$id",
+    );
+    final jsonList = res.data['data'];
+    if (jsonList != null) {
+      outfit = OutFitDTO.fromJson(jsonList);
+
+      return outfit;
+    }
+    return null;
+  }
+
   Future<List<OutFitDTO>?> getOutFitList({
     int page = 1,
     int size = 10,
@@ -17,10 +33,13 @@ class OutFitDAO extends BaseDAO {
       queryParameters: {"Page": page, "PageSize": size}..addAll(params),
     );
     final jsonList = res.data['data'];
+    var accountId = await getAccountId().then((value) => int.parse(value!));
     metaDataDTO = MetaDataDTO.fromJson(res.data['metadata']);
     if (jsonList != null) {
       outFitList =
-          List<OutFitDTO>.from(jsonList.map((i) => OutFitDTO.fromJson(i)));
+          List<OutFitDTO>.from(jsonList.map((i) => OutFitDTO.fromJson(i)))
+              .where((element) => element.subcategoryId == accountId)
+              .toList();
       return outFitList;
     }
     return null;
@@ -28,12 +47,12 @@ class OutFitDAO extends BaseDAO {
 
   Future<OutFitDTO> saveOutfit(
       String outfitName, String image, String description) async {
+    var accountId = await getAccountId().then((value) => int.parse(value!));
     Response response = await request.post("api/Outfit", data: {
-      "outfitId": 2,
       "outfitName": outfitName,
-      "categoryId": 1,
+      "categoryId": 5,
       "subcategoryId": 1,
-      "supplierId": 2,
+      "supplierId": accountId,
       "image": image,
       "description": description
     });

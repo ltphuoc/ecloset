@@ -14,6 +14,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'closet/closet_page.dart';
+
 List images = ['assets/images/img1.png', "assets/images/img11.png"];
 List imagess = ['assets/images/img2.png', "assets/images/tee.png"];
 
@@ -27,9 +29,14 @@ List brandList = [
   "https://cdn.logojoy.com/wp-content/uploads/2018/05/30143359/2_big1.png"
 ];
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,10 +76,177 @@ class HomePage extends StatelessWidget {
                     Tab(text: 'Outfit'),
                   ],
                 ),
-                const Expanded(
+                Expanded(
                   child: TabBarView(
                     children: <Widget>[
-                      _Closet(),
+                      ScopedModel(
+                          model: ClosetViewModel(),
+                          child: ScopedModelDescendant<ClosetViewModel>(
+                              builder: (context, child, model) {
+                            var closetList =
+                                Get.find<ClosetViewModel>().closetList ?? [];
+                            if (closetList.isEmpty) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 12, left: 12, right: 12),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                        child: InkWell(
+                                      onTap: () {
+                                        // Get.toNamed(RouteName.outfitPage);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ClosetPage(),
+                                          ),
+                                        ).then((_) {
+                                          setState(() {
+                                            // Call setState to refresh the page.
+                                          });
+                                        });
+                                      },
+                                      child: AspectRatio(
+                                        aspectRatio: 1 / 1,
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              color: AppColors.lightBrown1,
+                                            ),
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: const [
+                                                  Icon(Icons.add),
+                                                  Text("You don't have closet"),
+                                                ],
+                                              ),
+                                            )),
+                                      ),
+                                    )),
+                                    Expanded(child: Container()),
+                                  ],
+                                ),
+                              );
+                            }
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 12, left: 12, right: 12),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      child: InkWell(
+                                    onTap: () {
+                                      Get.toNamed(RouteName.closetPage)
+                                          ?.then((_) {
+                                        setState(() {
+                                          // Call setState to refresh the page.
+                                        });
+                                      });
+                                    },
+                                    child: AspectRatio(
+                                      aspectRatio: 1 / 1,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          color: AppColors.lightBrown1,
+                                        ),
+                                        child: GridView.count(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          crossAxisCount: 2,
+                                          children: closetList.length >= 4
+                                              ? closetList
+                                                  .sublist(0, 4)
+                                                  .map(
+                                                    (e) => Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color:
+                                                              AppColors.whiteBg,
+                                                          width: 0.7,
+                                                        ),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Image.network(
+                                                          e.image ??
+                                                              'https://picsum.photos/300',
+                                                          fit: BoxFit.contain,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList()
+                                              : closetList
+                                                  .map(
+                                                    (e) => Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color:
+                                                              AppColors.whiteBg,
+                                                          width: 0.7,
+                                                        ),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Image.network(
+                                                          e.image ??
+                                                              'https://picsum.photos/300',
+                                                          fit: BoxFit.contain,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                      child: InkWell(
+                                    onTap: () {
+                                      Get.toNamed(RouteName.outfitPage);
+                                    },
+                                    child: AspectRatio(
+                                      aspectRatio: 1 / 1,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            color: AppColors.lightBrown1,
+                                          ),
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: const [
+                                                Icon(Icons.add),
+                                                Text("Create a closet"),
+                                              ],
+                                            ),
+                                          )),
+                                    ),
+                                  )),
+                                ],
+                              ),
+                            );
+                          })),
                       _Outfit(),
                     ],
                   ),
@@ -134,94 +308,6 @@ class _Outfit extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class _Closet extends StatelessWidget {
-  const _Closet({
-    Key? key,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return ScopedModel(
-        model: ClosetViewModel(),
-        child: ScopedModelDescendant<ClosetViewModel>(
-            builder: (context, child, model) {
-          var closetList = Get.find<ClosetViewModel>().closetList ?? [];
-          if (closetList.isEmpty) {}
-          return Padding(
-            padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                    child: InkWell(
-                  onTap: () {
-                    Get.toNamed(RouteName.closetPage);
-                  },
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: AppColors.lightBrown1,
-                      ),
-                      child: GridView.count(
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 2,
-                        children: closetList
-                            .sublist(0, 4)
-                            .map(
-                              (e) => Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColors.whiteBg,
-                                    width: 0.7,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.network(
-                                    e.image ?? 'https://picsum.photos/300',
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                )),
-                const SizedBox(width: 16),
-                Expanded(
-                    child: InkWell(
-                  onTap: () {
-                    Get.toNamed(RouteName.outfitPage);
-                  },
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: AppColors.lightBrown1,
-                        ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(Icons.add),
-                              Text("Create a closet"),
-                            ],
-                          ),
-                        )),
-                  ),
-                )),
-              ],
-            ),
-          );
-        }));
   }
 }
 

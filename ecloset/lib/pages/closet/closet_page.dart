@@ -1,11 +1,11 @@
 import 'package:ecloset/Model/DTO/ClosetDTO.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
-// import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import '../../Utils/routes_name.dart';
 import '../../constant/app_styles.dart';
 import '../../utils/closet.dart';
 
@@ -18,6 +18,8 @@ class ClosetPage extends StatefulWidget {
 
 class _ClosetPageState extends State<ClosetPage> {
   int id = 1;
+  // var _accountId;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +33,7 @@ class _ClosetPageState extends State<ClosetPage> {
       child: ScopedModelDescendant<ClosetViewModel>(
         builder: (context, child, model) {
           var closetList = Get.find<ClosetViewModel>().closetList ?? [];
+
           List topIds, pantIds, footwearIds, otherIds;
           List categoryIds =
               closetList.map((closet) => closet.categoryId).toSet().toList();
@@ -273,7 +276,14 @@ class _ClosetPageState extends State<ClosetPage> {
 
   InkWell closetItemCard(ClosetData e) {
     return InkWell(
-      onTap: () {},
+      onTap: () async {
+        await Get.find<ClosetViewModel>().getCloset(e.productId);
+        // Get.toNamed(RouteName.addEditItemPage, arguments: e.productId);
+        // ignore: use_build_context_synchronously
+        Navigator.pushNamed(context, RouteName.addEditItemPage,
+                arguments: e.productId)
+            .then((value) => setState(() {}));
+      },
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(

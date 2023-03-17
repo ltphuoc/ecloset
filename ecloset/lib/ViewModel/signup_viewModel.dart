@@ -16,7 +16,6 @@ class SignUpViewModel extends BaseModel {
       updateUser = await _accountDAO?.updateUser(user);
       setState(ViewStatus.Completed);
     } catch (e) {
-      print(e);
       setState(ViewStatus.Error);
     }
   }

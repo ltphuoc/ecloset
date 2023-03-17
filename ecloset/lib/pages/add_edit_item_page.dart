@@ -1,16 +1,20 @@
-import 'dart:io';
-import 'dart:typed_data';
+// ignore_for_file: use_build_context_synchronously
 
-import 'package:ecloset/Model/DTO/index.dart';
+import 'dart:io';
+
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/api/api_client.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import '../widgets/loading_screen.dart';
 
 enum ProductCategories { top, bottom, footwear, otherAccessories }
 
@@ -57,12 +61,9 @@ List<SubProductCat> subProductCategories = [
 ];
 
 class AddEditItemPage extends StatefulWidget {
-  const AddEditItemPage({
-    super.key,
-    required this.closet,
-  });
+  const AddEditItemPage({super.key, this.id});
 
-  final ClosetData closet;
+  final int? id;
 
   @override
   State<AddEditItemPage> createState() => _AddEditItemPageState();
@@ -71,15 +72,15 @@ class AddEditItemPage extends StatefulWidget {
 class _AddEditItemPageState extends State<AddEditItemPage> {
   final _formKey = GlobalKey<FormState>();
   bool _isEdit = false;
-  int? _productId;
-  int? _subProductCat;
+  int? productId;
+  int? _productCatId;
+  int? _subProductCatId;
   String? _productName;
   File? image;
   Uint8List? imageFile;
   String? imagePath;
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
-  // DatabaseReference databaseRef = FirebaseDatabase.instance.ref("Image");
 
   Future pickImage(context) async {
     try {
@@ -101,301 +102,292 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
   @override
   void initState() {
     super.initState();
-    _isEdit = widget.closet != null;
-    // _productCat = widget.closet?.categoryId;
-    // _subProductCat = widget.closet?.subcategoryId;
-    // _productName = widget.closet?.productName;
+    _isEdit = widget.id != null;
+    if (widget.id != null) {
+      Get.find<ClosetViewModel>().getCloset(widget.id);
+    }
   }
-
-  void saveItem(context) async {
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-        .ref("/foldername${DateTime.now().millisecondsSinceEpoch}");
-    firebase_storage.UploadTask uploadTask = ref.putFile(image!.absolute);
-
-    Future.value(uploadTask).then((value) async {
-      var newUrl = await ref.getDownloadURL();
-      // var formData = jsonEncode({
-      //   "productName": _productName,
-      //   "categoryId": _productCat,
-      //   "subcategoryId": _subProductCat,
-      //   "supplierId": 1,
-      //   "color": "string",
-      //   "image": newUrl,
-      //   "productUrl": "string"
-      // });
-
-      // const url = 'https://localhost:7269/api/product/add';
-      // final response = await http.post(
-      //   Uri.parse(url),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      //   body: formData,
-      // );
-      // if (response.statusCode == 201) {
-      //   Navigator.pushAndRemoveUntil(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => const HomePage()),
-      //       (route) => false);
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => ClosetPage()),
-      //   );
-      // }
-    });
-  }
-
-  // void deleteItem(context) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext ctx) {
-  //         return AlertDialog(
-  //           title: const Text('Please Confirm'),
-  //           content: const Text('Are you sure to remove this item?'),
-  //           actions: [
-  //             TextButton(
-  //                 onPressed: () async {
-  //                   var url =
-  //                       "https://localhost:7269/api/product/${widget.closet?.productId}";
-  //                   final response = await http.delete(Uri.parse(url));
-  //                   if (response.statusCode == 200) {
-  //                     Navigator.pushNamedAndRemoveUntil(
-  //                         context, RouteName.app, (route) => false);
-  //                     Navigator.pushNamed(
-  //                       context,
-  //                       RouteName.closetPage,
-  //                     );
-  //                   } else {
-  //                     Navigator.of(context).pop();
-  //                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-  //                         content:
-  //                             Text('Failed to delete item, please try again')));
-  //                   }
-  //                 },
-  //                 child: const Text('Yes')),
-  //             TextButton(
-  //                 onPressed: () {
-  //                   Navigator.of(context).pop();
-  //                 },
-  //                 child: const Text('No'))
-  //           ],
-  //         );
-  //       });
-  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.whiteBg,
-      appBar: AppBar(
-        title: const Text("Add new clothes"),
-        centerTitle: true,
-        // leading: ,
-        backgroundColor: AppColors.primaryColor,
-        actions: [
-          if (_isEdit)
-            IconButton(
-                onPressed: () {
-                  // deleteItem(context);
-                },
-                icon: const Icon(Icons.delete))
-        ],
-      ),
-      bottomNavigationBar: _productId != null &&
-              _productName != null &&
-              _productName != "" &&
-              _subProductCat != null
-          ? ElevatedButton(
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(
-                      AppColors.secondaryColor)),
-              child: Text(
-                "Save",
-                style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
-              ),
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  ClosetViewModel root = Get.find<ClosetViewModel>();
-                  imageFile = await ApiCLient().removeBgApi(imagePath!);
-                  setState(() {});
+    return ScopedModel(
+        model: ClosetViewModel(),
+        child: ScopedModelDescendant<ClosetViewModel>(
+            builder: (context, child, model) {
+          var closetItem = Get.find<ClosetViewModel>().closet;
 
-                  firebase_storage.Reference ref =
-                      firebase_storage.FirebaseStorage.instance.ref(
-                          "/foldername${DateTime.now().millisecondsSinceEpoch}");
-                  // firebase_storage.UploadTask uploadTask =
-                  //     ref.putFile(image!.absolute);
-                  final TaskSnapshot snapshot = await ref.putData(imageFile!);
+          if (closetItem != null && _isEdit) {
+            productId = closetItem.productId;
+            _productCatId = closetItem.categoryId;
+            _subProductCatId = closetItem.subcategoryId;
+            _productName = closetItem.productName;
+          }
 
-                  var newUrl = await snapshot.ref.getDownloadURL();
-                  root.addCloset(_productName as String, _productId as int,
-                      _subProductCat as int, newUrl);
-                }
-              },
-            )
-          : null,
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 16,
-                ),
-                InkWell(
-                  child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              width: 1.5, color: AppColors.primaryColor)),
-                      height: 300,
-                      width: double.infinity,
-                      child: _isEdit
-                          ? Image.network(
-                              widget.closet.image ??
-                                  'https://picsum.photos/300',
-                              fit: BoxFit.fill)
-                          : image != null
-                              ? Image.file(
-                                  image!,
-                                  fit: BoxFit.fitHeight,
-                                )
-                              : Center(
-                                  child: Text(
-                                  "Upload your item",
-                                  style: AppStyles.h4.copyWith(
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ))),
-                  onTap: () => pickImage(context),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Name",
-                  style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  initialValue: _productName,
-                  onChanged: ((value) => setState(() {
-                        _productName = value;
-                      })),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: AppColors.textWhite,
-                    focusedBorder: OutlineInputBorder(
-                      gapPadding: 0.0,
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                          color: AppColors.primaryColor, width: 1.5),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    errorStyle: const TextStyle(height: 0),
-                    counterText: "",
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Type of clothes",
-                  style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                DropdownButtonFormField(
-                    validator: (value) =>
-                        value == null ? "Please select" : null,
-                    value: _productId,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors.textWhite,
-                      focusedBorder: OutlineInputBorder(
-                        gapPadding: 0.0,
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.5),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      errorStyle: const TextStyle(height: 0),
-                      counterText: "",
-                    ),
-                    items: productCategories
-                        .map((e) => DropdownMenuItem(
-                              value: e.id,
-                              child: Text(e.name.toString()),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _productId = value;
-                      });
-                    }),
-                const SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Category",
-                  style: AppStyles.h4.copyWith(color: AppColors.primaryColor),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                DropdownButtonFormField(
-                    validator: (value) =>
-                        value == null ? "Please select" : null,
-                    value: _subProductCat,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors.textWhite,
-                      focusedBorder: OutlineInputBorder(
-                        gapPadding: 0.0,
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                            color: AppColors.primaryColor, width: 1.5),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      errorStyle: const TextStyle(height: 0),
-                      counterText: "",
-                    ),
-                    items: subProductCategories
-                        .where((e) => e.id == _productId)
-                        .map((e) => DropdownMenuItem(
-                              value: e.catId,
-                              child: Text(e.name.toString()),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _subProductCat = value;
-                      });
-                    }),
+          return Scaffold(
+            backgroundColor: AppColors.whiteBg,
+            appBar: AppBar(
+              title: _isEdit
+                  ? const Text("Edit clothes")
+                  : const Text("Add new clothes"),
+              centerTitle: true,
+              backgroundColor: AppColors.primaryColor,
+              actions: [
+                if (_isEdit)
+                  IconButton(
+                    onPressed: () async {
+                      bool shouldDelete = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Confirm Delete"),
+                            content: const Text(
+                                "Are you sure you want to delete this item?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(false),
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                                child: const Text("Delete"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      if (shouldDelete == true) {
+                        loadingScreen(context);
+                        bool isSuccess = await Get.find<ClosetViewModel>()
+                            .deleteCloset(productId!);
+                        Navigator.of(context).pop();
+                        if (isSuccess) {
+                          Navigator.pop(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Delete Failed")),
+                          );
+                        }
+                      }
+                    },
+                    icon: const Icon(Icons.delete),
+                  )
               ],
             ),
-          ),
-        ),
-      )),
-    );
+            bottomNavigationBar: _productName != null &&
+                    _productName != "" &&
+                    _subProductCatId != null
+                ? ElevatedButton(
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                            AppColors.secondaryColor)),
+                    child: Text(
+                      "Save",
+                      style:
+                          AppStyles.h4.copyWith(color: AppColors.primaryColor),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        ClosetViewModel root = Get.find<ClosetViewModel>();
+                        String newUrl = _isEdit ? closetItem?.image ?? "" : "";
+
+                        if (imagePath != null) {
+                          imageFile = await ApiCLient().removeBgApi(imagePath!);
+
+                          setState(() {});
+
+                          firebase_storage.Reference ref =
+                              firebase_storage.FirebaseStorage.instance.ref(
+                                  "/foldername${DateTime.now().millisecondsSinceEpoch}");
+
+                          final TaskSnapshot snapshot =
+                              await ref.putData(imageFile!);
+
+                          newUrl = await snapshot.ref.getDownloadURL();
+                        }
+
+                        if (_isEdit) {
+                          root.updateCloset(productId!, _productName!,
+                              _productCatId!, _subProductCatId!, newUrl);
+                        } else {
+                          root.addCloset(
+                              _productName as String,
+                              _productCatId as int,
+                              _subProductCatId as int,
+                              newUrl);
+                        }
+                      }
+                    },
+                  )
+                : null,
+            body: SafeArea(
+                child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      InkWell(
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                    width: 1.5, color: AppColors.primaryColor)),
+                            height: 350,
+                            width: double.infinity,
+                            child: _isEdit
+                                ? Image.network(
+                                    closetItem?.image ??
+                                        'https://picsum.photos/300',
+                                    fit: BoxFit.fill)
+                                : image != null
+                                    ? Image.file(
+                                        image!,
+                                        fit: BoxFit.fitHeight,
+                                      )
+                                    : Center(
+                                        child: Text(
+                                        "Upload your item",
+                                        style: AppStyles.h4.copyWith(
+                                          color: AppColors.primaryColor,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ))),
+                        onTap: () => pickImage(context),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        "Name",
+                        style: AppStyles.h4
+                            .copyWith(color: AppColors.primaryColor),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      TextFormField(
+                        initialValue: _productName,
+                        onChanged: ((value) => setState(() {
+                              _productName = value;
+                            })),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: AppColors.textWhite,
+                          focusedBorder: OutlineInputBorder(
+                            gapPadding: 0.0,
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                                color: AppColors.primaryColor, width: 1.5),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          errorStyle: const TextStyle(height: 0),
+                          counterText: "",
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter name';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        "Type of clothes",
+                        style: AppStyles.h4
+                            .copyWith(color: AppColors.primaryColor),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      DropdownButtonFormField(
+                          validator: (value) =>
+                              value == null ? "Please select" : null,
+                          value: _productCatId,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: AppColors.textWhite,
+                            focusedBorder: OutlineInputBorder(
+                              gapPadding: 0.0,
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: AppColors.primaryColor, width: 1.5),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorStyle: const TextStyle(height: 0),
+                            counterText: "",
+                          ),
+                          items: productCategories
+                              .map((e) => DropdownMenuItem(
+                                    value: e.id,
+                                    child: Text(e.name.toString()),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _productCatId = value;
+                            });
+                          }),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        "Category",
+                        style: AppStyles.h4
+                            .copyWith(color: AppColors.primaryColor),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      DropdownButtonFormField(
+                          validator: (value) =>
+                              value == null ? "Please select" : null,
+                          value: _subProductCatId,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: AppColors.textWhite,
+                            focusedBorder: OutlineInputBorder(
+                              gapPadding: 0.0,
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  color: AppColors.primaryColor, width: 1.5),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorStyle: const TextStyle(height: 0),
+                            counterText: "",
+                          ),
+                          items: subProductCategories
+                              .where((e) => e.id == _productCatId)
+                              .map((e) => DropdownMenuItem(
+                                    value: e.catId,
+                                    child: Text(e.name.toString()),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _subProductCatId = value;
+                            });
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+            )),
+          );
+        }));
   }
 }

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../utils/shared_pref.dart';
+
 class SettingPage extends StatelessWidget {
   const SettingPage({Key? key}) : super(key: key);
 
@@ -77,6 +79,7 @@ class SettingPage extends StatelessWidget {
 }
 
 Future<void> _signOut() async {
+  await setToken("");
   await FirebaseAuth.instance.signOut();
   await GoogleSignIn().signOut();
   Get.offAllNamed(RouteName.login);

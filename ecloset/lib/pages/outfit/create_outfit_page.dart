@@ -51,26 +51,18 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
   late double _currentRotation;
   late Size screen;
   bool _isSelectItem = false;
-  int? _selectedTop;
-  int? _selectedPant;
-  int? _selectedFootwear;
-  int? _selectedOther;
 
   WidgetsToImageController controller = WidgetsToImageController();
 
   @override
   void initState() {
     super.initState();
-    screen = const Size(800, 1080);
-
-    _selectedTop = topBtn.first.id;
-    _selectedPant = topBtn.first.id;
-    _selectedFootwear = topBtn.first.id;
-    _selectedOther = topBtn.first.id;
+    Get.find<ClosetViewModel>().getCloset();
   }
 
   @override
   Widget build(BuildContext context) {
+    screen = MediaQuery.of(context).size;
     return ScopedModel(
         model: ClosetViewModel(),
         child: ScopedModelDescendant<ClosetViewModel>(
@@ -87,16 +79,22 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                 backgroundColor: AppColors.primaryColor,
                 actions: [
                   TextButton(
-                      onPressed: () async {
-                        loadingScreen(context);
-                        Uint8List? imageByte = await controller.capture();
-                        if (imageByte == null) return;
-                        Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SaveOutfitPage(imageByte: imageByte)));
+                      onPressed: () {
+                        setState(() {
+                          _isSelectItem = false;
+                        });
+                        WidgetsBinding.instance.addPostFrameCallback((_) async {
+                          // Code to be executed after the UI has been updated
+                          loadingScreen(context);
+                          Uint8List? imageByte = await controller.capture();
+                          if (imageByte == null) return;
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SaveOutfitPage(imageByte: imageByte)));
+                        });
                       },
                       child: Text(
                         "Next",
@@ -108,7 +106,7 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                 backgroundColor: AppColors.brown,
                 child: const Icon(Icons.add),
                 onPressed: () {
-                  _showBottomSheet(context, listCloset);
+                  _showBottomSheet(context, listCloset ?? []);
                 },
               ),
               body: GestureDetector(
@@ -171,76 +169,57 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                                         height: value.height,
                                         width: value.width,
                                         child: FittedBox(
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.contain,
                                           child: Listener(
-                                              onPointerDown: (details) {
-                                                _initPos = details.position;
-                                                _currentPos = Offset(
-                                                    value.xPosition,
-                                                    value.yPosition);
-                                                _currentScale = value.scale;
-                                                _currentRotation =
-                                                    value.rotation;
-                                              },
-                                              child: DottedBorder(
-                                                color: value == list.last &&
-                                                        _isSelectItem
-                                                    ? Colors.black
-                                                    : Colors.transparent,
-                                                dashPattern: const [8, 8],
-                                                strokeWidth: 2,
-                                                borderType: BorderType.RRect,
-                                                radius:
-                                                    const Radius.circular(12),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(12)),
-                                                  child: Column(
-                                                    // mainAxisAlignment:
-                                                    //     MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      value == list.last &&
-                                                              _isSelectItem
-                                                          ? IconButton(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      right: 56,
-                                                                      top: 8,
-                                                                      bottom:
-                                                                          16),
+                                            onPointerDown: (details) {
+                                              _initPos = details.position;
+                                              _currentPos = Offset(
+                                                  value.xPosition,
+                                                  value.yPosition);
+                                              _currentScale = value.scale;
+                                              _currentRotation = value.rotation;
+                                            },
+                                            child: DottedBorder(
+                                              color: value == list.last &&
+                                                      _isSelectItem
+                                                  ? Colors.black
+                                                  : Colors.transparent,
+                                              dashPattern: const [8, 8],
+                                              strokeWidth: 1.5,
+                                              borderType: BorderType.RRect,
+                                              radius: const Radius.circular(12),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(12)),
+                                                child: Stack(
+                                                  children: [
+                                                    Image.network(value.url),
+                                                    value == list.last &&
+                                                            _isSelectItem
+                                                        ? Positioned(
+                                                            top: 0,
+                                                            right: 0,
+                                                            child: IconButton(
+                                                              iconSize: 36,
+                                                              color: AppColors
+                                                                  .secondaryColor,
                                                               icon: const Icon(
-                                                                Icons.close,
-                                                                size: 80,
-                                                              ),
+                                                                  Icons.close),
                                                               onPressed: () {
                                                                 setState(() {
                                                                   list.remove(
                                                                       value);
                                                                 });
                                                               },
-                                                              color: Colors.red,
-                                                            )
-                                                          : IconButton(
-                                                              icon: const Icon(
-                                                                size: 32,
-                                                                Icons.close,
-                                                              ),
-                                                              onPressed: () {},
-                                                              color: Colors
-                                                                  .transparent,
                                                             ),
-                                                      Image.network(
-                                                        (value.url),
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ],
-                                                  ),
+                                                          )
+                                                        : Container(),
+                                                  ],
                                                 ),
-                                              )),
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -261,17 +240,22 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
   }
 
   void _showBottomSheet(
-      BuildContext context, List<ClosetData>? closetList) async {
+      BuildContext context, List<ClosetData> closetList) async {
     await showModalBottomSheet(
         backgroundColor: AppColors.whiteBg,
         isScrollControlled: true,
         context: context,
         builder: (ctx) {
           List topIds, pantIds, footwearIds, otherIds;
-          List categoryIds =
-              closetList!.map((closet) => closet.categoryId).toSet().toList();
-          List subCategoryIds =
-              closetList.map((closet) => closet.subcategoryId).toSet().toList();
+          List categoryIds = closetList.isNotEmpty
+              ? closetList.map((closet) => closet.categoryId).toSet().toList()
+              : [];
+          List subCategoryIds = closetList.isNotEmpty
+              ? closetList
+                  .map((closet) => closet.subcategoryId)
+                  .toSet()
+                  .toList()
+              : [];
           if (categoryIds.isNotEmpty) {
             categoryIds.add(0);
             categoryIds = categoryIds.toList()..sort();
@@ -323,261 +307,305 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
                         ),
                         SizedBox(
                             height: 400, //height of TabBarView
-                            child: TabBarView(children: [
-                              GridView.count(
-                                  crossAxisCount: 3,
-                                  children: closetList
-                                      .map((e) =>
-                                          closetItemIcon(e, list, setState))
-                                      .toList()),
-                              DefaultTabController(
-                                  animationDuration: Duration.zero,
-                                  length: topIds.length,
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: TabBar(
-                                            indicatorColor: Colors.transparent,
-                                            labelColor: Colors.black,
-                                            unselectedLabelColor: Colors.grey,
-                                            isScrollable: true,
-                                            tabs: topIds.map((e) {
-                                              return Tab(
-                                                text: getNameById(e, topBtn),
-                                              );
-                                            }).toList()),
-                                      ),
-                                      Expanded(
-                                        child: TabBarView(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            children: topIds.map((subCatId) {
-                                              return GridView.count(
-                                                  crossAxisCount: 3,
-                                                  children: closetList
-                                                      .where((e) {
-                                                        if (subCatId != 0) {
-                                                          return e.subcategoryId ==
-                                                              subCatId;
-                                                        }
-                                                        return e.categoryId ==
-                                                            1;
-                                                      })
-                                                      .map((e) =>
-                                                          closetItemIcon(e,
-                                                              list, setState))
-                                                      .toList());
-                                            }).toList()),
-                                      )
-                                    ],
-                                  )),
-                              // Column(
-                              //   children: [
-                              //     Wrap(
-                              //       children: topBtn
-                              //           .map((e) => TextButton(
-                              //               onPressed: () {
-                              //                 setState(() {
-                              //                   _selectedTop = e.id;
-                              //                 });
-                              //               },
-                              //               child: Text(
-                              //                 e.name,
-                              //                 style: AppStyles.h4.copyWith(
-                              //                     color: _selectedTop == e.id
-                              //                         ? AppColors.secondaryColor
-                              //                         : AppColors.textGrey),
-                              //               )))
-                              //           .toList(),
-                              //     ),
-                              //     const SizedBox(
-                              //       height: 8,
-                              //     ),
-                              //     Expanded(
-                              //       child: GridView.count(
-                              //           crossAxisCount: 3,
-                              //           children: closetList
-                              //               .where((e) {
-                              //                 if (_selectedTop != 0) {
-                              //                   return e.subcategoryId ==
-                              //                       _selectedTop;
-                              //                 } else {
-                              //                   return e.categoryId == 1;
-                              //                 }
-                              //               })
-                              //               .map((e) => InkWell(
-                              //                     onTap: () {
-                              //                       doMultiSelect(
-                              //                           e.image, setState);
-                              //                     },
-                              //                     child: Stack(
-                              //                       fit: StackFit.expand,
-                              //                       children: [
-                              //                         Container(
-                              //                           decoration:
-                              //                               BoxDecoration(
-                              //                             border: Border.all(
-                              //                                 width: 0.1),
-                              //                           ),
-                              //                           child: Image.network(
-                              //                               e.image ??
-                              //                                   'https://picsum.photos/300',
-                              //                               fit: BoxFit.cover),
-                              //                         ),
-                              //                         Positioned(
-                              //                           top: 0,
-                              //                           right: 0,
-                              //                           child: Icon(
-                              //                             list.any((element) =>
-                              //                                     element.url ==
-                              //                                     e.image)
-                              //                                 ? Icons
-                              //                                     .check_circle
-                              //                                 : Icons
-                              //                                     .radio_button_unchecked,
-                              //                             size: 24,
-                              //                             color: AppColors
-                              //                                 .secondaryColor,
-                              //                           ),
-                              //                         )
-                              //                       ],
-                              //                     ),
-                              //                   ))
-                              //               .toList()),
-                              //     ),
-                              //   ],
-                              // ),
+                            child: closetList.isEmpty
+                                ? const TabBarView(children: [
+                                    Center(
+                                      child: Text("No item in closet"),
+                                    ),
+                                    Center(
+                                      child: Text("No item in closet"),
+                                    ),
+                                    Center(
+                                      child: Text("No item in closet"),
+                                    ),
+                                    Center(
+                                      child: Text("No item in closet"),
+                                    ),
+                                    Center(
+                                      child: Text("No item in closet"),
+                                    )
+                                  ])
+                                : TabBarView(children: [
+                                    GridView.count(
+                                        crossAxisCount: 3,
+                                        children: closetList
+                                            .map((e) => closetItemIcon(
+                                                e, list, setState))
+                                            .toList()),
+                                    DefaultTabController(
+                                        animationDuration: Duration.zero,
+                                        length: topIds.length,
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: TabBar(
+                                                  indicatorColor:
+                                                      Colors.transparent,
+                                                  labelColor: Colors.black,
+                                                  unselectedLabelColor:
+                                                      Colors.grey,
+                                                  isScrollable: true,
+                                                  tabs: topIds.map((e) {
+                                                    return Tab(
+                                                      text: getNameById(
+                                                          e, topBtn),
+                                                    );
+                                                  }).toList()),
+                                            ),
+                                            Expanded(
+                                              child: TabBarView(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  children:
+                                                      topIds.map((subCatId) {
+                                                    return GridView.count(
+                                                        crossAxisCount: 3,
+                                                        children: closetList
+                                                            .where((e) {
+                                                              if (subCatId !=
+                                                                  0) {
+                                                                return e.subcategoryId ==
+                                                                    subCatId;
+                                                              }
+                                                              return e.categoryId ==
+                                                                  1;
+                                                            })
+                                                            .map((e) =>
+                                                                closetItemIcon(
+                                                                    e,
+                                                                    list,
+                                                                    setState))
+                                                            .toList());
+                                                  }).toList()),
+                                            )
+                                          ],
+                                        )),
+                                    // Column(
+                                    //   children: [
+                                    //     Wrap(
+                                    //       children: topBtn
+                                    //           .map((e) => TextButton(
+                                    //               onPressed: () {
+                                    //                 setState(() {
+                                    //                   _selectedTop = e.id;
+                                    //                 });
+                                    //               },
+                                    //               child: Text(
+                                    //                 e.name,
+                                    //                 style: AppStyles.h4.copyWith(
+                                    //                     color: _selectedTop == e.id
+                                    //                         ? AppColors.secondaryColor
+                                    //                         : AppColors.textGrey),
+                                    //               )))
+                                    //           .toList(),
+                                    //     ),
+                                    //     const SizedBox(
+                                    //       height: 8,
+                                    //     ),
+                                    //     Expanded(
+                                    //       child: GridView.count(
+                                    //           crossAxisCount: 3,
+                                    //           children: closetList
+                                    //               .where((e) {
+                                    //                 if (_selectedTop != 0) {
+                                    //                   return e.subcategoryId ==
+                                    //                       _selectedTop;
+                                    //                 } else {
+                                    //                   return e.categoryId == 1;
+                                    //                 }
+                                    //               })
+                                    //               .map((e) => InkWell(
+                                    //                     onTap: () {
+                                    //                       doMultiSelect(
+                                    //                           e.image, setState);
+                                    //                     },
+                                    //                     child: Stack(
+                                    //                       fit: StackFit.expand,
+                                    //                       children: [
+                                    //                         Container(
+                                    //                           decoration:
+                                    //                               BoxDecoration(
+                                    //                             border: Border.all(
+                                    //                                 width: 0.1),
+                                    //                           ),
+                                    //                           child: Image.network(
+                                    //                               e.image ??
+                                    //                                   'https://picsum.photos/300',
+                                    //                               fit: BoxFit.cover),
+                                    //                         ),
+                                    //                         Positioned(
+                                    //                           top: 0,
+                                    //                           right: 0,
+                                    //                           child: Icon(
+                                    //                             list.any((element) =>
+                                    //                                     element.url ==
+                                    //                                     e.image)
+                                    //                                 ? Icons
+                                    //                                     .check_circle
+                                    //                                 : Icons
+                                    //                                     .radio_button_unchecked,
+                                    //                             size: 24,
+                                    //                             color: AppColors
+                                    //                                 .secondaryColor,
+                                    //                           ),
+                                    //                         )
+                                    //                       ],
+                                    //                     ),
+                                    //                   ))
+                                    //               .toList()),
+                                    //     ),
+                                    //   ],
+                                    // ),
 
-                              DefaultTabController(
-                                  animationDuration: Duration.zero,
-                                  length: pantIds.length,
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: TabBar(
-                                            indicatorColor: Colors.transparent,
-                                            labelColor: Colors.black,
-                                            unselectedLabelColor: Colors.grey,
-                                            isScrollable: true,
-                                            tabs: pantIds.map((e) {
-                                              return Tab(
-                                                text: getNameById(e, pantBtn),
-                                              );
-                                            }).toList()),
-                                      ),
-                                      Expanded(
-                                        child: TabBarView(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            children: pantIds.map((subCatId) {
-                                              return GridView.count(
-                                                  crossAxisCount: 3,
-                                                  children: closetList
-                                                      .where((e) {
-                                                        if (subCatId != 0) {
-                                                          return e.subcategoryId ==
-                                                              subCatId;
-                                                        }
-                                                        return e.categoryId ==
-                                                            2;
-                                                      })
-                                                      .map((e) =>
-                                                          closetItemIcon(e,
-                                                              list, setState))
-                                                      .toList());
-                                            }).toList()),
-                                      )
-                                    ],
-                                  )),
-                              DefaultTabController(
-                                  animationDuration: Duration.zero,
-                                  length: footwearIds.length,
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: TabBar(
-                                            indicatorColor: Colors.transparent,
-                                            labelColor: Colors.black,
-                                            unselectedLabelColor: Colors.grey,
-                                            isScrollable: true,
-                                            tabs: footwearIds.map((e) {
-                                              return Tab(
-                                                text:
-                                                    getNameById(e, footwearBtn),
-                                              );
-                                            }).toList()),
-                                      ),
-                                      Expanded(
-                                        child: TabBarView(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            children:
-                                                footwearIds.map((subCatId) {
-                                              return GridView.count(
-                                                  crossAxisCount: 3,
-                                                  children: closetList
-                                                      .where((e) {
-                                                        if (subCatId != 0) {
-                                                          return e.subcategoryId ==
-                                                              subCatId;
-                                                        }
-                                                        return e.categoryId ==
-                                                            3;
-                                                      })
-                                                      .map((e) =>
-                                                          closetItemIcon(e,
-                                                              list, setState))
-                                                      .toList());
-                                            }).toList()),
-                                      )
-                                    ],
-                                  )),
-                              DefaultTabController(
-                                  animationDuration: Duration.zero,
-                                  length: otherIds.length,
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: TabBar(
-                                            indicatorColor: Colors.transparent,
-                                            labelColor: Colors.black,
-                                            unselectedLabelColor: Colors.grey,
-                                            isScrollable: true,
-                                            tabs: otherIds.map((e) {
-                                              return Tab(
-                                                text: getNameById(e, otherBtn),
-                                              );
-                                            }).toList()),
-                                      ),
-                                      Expanded(
-                                        child: TabBarView(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            children: otherIds.map((subCatId) {
-                                              return GridView.count(
-                                                  crossAxisCount: 3,
-                                                  children: closetList
-                                                      .where((e) {
-                                                        if (subCatId != 0) {
-                                                          return e.subcategoryId ==
-                                                              subCatId;
-                                                        }
-                                                        return e.categoryId ==
-                                                            4;
-                                                      })
-                                                      .map((e) =>
-                                                          closetItemIcon(e,
-                                                              list, setState))
-                                                      .toList());
-                                            }).toList()),
-                                      )
-                                    ],
-                                  )),
-                            ]))
+                                    DefaultTabController(
+                                        animationDuration: Duration.zero,
+                                        length: pantIds.length,
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: TabBar(
+                                                  indicatorColor:
+                                                      Colors.transparent,
+                                                  labelColor: Colors.black,
+                                                  unselectedLabelColor:
+                                                      Colors.grey,
+                                                  isScrollable: true,
+                                                  tabs: pantIds.map((e) {
+                                                    return Tab(
+                                                      text: getNameById(
+                                                          e, pantBtn),
+                                                    );
+                                                  }).toList()),
+                                            ),
+                                            Expanded(
+                                              child: TabBarView(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  children:
+                                                      pantIds.map((subCatId) {
+                                                    return GridView.count(
+                                                        crossAxisCount: 3,
+                                                        children: closetList
+                                                            .where((e) {
+                                                              if (subCatId !=
+                                                                  0) {
+                                                                return e.subcategoryId ==
+                                                                    subCatId;
+                                                              }
+                                                              return e.categoryId ==
+                                                                  2;
+                                                            })
+                                                            .map((e) =>
+                                                                closetItemIcon(
+                                                                    e,
+                                                                    list,
+                                                                    setState))
+                                                            .toList());
+                                                  }).toList()),
+                                            )
+                                          ],
+                                        )),
+                                    DefaultTabController(
+                                        animationDuration: Duration.zero,
+                                        length: footwearIds.length,
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: TabBar(
+                                                  indicatorColor:
+                                                      Colors.transparent,
+                                                  labelColor: Colors.black,
+                                                  unselectedLabelColor:
+                                                      Colors.grey,
+                                                  isScrollable: true,
+                                                  tabs: footwearIds.map((e) {
+                                                    return Tab(
+                                                      text: getNameById(
+                                                          e, footwearBtn),
+                                                    );
+                                                  }).toList()),
+                                            ),
+                                            Expanded(
+                                              child: TabBarView(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  children: footwearIds
+                                                      .map((subCatId) {
+                                                    return GridView.count(
+                                                        crossAxisCount: 3,
+                                                        children: closetList
+                                                            .where((e) {
+                                                              if (subCatId !=
+                                                                  0) {
+                                                                return e.subcategoryId ==
+                                                                    subCatId;
+                                                              }
+                                                              return e.categoryId ==
+                                                                  3;
+                                                            })
+                                                            .map((e) =>
+                                                                closetItemIcon(
+                                                                    e,
+                                                                    list,
+                                                                    setState))
+                                                            .toList());
+                                                  }).toList()),
+                                            )
+                                          ],
+                                        )),
+                                    DefaultTabController(
+                                        animationDuration: Duration.zero,
+                                        length: otherIds.length,
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: TabBar(
+                                                  indicatorColor:
+                                                      Colors.transparent,
+                                                  labelColor: Colors.black,
+                                                  unselectedLabelColor:
+                                                      Colors.grey,
+                                                  isScrollable: true,
+                                                  tabs: otherIds.map((e) {
+                                                    return Tab(
+                                                      text: getNameById(
+                                                          e, otherBtn),
+                                                    );
+                                                  }).toList()),
+                                            ),
+                                            Expanded(
+                                              child: TabBarView(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  children:
+                                                      otherIds.map((subCatId) {
+                                                    return GridView.count(
+                                                        crossAxisCount: 3,
+                                                        children: closetList
+                                                            .where((e) {
+                                                              if (subCatId !=
+                                                                  0) {
+                                                                return e.subcategoryId ==
+                                                                    subCatId;
+                                                              }
+                                                              return e.categoryId ==
+                                                                  4;
+                                                            })
+                                                            .map((e) =>
+                                                                closetItemIcon(
+                                                                    e,
+                                                                    list,
+                                                                    setState))
+                                                            .toList());
+                                                  }).toList()),
+                                            )
+                                          ],
+                                        )),
+                                  ]))
                       ])),
             ),
           );
@@ -586,8 +614,8 @@ class _CreateOutfitPageState extends State<CreateOutfitPage> {
 
   void doMultiSelect(image, setStateBottom) {
     var item = ContainerList(
-        height: 150.0,
-        width: 150.0,
+        height: 200.0,
+        width: 200.0,
         rotation: 0.0,
         scale: 1.0,
         xPosition: 0.1,

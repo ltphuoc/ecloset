@@ -21,8 +21,10 @@ class AccountDAO extends BaseDAO {
 
       // set access token
       print("accessToken    $accessToken");
+      print("accountId ${userDTO.accountId}");
       requestObj.setToken = accessToken;
       setToken(accessToken);
+      setAccountId(userDTO.accountId!);
       return userDTO;
     } catch (e) {
       throw (e);
@@ -33,16 +35,21 @@ class AccountDAO extends BaseDAO {
     final isExpireToken = await expireToken();
     final token = await getToken();
     if (isExpireToken) return false;
-    if (token != null) requestObj.setToken = token;
-    return token != null;
+    if (token != null && token != "") requestObj.setToken = token;
+    return token != null && token != "";
   }
 
-  Future<AccountDTO> getUser() async {
-    Response response = await request.get("users/me");
-    // set access token
-    final user = response.data;
-    return AccountDTO.fromJson(user);
-    // return AccountDTO(uid: idToken, name: "Default Name");
+  Future<AccountDTO?> getUser(int id) async {
+    AccountDTO account;
+    final res = await request.get("api/account/$id");
+
+    final jsonList = res.data['data'];
+    if (jsonList != null) {
+      account = AccountDTO.fromJson(jsonList);
+
+      return account;
+    }
+    return null;
   }
 
   Future<String> getRefferalMessage(String refferalCode) async {
@@ -65,6 +72,7 @@ class AccountDAO extends BaseDAO {
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
+
     // Navigator.of(context).pushAndRemoveUntil(
     //     MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
   }

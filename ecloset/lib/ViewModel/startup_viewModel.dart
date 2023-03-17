@@ -1,19 +1,23 @@
 import 'package:ecloset/Model/DAO/AccountDAO.dart';
+import 'package:ecloset/Model/DTO/AccountDTO.dart';
 import 'package:ecloset/Utils/routes_name.dart';
-import 'package:ecloset/Utils/shared_pref.dart';
 import 'package:ecloset/ViewModel/base_model.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:get/get.dart';
+
+import '../utils/shared_pref.dart';
 
 class StartUpViewModel extends BaseModel {
   StartUpViewModel() {
     handleStartUpLogic();
   }
   Future handleStartUpLogic() async {
-    AccountDAO _accountDAO = AccountDAO();
-    await Future.delayed(Duration(seconds: 3));
-    var hasLoggedInUser = await _accountDAO.isUserLoggedIn();
-    bool isFirstOnBoard = await getIsFirstOnboard() ?? true;
+    AccountDAO accountDAO = AccountDAO();
+    await Future.delayed(const Duration(seconds: 3));
+    var hasLoggedInUser = await accountDAO.isUserLoggedIn();
+
+    // bool isFirstOnBoard = await getIsFirstOnboard() ?? true;
+
     // if (isFirstOnBoard) {
     //   await Get.find<RootViewModel>().startUp();
     //   // Get.offAndToNamed(Rout.ONBOARD);

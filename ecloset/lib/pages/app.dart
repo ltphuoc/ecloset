@@ -84,8 +84,12 @@ class _AppState extends State<App> {
               labelBackgroundColor: Colors.amber[50],
               labelStyle: const TextStyle(color: Colors.black54),
               label: 'Add new outfit',
-              onTap: () =>
-                  {Navigator.pushNamed(context, RouteName.createOutfitPage)},
+              onTap: () => {
+                Navigator.pushNamed(
+                  context,
+                  RouteName.createOutfitPage,
+                )
+              },
             ),
             SpeedDialChild(
               child: const Icon(Icons.checkroom),
@@ -95,8 +99,12 @@ class _AppState extends State<App> {
               labelStyle: const TextStyle(color: Colors.black54),
               label: 'Add new clothes',
               visible: true,
-              onTap: () =>
-                  {Navigator.pushNamed(context, RouteName.addEditItemPage)},
+              onTap: () => {
+                Navigator.pushNamed(
+                  context,
+                  RouteName.addEditItemPage,
+                )
+              },
             ),
           ],
         ),

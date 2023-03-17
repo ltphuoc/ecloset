@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:ecloset/Utils/routes_name.dart';
 import 'package:ecloset/Widgets/custom_dialog.dart';
 import 'package:ecloset/api/api_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as Get;
 
 Map<String, dynamic> convertToQueryParams(
@@ -54,30 +55,38 @@ class ExpiredException extends AppException {
 class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print(
-        'REQUEST[${options.method}] => PATH: ${options.path} HEADER: ${options.headers.toString()}');
+    if (kDebugMode) {
+      print(
+          'REQUEST[${options.method}] => PATH: ${options.path} HEADER: ${options.headers.toString()}');
+    }
     return super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print(
-        'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
-    print('DATA: ${response.data}');
+    if (kDebugMode) {
+      print(
+          'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
+    }
+    if (kDebugMode) {
+      print('DATA: ${response.data}');
+    }
     return super.onResponse(response, handler);
   }
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    print(
-        'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+    if (kDebugMode) {
+      print(
+          'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+    }
     return super.onError(err, handler);
   }
 }
 // or new Dio with a BaseOptions instance.
 
 class MyRequest {
-  static BaseOptions options = new BaseOptions(
+  static BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
       headers: {
         Headers.contentTypeHeader: "application/json",
@@ -86,7 +95,7 @@ class MyRequest {
       receiveTimeout: 5000);
   late Dio _inner;
   MyRequest() {
-    _inner = new Dio(options);
+    _inner = Dio(options);
     // _inner.interceptors.add(
     //     DioCacheManager(CacheConfig(baseUrl: options.baseUrl)).interceptor);
     _inner.interceptors.add(CustomInterceptors());
@@ -95,9 +104,11 @@ class MyRequest {
         return handler.next(e); // continue
       },
       onError: (e, handler) async {
-        print(e.response.toString());
+        if (kDebugMode) {
+          print(e.response.toString());
+        }
         if (e.response?.statusCode == 401) {
-          await CustomDialogBox(
+          const CustomDialogBox(
             title: "Vui lòng đăng nhập lại",
           );
           // await showStatusDialog("assets/images/global_error.png", "Lỗi",
@@ -119,7 +130,7 @@ class MyRequest {
   }
 }
 
-final requestObj = new MyRequest();
+final requestObj = MyRequest();
 final request = requestObj.request;
 
 class MyHttpOverrides extends HttpOverrides {

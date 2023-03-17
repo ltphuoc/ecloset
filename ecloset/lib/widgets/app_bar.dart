@@ -1,9 +1,10 @@
-import 'package:ecloset/ViewModel/closet_viewModel.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../Pages/app.dart';
 
 enum AddMenuAction { addEditItem, addOutfit, add3 }
 
@@ -17,9 +18,14 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColors.primaryColor,
-      title: Text(
-        "eCloset",
-        style: AppStyles.h2,
+      title: InkWell(
+        onTap: () {
+          Get.offAll(() => const App());
+        },
+        child: Text(
+          "eCloset",
+          style: AppStyles.h2,
+        ),
       ),
       elevation: 0,
       actions: [

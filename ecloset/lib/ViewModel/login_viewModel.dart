@@ -9,7 +9,6 @@ import 'package:ecloset/ViewModel/base_model.dart';
 import 'package:ecloset/ViewModel/root_viewModel.dart';
 import 'package:ecloset/widgets/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -18,8 +17,6 @@ class LoginViewModel extends BaseModel {
   late String verificationId;
   late AnalyticsService _analyticsService;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final FirebaseAuth _auth;
-  // User get user => _auth.currentUser!;
 
   late AccountDTO userInfo;
 
@@ -44,25 +41,12 @@ class LoginViewModel extends BaseModel {
 
         User userToken = FirebaseAuth.instance.currentUser!;
         final idToken = await userToken.getIdToken();
-        final fcmToken = await FirebaseMessaging.instance.getToken();
-        log('idToken: ' + idToken);
-        log('fcmToken: ' + fcmToken.toString());
+        // final fcmToken = await FirebaseMessaging.instance.getToken();
         userInfo = await dao.login(idToken);
         await _analyticsService.setUserProperties(userInfo);
         hideDialog();
-        if (userInfo != null) {
-          await Get.find<RootViewModel>().startUp();
-          // Get.rawSnackbar(
-          //     message: "Đăng nhập thành công!!",
-          //     duration: Duration(seconds: 2),
-          //     snackPosition: SnackPosition.BOTTOM,
-          //     margin: EdgeInsets.only(left: 8, right: 8, bottom: 32),
-          //     borderRadius: 8);
-          // await Future.delayed(Duration(microseconds: 500));
-
-          await Get.offAllNamed(RouteName.app);
-        }
-        // await Get.offAllNamed(RouteName.app);
+        await Get.find<RootViewModel>().startUp();
+        await Get.offAllNamed(RouteName.app);
       }
       await Future.delayed(Duration(microseconds: 500));
       setState(ViewStatus.Completed);

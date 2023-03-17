@@ -18,8 +18,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
-import 'Model/DTO/ClosetDTO.dart';
-
 import 'Pages/add_edit_item_page.dart';
 import 'Pages/home_page.dart';
 import 'Pages/settings/setting_page.dart';
@@ -29,13 +27,15 @@ import 'Utils/routes_name.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HttpOverrides.global = new MyHttpOverrides();
+  HttpOverrides.global = MyHttpOverrides();
   await setup();
   createRouteBindings();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -59,36 +59,38 @@ class MyApp extends StatelessWidget {
             return ScaleRoute(page: SignUpPage());
           case RouteName.app:
             return CupertinoPageRoute(
-                builder: (context) => App(), settings: settings);
+                builder: (context) => const App(), settings: settings);
           case RouteName.settingPage:
             return CupertinoPageRoute(
-                builder: (context) => SettingPage(), settings: settings);
+                builder: (context) => const SettingPage(), settings: settings);
 
           case RouteName.homePage:
             return CupertinoPageRoute(
-                builder: (context) => HomePage(), settings: settings);
+                builder: (context) => const HomePage(), settings: settings);
           case RouteName.newsFeed:
             return CupertinoPageRoute(
-                builder: (context) => NewsFeedPage(), settings: settings);
+                builder: (context) => const NewsFeedPage(), settings: settings);
 
           case RouteName.closetPage:
             return CupertinoPageRoute(
-                builder: (context) => ClosetPage(), settings: settings);
+                builder: (context) => const ClosetPage(), settings: settings);
           case RouteName.addEditItemPage:
             return CupertinoPageRoute(
                 builder: (context) => AddEditItemPage(
-                      closet: settings.arguments as ClosetData,
+                      id: settings.arguments as int,
                     ));
 
           case RouteName.outfitPage:
             return CupertinoPageRoute(
-                builder: (context) => OutfitPage(), settings: settings);
+                builder: (context) => const OutfitPage(), settings: settings);
           case RouteName.outfitDetail:
             return CupertinoPageRoute(
-                builder: (context) => OutfitDetailPage(), settings: settings);
+                builder: (context) => const OutfitDetailPage(),
+                settings: settings);
           case RouteName.createOutfitPage:
             return CupertinoPageRoute(
-                builder: (context) => CreateOutfitPage(), settings: settings);
+                builder: (context) => const CreateOutfitPage(),
+                settings: settings);
           case RouteName.saveOutfitPage:
             return CupertinoPageRoute(
                 builder: (context) => SaveOutfitPage(
@@ -97,7 +99,7 @@ class MyApp extends StatelessWidget {
 
           case RouteName.profileSettingPage:
             return CupertinoPageRoute(
-                builder: (context) => ProfileSettingsPage(),
+                builder: (context) => const ProfileSettingsPage(),
                 settings: settings);
           case RouteName.updatePremium:
             return CupertinoPageRoute(
@@ -123,7 +125,7 @@ class MyApp extends StatelessWidget {
         // primaryColor: AppColors.primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StartUpView(),
+      home: const StartUpView(),
       // home: App(),
     );
   }

@@ -15,7 +15,7 @@ class StartUpView extends StatelessWidget {
           builder: (context, child, model) {
         return Scaffold(
           backgroundColor: AppColors.primaryColor,
-          body: Container(
+          body: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             // decoration: BoxDecoration(
@@ -25,18 +25,16 @@ class StartUpView extends StatelessWidget {
             //   ),
             // ),
             child: Center(
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/icons/logo.png",
-                      // fit: BoxFit.fill,
-                      width: 250,
-                      height: 150,
-                    ),
-                  ],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/icons/logo.png",
+                    // fit: BoxFit.fill,
+                    width: 250,
+                    height: 150,
+                  ),
+                ],
               ),
             ),
           ),
@@ -61,10 +59,10 @@ class LoadingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // LoadingBean(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
-                this.title,
-                style: Get.theme.textTheme.headline1,
+                title,
+                style: Get.theme.textTheme.displayLarge,
               )
             ],
           ),

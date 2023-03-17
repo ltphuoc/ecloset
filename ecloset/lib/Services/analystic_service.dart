@@ -1,15 +1,12 @@
 import 'package:ecloset/Model/DTO/AccountDTO.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 
 class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
   static AnalyticsService? _instance;
 
   static AnalyticsService? getInstance() {
-    if (_instance == null) {
-      _instance = AnalyticsService();
-    }
+    _instance ??= AnalyticsService();
     return _instance;
   }
 

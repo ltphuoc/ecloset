@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,10 +48,15 @@ Future<String?> getToken() async {
   return prefs.getString('token');
 }
 
-// Future<bool> setUser(A value) async {
-//   final SharedPreferences prefs = await SharedPreferences.getInstance();
-//   return prefs.setString('token', value);
-// }
+Future<bool> setAccountId(int id) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString('accountId', id.toString());
+}
+
+Future<String?> getAccountId() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('accountId');
+}
 
 // Future<String> getToken() async {
 //   final SharedPreferences prefs = await SharedPreferences.getInstance();
