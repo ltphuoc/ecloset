@@ -60,7 +60,6 @@ class _ClosetPageState extends State<ClosetPage> {
           if (closetList.isEmpty) {}
           return Scaffold(
             backgroundColor: AppColors.whiteBg,
-            // appBar: const MainAppBar(),
             appBar: AppBar(
               centerTitle: true,
               title: Text(

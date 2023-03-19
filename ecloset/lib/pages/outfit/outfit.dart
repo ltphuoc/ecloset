@@ -104,8 +104,8 @@ class _OutfitState extends State<Outfit> {
                                 return Wrap(
                                   children: <Widget>[
                                     ListTile(
-                                      leading: Icon(Icons.edit),
-                                      title: Text('Edit'),
+                                      leading: const Icon(Icons.edit),
+                                      title: const Text('Edit'),
                                       onTap: () {
                                         Navigator.of(bottomSheetDialog).pop();
                                         Get.to(() => EditOutfitPage(
@@ -116,16 +116,16 @@ class _OutfitState extends State<Outfit> {
                                       },
                                     ),
                                     ListTile(
-                                      leading: Icon(Icons.delete),
-                                      title: Text('Delete'),
+                                      leading: const Icon(Icons.delete),
+                                      title: const Text('Delete'),
                                       onTap: () async {
                                         Navigator.of(bottomSheetDialog).pop();
                                         bool shouldDelete = await showDialog(
                                           context: bottomSheetDialog,
                                           builder: (dialogContext) {
                                             return AlertDialog(
-                                              title: Text('Delete Post?'),
-                                              content: Text(
+                                              title: const Text('Delete Post?'),
+                                              content: const Text(
                                                   'Are you sure you want to delete this post?'),
                                               actions: <Widget>[
                                                 TextButton(

@@ -4,11 +4,13 @@ import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../Utils/request.dart';
 import '../../utils/shared_pref.dart';
 import '../../widgets/loading_screen.dart';
+import 'ediit_post_page.dart';
 import 'newsfeed.dart';
 
 class UserFeedPage extends StatefulWidget {
@@ -79,10 +81,6 @@ class _UserFeedPageState extends State<UserFeedPage> {
           .where((feedItem) => feedItem.user != null)
           .toList();
 
-      // _post = res.data['data']
-      //     .map<PostData>((post) => PostData.fromJson(post))
-      //     .toList();
-
       setState(() {});
     } catch (e) {
       print("Error fetching posts: $e");
@@ -99,7 +97,14 @@ class _UserFeedPageState extends State<UserFeedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: const MainAppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "My post",
+          style: AppStyles.h3,
+        ),
+        backgroundColor: AppColors.primaryColor,
+      ),
       backgroundColor: AppColors.whiteBg,
       body: _feedItems == null
           ? const Center(child: CircularProgressIndicator())
@@ -138,23 +143,28 @@ class _UserFeedPageState extends State<UserFeedPage> {
                                 return Wrap(
                                   children: <Widget>[
                                     ListTile(
-                                      leading: Icon(Icons.save),
-                                      title: Text('Edit'),
+                                      leading: const Icon(Icons.save),
+                                      title: const Text('Edit'),
                                       onTap: () {
                                         Navigator.of(bottomSheetDialog).pop();
+                                        Get.to(() => EditPostPage(
+                                                id: feedItem.postId))!
+                                            .then((value) {
+                                          fetchPost();
+                                        });
                                       },
                                     ),
                                     ListTile(
-                                      leading: Icon(Icons.delete),
-                                      title: Text('Delete'),
+                                      leading: const Icon(Icons.delete),
+                                      title: const Text('Delete'),
                                       onTap: () async {
                                         Navigator.of(bottomSheetDialog).pop();
                                         bool shouldDelete = await showDialog(
                                           context: bottomSheetDialog,
                                           builder: (dialogContext) {
                                             return AlertDialog(
-                                              title: Text('Delete Post?'),
-                                              content: Text(
+                                              title: const Text('Delete Post?'),
+                                              content: const Text(
                                                   'Are you sure you want to delete this post?'),
                                               actions: <Widget>[
                                                 TextButton(
@@ -220,9 +230,15 @@ class _UserFeedPageState extends State<UserFeedPage> {
                       if (feedItem.imageUrl != null &&
                           feedItem.imageUrl != "" &&
                           feedItem.imageUrl != "string")
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Image.network(feedItem.imageUrl!),
+                        Container(
+                          width: double.infinity,
+                          color: AppColors.greyBg,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Image.network(feedItem.imageUrl!),
+                            ),
+                          ),
                         ),
                       ButtonBar(
                         alignment: MainAxisAlignment.center,
