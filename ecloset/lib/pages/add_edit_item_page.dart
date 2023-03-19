@@ -221,8 +221,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                     },
                   )
                 : null,
-            body: SafeArea(
-                child: SingleChildScrollView(
+            body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
                 child: Form(
@@ -386,7 +385,7 @@ class _AddEditItemPageState extends State<AddEditItemPage> {
                   ),
                 ),
               ),
-            )),
+            ),
           );
         }));
   }

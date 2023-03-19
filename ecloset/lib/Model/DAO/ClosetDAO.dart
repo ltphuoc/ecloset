@@ -61,7 +61,7 @@ class ClosetDAO extends BaseDAO {
 
   Future<List<ClosetData>?> getClosetList({
     int page = 1,
-    int size = 30,
+    int size = 100,
     int? total,
     Map<String, dynamic> params = const {},
   }) async {

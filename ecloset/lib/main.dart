@@ -4,6 +4,7 @@ import 'package:ecloset/pages/app.dart';
 import 'package:ecloset/pages/auth/login.dart';
 import 'package:ecloset/pages/auth/sign_up.dart';
 import 'package:ecloset/pages/closet/closet_page.dart';
+import 'package:ecloset/pages/community/add_edit_post_page.dart';
 import 'package:ecloset/pages/community/newsfeed.dart';
 import 'package:ecloset/pages/outfit/create_outfit_page.dart';
 import 'package:ecloset/pages/outfit/outfit_detail_page.dart';
@@ -16,7 +17,8 @@ import 'package:ecloset/setup.dart';
 import 'package:ecloset/utils/pageNavigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+// import 'package:get/route_manager.dart';
 
 import 'Pages/add_edit_item_page.dart';
 import 'Pages/home_page.dart';
@@ -70,7 +72,9 @@ class MyApp extends StatelessWidget {
           case RouteName.newsFeed:
             return CupertinoPageRoute(
                 builder: (context) => const NewsFeedPage(), settings: settings);
-
+          case RouteName.createPost:
+            return CupertinoPageRoute(
+                builder: (context) => CreatePostScreen(), settings: settings);
           case RouteName.closetPage:
             return CupertinoPageRoute(
                 builder: (context) => const ClosetPage(), settings: settings);
@@ -112,6 +116,7 @@ class MyApp extends StatelessWidget {
           // case RouteName.settingPage:
           //   return CupertinoPageRoute(
           //       builder: (context) => const SettingPage(), settings: settings);
+
           default:
             return MaterialPageRoute(builder: (context) {
               return const Scaffold(

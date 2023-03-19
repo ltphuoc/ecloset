@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../Utils/routes_name.dart';
+import 'community/add_edit_post_page.dart';
 import 'community/newsfeed.dart';
 
 class App extends StatefulWidget {
@@ -75,7 +76,12 @@ class _AppState extends State<App> {
               labelBackgroundColor: Colors.amber[50],
               labelStyle: const TextStyle(color: Colors.black54),
               label: 'Add new post',
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  RouteName.createPost,
+                );
+              },
             ),
             SpeedDialChild(
               child: const Icon(Icons.document_scanner_outlined),

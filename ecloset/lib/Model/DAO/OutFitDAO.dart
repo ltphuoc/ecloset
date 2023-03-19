@@ -23,7 +23,7 @@ class OutFitDAO extends BaseDAO {
 
   Future<List<OutFitDTO>?> getOutFitList({
     int page = 1,
-    int size = 10,
+    int size = 100,
     int? total,
     Map<String, dynamic> params = const {},
   }) async {
@@ -38,7 +38,7 @@ class OutFitDAO extends BaseDAO {
     if (jsonList != null) {
       outFitList =
           List<OutFitDTO>.from(jsonList.map((i) => OutFitDTO.fromJson(i)))
-              .where((element) => element.subcategoryId == accountId)
+              .where((element) => element.supplierId == accountId)
               .toList();
       return outFitList;
     }

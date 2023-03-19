@@ -22,7 +22,7 @@ class AccountDAO extends BaseDAO {
       // set access token
       print("accessToken    $accessToken");
       print("accountId ${userDTO.accountId}");
-      requestObj.setToken = accessToken;
+      requestObj.setToken = response.data['data'];
       setToken(accessToken);
       setAccountId(userDTO.accountId!);
       return userDTO;

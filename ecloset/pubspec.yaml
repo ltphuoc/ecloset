@@ -59,6 +59,7 @@ dependencies:
   material_design_icons_flutter: ^6.0.7096
   flutter_speed_dial: ^6.2.0
   flutter_staggered_grid_view: ^0.6.2
+  scrollable_positioned_list: ^0.3.5
 
 dependency_overrides:
   firebase_auth_platform_interface: 6.11.7

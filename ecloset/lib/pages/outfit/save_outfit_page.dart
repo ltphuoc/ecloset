@@ -19,23 +19,26 @@ class SaveOutfitPage extends StatefulWidget {
   dynamic imageByte;
 
   @override
-  _SaveOutfitPageState createState() => _SaveOutfitPageState();
+  State<SaveOutfitPage> createState() => _SaveOutfitPageState();
 }
 
 class _SaveOutfitPageState extends State<SaveOutfitPage> {
   String? outfitName;
-  // String? value;
-  // TextEditingController controller = TextEditingController(text: value);
   String? description;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+
+  TextEditingController outfitNameController = TextEditingController();
 
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    outfitNameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +66,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   ClosetViewModel root = Get.find<ClosetViewModel>();
                   Navigator.pop(context);
                   await root.saveOutfit(
-                      outfitName as String, newUrl, description as String);
+                      outfitNameController.text, newUrl, description ?? "");
                 }
               },
               child: Text(
@@ -112,7 +115,7 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
                   height: 8,
                 ),
                 TextFormField(
-                  controller: outfitName as TextEditingController,
+                  controller: outfitNameController,
                   cursorColor: AppColors.primaryColor,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -174,18 +177,4 @@ class _SaveOutfitPageState extends State<SaveOutfitPage> {
       )),
     );
   }
-
-  // void saveOutfit(context) async {
-  //   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-  //       .ref("/foldername${DateTime.now().millisecondsSinceEpoch}");
-  //   final tempDir = await getTemporaryDirectory();
-  //   File file = await File('${tempDir.path}/image.png').create();
-  //   file.writeAsBytesSync(widget.imageByte);
-  //   firebase_storage.UploadTask uploadTask = ref.putFile(file.absolute);
-
-  //   Future.value(uploadTask).then((value) async {
-  //     var newUrl = await ref.getDownloadURL();
-  //     print(newUrl);
-  //   });
-  // }
 }

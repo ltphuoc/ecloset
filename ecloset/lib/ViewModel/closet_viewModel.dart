@@ -126,19 +126,12 @@ class ClosetViewModel extends BaseModel {
       String outfitName, String img, String description) async {
     try {
       setState(ViewStatus.Loading);
-      showLoading();
+      // showLoading();
       outFit = await _dao?.saveOutfit(outfitName, img, description);
-      hideDialog();
-      outFitList?.add(OutFitDTO(
-          outfitId: outFit?.outfitId,
-          categoryId: outFit?.categoryId,
-          description: outFit?.description,
-          image: outFit?.image,
-          outfitName: outFit?.outfitName,
-          subcategoryId: outFit?.subcategoryId,
-          supplierId: outFit?.supplierId));
-      // Get.offAll(() => const App());
-      await Get.find<ClosetViewModel>().getOutfit();
+      // hideDialog();
+
+      await Get.find<RootViewModel>().startUp();
+      Get.offAll(() => const App());
       setState(ViewStatus.Completed);
     } catch (e) {
       setState(ViewStatus.Error);

@@ -2,11 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecloset/Constant/view_status.dart';
 import 'package:ecloset/ViewModel/blogs_viewModel.dart';
 import 'package:ecloset/ViewModel/closet_viewModel.dart';
+import 'package:ecloset/ViewModel/root_viewModel.dart';
+import 'package:ecloset/ViewModel/startup_viewModel.dart';
 import 'package:ecloset/Widgets/app_bar.dart';
 import 'package:ecloset/constant/app_colors.dart';
 import 'package:ecloset/constant/app_styles.dart';
 import 'package:ecloset/utils/routes_name.dart';
 import 'package:ecloset/widgets/shimmer_block.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
@@ -15,6 +18,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'closet/closet_page.dart';
+import 'outfit/outfit.dart';
 
 List images = ['assets/images/img1.png', "assets/images/img11.png"];
 List imagess = ['assets/images/img2.png', "assets/images/tee.png"];
@@ -37,6 +41,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.find<RootViewModel>().startUp();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -221,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                                   Expanded(
                                       child: InkWell(
                                     onTap: () {
-                                      Get.toNamed(RouteName.outfitPage);
+                                      Get.toNamed(RouteName.closetPage);
                                     },
                                     child: AspectRatio(
                                       aspectRatio: 1 / 1,
@@ -247,7 +258,63 @@ class _HomePageState extends State<HomePage> {
                               ),
                             );
                           })),
-                      _Outfit(),
+                      ScopedModel(
+                        model: ClosetViewModel(),
+                        child: ScopedModelDescendant<ClosetViewModel>(
+                          builder: (context, child, model) {
+                            var outFitList =
+                                Get.find<ClosetViewModel>().outFitList ?? [];
+                            if (outFitList.isEmpty) {}
+                            return Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 12.0,
+                                    mainAxisSpacing: 12.0,
+                                    childAspectRatio: 366 / 512,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: outFitList.length,
+                                  itemBuilder: (context, index) {
+                                    final e = outFitList[
+                                        outFitList.length - index - 1];
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColors.primaryColor,
+                                          width: 0.8,
+                                        ),
+                                      ),
+                                      child: InkWell(
+                                        child: Image.network(
+                                          e.image ??
+                                              'https://picsum.photos/300',
+                                          fit: BoxFit.fill,
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              builder: (context) => Outfit(
+                                                index: index,
+                                              ),
+                                            ),
+                                          ).then((value) {
+                                            setState(() {
+                                              // Call setState to refresh the page.
+                                            });
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ));
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -274,37 +341,46 @@ class _Outfit extends StatelessWidget {
           var outFitList = Get.find<ClosetViewModel>().outFitList ?? [];
           if (outFitList.isEmpty) {}
           return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: GridView(
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12.0,
-                mainAxisSpacing: 12.0,
-                childAspectRatio: 366 / 512,
-              ),
-              scrollDirection: Axis.vertical,
-              children: outFitList.reversed
-                  .map(
-                    (e) => Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: AppColors.primaryColor,
-                          width: 0.8,
-                        ),
-                      ),
-                      child: InkWell(
-                        child: Image.network(
-                          e.image ?? 'https://picsum.photos/300',
-                          fit: BoxFit.fill,
-                        ),
-                        onTap: () {},
+              padding: const EdgeInsets.all(12.0),
+              child: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12.0,
+                  mainAxisSpacing: 12.0,
+                  childAspectRatio: 366 / 512,
+                ),
+                scrollDirection: Axis.vertical,
+                itemCount: outFitList.length,
+                itemBuilder: (context, index) {
+                  final e = outFitList[outFitList.length - index - 1];
+                  return Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.primaryColor,
+                        width: 0.8,
                       ),
                     ),
-                  )
-                  .toList(),
-            ),
-          );
+                    child: InkWell(
+                      child: Image.network(
+                        e.image ?? 'https://picsum.photos/300',
+                        fit: BoxFit.fill,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => Outfit(
+                              index: index,
+                            ),
+                          ),
+                        ).then(
+                            (value) => Get.find<ClosetViewModel>().getOutfit());
+                      },
+                    ),
+                  );
+                },
+              ));
         },
       ),
     );
