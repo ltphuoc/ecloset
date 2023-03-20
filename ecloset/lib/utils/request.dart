@@ -91,8 +91,8 @@ class MyRequest {
       headers: {
         Headers.contentTypeHeader: "application/json",
       },
-      sendTimeout: 15000,
-      receiveTimeout: 5000);
+      sendTimeout: const Duration(seconds: 15000),
+      receiveTimeout: const Duration(seconds: 5000));
   late Dio _inner;
   MyRequest() {
     _inner = Dio(options);

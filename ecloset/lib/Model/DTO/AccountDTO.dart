@@ -15,6 +15,7 @@ class AccountDTO {
   String? follower;
   String? following;
   int? brandId;
+  String? jwtToken;
 
   AccountDTO(
       {this.accountId,
@@ -32,7 +33,8 @@ class AccountDTO {
       this.avatar,
       this.follower,
       this.following,
-      this.brandId});
+      this.brandId,
+      this.jwtToken});
 
   AccountDTO.fromJson(Map<String, dynamic> json) {
     accountId = json['accountId'];
@@ -51,26 +53,28 @@ class AccountDTO {
     follower = json['follower'];
     following = json['following'];
     brandId = json['brandId'];
+    jwtToken = json['jwtToken'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['accountId'] = this.accountId;
-    data['contactFname'] = this.contactFname;
-    data['contactLname'] = this.contactLname;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['password'] = this.password;
-    data['roleId'] = this.roleId;
-    data['country'] = this.country;
-    data['city'] = this.city;
-    data['district'] = this.district;
-    data['province'] = this.province;
-    data['address'] = this.address;
-    data['avatar'] = this.avatar;
-    data['follower'] = this.follower;
-    data['following'] = this.following;
-    data['brandId'] = this.brandId;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['accountId'] = accountId;
+    data['contactFname'] = contactFname;
+    data['contactLname'] = contactLname;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['password'] = password;
+    data['roleId'] = roleId;
+    data['country'] = country;
+    data['city'] = city;
+    data['district'] = district;
+    data['province'] = province;
+    data['address'] = address;
+    data['avatar'] = avatar;
+    data['follower'] = follower;
+    data['following'] = following;
+    data['brandId'] = brandId;
+    data['jwtToken'] = jwtToken;
     return data;
   }
 }

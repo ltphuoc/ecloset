@@ -16,15 +16,14 @@ class AccountDAO extends BaseDAO {
           await request.post("GoogleLogin", data: {"idToken": idToken});
       final user = response.data['data'];
       final userDTO = AccountDTO.fromJson(user);
-      // final accessToken = user["accessToken"] as String;
       final accessToken = idToken;
 
-      // set access token
-      print("accessToken    $accessToken");
-      print("accountId ${userDTO.accountId}");
-      requestObj.setToken = response.data['data'];
       setToken(accessToken);
+
+      requestObj.setToken = userDTO.jwtToken;
+
       setAccountId(userDTO.accountId!);
+
       return userDTO;
     } catch (e) {
       throw (e);

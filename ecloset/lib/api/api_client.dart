@@ -1,7 +1,11 @@
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
-List<String> apiKeys = [];
+List<String> apiKeys = [
+  "yUZe7Yfyqn26pgvpF8rPsz4X",
+  "VzgDVoFdZt2Fahx46ZUQDMQ1",
+  "8FfokmwdUQWRD5eoJUxVWpaa",
+];
 
 class ApiCLient {
   Future<Uint8List> removeBgApi(String imagePath) async {
